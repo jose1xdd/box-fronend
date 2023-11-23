@@ -26,13 +26,13 @@ const exo = Exo_2({
 export default function NavbarAdministrador() {
 
 	return (
-		<nav className="bg-zinc-900 p-4">
+		<nav className="bg-[#1e1e1e] p-4">
 			<div className="container">
 				<div className="flex justify-between">
 					<div className="flex items-center">
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
-								<div className="w-60 h-60 bg-neutral-950 rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
+								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
 									<Image
 										src={Logo}
 										alt="Logo Liga de Boxeo de Norte de Santander"
