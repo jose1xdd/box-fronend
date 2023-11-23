@@ -35,7 +35,7 @@ export default function Footer(){
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
-							viewBox="0 0 448 512"
+							viewBox="0 0 512 512"
 							fill="#cd1919"
 							className='mx-2'
 						>
@@ -47,7 +47,7 @@ export default function Footer(){
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
-							viewBox="0 0 448 512"
+							viewBox="0 0 512 512"
 							fill="#cd1919"
 							className='mx-2'
 						>
@@ -59,7 +59,7 @@ export default function Footer(){
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
-							viewBox="0 0 448 512"
+							viewBox="0 0 512 512"
 							fill="#cd1919"
 							className='mx-2'
 						>
@@ -71,7 +71,7 @@ export default function Footer(){
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
-							viewBox="0 0 448 512"
+							viewBox="0 0 512 512"
 							fill="#cd1919"
 							className='mx-2'
 						>
