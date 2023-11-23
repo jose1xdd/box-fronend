@@ -11,15 +11,16 @@ interface InputProps {
     label: string; // Etiqueta del campo de entrada
     placeholder?: string; // Texto de marcador de posición opcional
 	value: string;
+	className: string;
 	onChange : (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // Define el componente funcional Input que acepta las propiedades definidas en InputProps.
-export function Input({ label, name, placeholder, type, value, onChange }: InputProps) {
+export function Input({ label, name, placeholder, type, value, onChange, className }: InputProps) {
 
 	// Retorna la estructura del componente Input.
 	return (
-		<div className={styles.inputContainer}>
+		<div className={styles.inputContainer + ' ' + className}>
 			{/* Etiqueta del campo de entrada */}
 			<label className={styles.label} htmlFor={name}>
 				{label}
