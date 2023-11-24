@@ -1,7 +1,7 @@
 'use client';
 
 import loginData from '@/pruebas/login.json';
-import { Modal } from '@/components/modal';
+import { Modal } from '@/components/Modal';
 import { Form } from '@/components/form';
 import { useState, useEffect } from 'react';
 

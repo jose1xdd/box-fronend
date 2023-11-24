@@ -11,10 +11,13 @@
     "check:ts": "npx tsc --project tsconfig.json"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.10.7",
     "axios": "^1.6.2",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-modal": "^3.16.1",
+    "react-paginate": "^8.2.0",
     "saas": "^1.0.0",
     "sass": "^1.69.5",
     "winston": "^3.11.0"
@@ -23,6 +26,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-modal": "^3.16.3",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "autoprefixer": "^10.0.1",
