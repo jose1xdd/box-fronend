@@ -18,13 +18,7 @@ export function Modal({ isOpen, onClose, title, children, imagen }: ModalProps) 
 				<div className="fixed inset-0 flex justify-center items-center">
 					<div className="bg-black bg-opacity-40 w-full h-full flex items-center justify-center">
 						<div className="bg-[#1e1e1e] bg-opacity-80 p-8 rounded-[30PX] w-[600px] h-[350px] text-white flex flex-col justify-center items-center gap-4">
-							<svg
-								className='bg-[#1e1e1e]'
-								xmlns="http://www.w3.org/2000/svg"
-								height="100px"
-								viewBox="0 0 512 512"
-								fill="#ffffff"
-							>
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" className=" bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
 								<path d={imagen} />
 							</svg>
 							<h2 className="text-2xl font-bold mb-4">{title}</h2>

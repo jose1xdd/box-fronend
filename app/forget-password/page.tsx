@@ -1,7 +1,7 @@
 'use client';
 
 import loginData from '@/pruebas/login.json';
-import { Modal } from '@/components/modal';
+import { Modal } from '@/components/Modal';
 import { Form } from '@/components/form';
 import { useState } from 'react';
 
@@ -56,7 +56,7 @@ export default function LoginPage() {
 			setModalContent({
 		  title: 'Correo enviado exitosamente',
 		  message: 'Correo enviado satisfactoriamente, revisa la bandeja de entrada.',
-		  imagen: 'M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z'
+		  imagen: 'M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'
 			});
 			setIsModalOpen(true);
 	  }
