@@ -1,26 +1,24 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
+import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
-	title: 'Boxing League',
-	description: 'Liga de Boxeo Norte de Santander'
+	title: 'Home',
 };
 
-interface RootLayoutProps {
-	children: React.ReactNode
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({
+	children,
+}: {
+  children: React.ReactNode;
+}) {
 	return (
-	  <html lang='en'>
-			<body className={inter.className}>
-				<div className='min-h-screen flex flex-col items-center justify-center'>
-			  {children}
+		<html lang="es">
+			<body className="flex flex-col min-h-screen">
+				<div id="content-container" className="flex-grow">
+					{children}
 				</div>
+				<Footer />
 			</body>
-	  </html>
+		</html>
 	);
 }
