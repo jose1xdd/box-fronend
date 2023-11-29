@@ -16,6 +16,15 @@ const Home: React.FC = () => {
 		setIsModalOpen(false);
 	};
 
+	const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const files = e.target.files;
+		if (files && files.length > 0) {
+			// Aquí puedes manejar la lógica relacionada con el archivo si es necesario
+			// Por ejemplo, puedes mostrar la información del archivo antes de abrir el modal
+			handleOpenModal();
+		}
+	};
+
 	return (
 		<div className="w-full max-w-screen-xl mx-auto p-6">
 			<Table data={data} filtroRol="entrenador" />
@@ -24,17 +33,23 @@ const Home: React.FC = () => {
 					onClick={() => alert('Usuarios descargados')}
 					className="bg-[#cd1919] text-white rounded p-2"
 				>
-          Descargar usuarios
+					Descargar usuarios
 				</button>
 				<div className="flex gap-2">
-					<button onClick={handleOpenModal} className="bg-[#cd1919] text-white rounded p-2">
-          Carga masiva
-					</button>
+					<label htmlFor="fileInput" className="bg-[#cd1919] text-white rounded p-2 cursor-pointer">
+						Carga masiva
+					</label>
+					<input
+						type="file"
+						id="fileInput"
+						style={{ display: 'none' }}
+						onChange={handleFileInputChange}
+					/>
 					<button
 						onClick={() => alert('Agregar usuario')}
 						className="bg-[#cd1919] text-white rounded p-2"
 					>
-          +
+						+
 					</button>
 				</div>
 			</div>

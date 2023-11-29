@@ -1,26 +1,31 @@
 /* styles para el modal */
+.react-modal {
+  width: 800px;
+  height: 450px;
+}
+
 .drop-zone {
-    background-color: #1e1e1e;
-    border: 2px dashed #ddd;
-    padding: 20px;
-    text-align: center;
-    width: 600px; /* Tamaño horizontal */
-    height: 400px; /* Tamaño vertical */
-  }
-  
-  .dragging .drop-zone {
-    border-color: #33adff;
-  }
-  
-  /* Otros estilos según tus necesidades */
-  
-  /* Estilos para el fondo oscuro */
-  .overlay-custom {
-    background: rgba(0, 0, 0, 0.8); /* Fondo negro con 80% de transparencia */
-  }
-  
-  /* Estilos para el texto */
-  .text-white {
-    color: white;
-  }
-  
+  background-color: #1e1e1e;
+  border: 2px dashed #ddd;
+  padding: 20px;
+  text-align: center;
+  width: 600px; /* Tamaño horizontal */
+  height: 250px; /* Tamaño vertical */
+  margin: auto; /* Centrar la drop zone */
+}
+
+.dragging .drop-zone {
+  border-color: #33adff;
+}
+
+/* Otros estilos según tus necesidades */
+
+/* Estilos para el fondo oscuro */
+.overlay-custom {
+  background: rgba(0, 0, 0, 0.8); /* Fondo negro con 80% de transparencia */
+}
+
+/* Estilos para el texto */
+.text-white {
+  color: white;
+}

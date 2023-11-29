@@ -1,8 +1,10 @@
 'use client';
+//'use strict';
 
 import loginData from '@/pruebas/login.json';
 import { Form } from '@/components/form';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function LoginPage() {
 
@@ -17,13 +19,52 @@ export default function LoginPage() {
 		setIncorrectData(false);
 	};
 
-	function handleButton(): void {
-		// Busca en el archivo JSON si hay coincidencia de correo y contraseña
-		const user = loginData.find((userData: any) => {
-		  return userData['correo-electronico'] === information.email && userData.password === information.password;
-		});
+	async function handleButton(): Promise<void> {
+		try {
+		  const response = await axios.post('https://deportnortbox-api.ddns.net/users/download/Deportistas', {
+				firstName: 'Fred',
+				lastName: 'Flintstone'
+		  });
 
-		if (user) {
+		  // Si la solicitud fue exitosa, puedes acceder a los datos de la respuesta
+		  const user = response.data;
+
+		  // Asegurar que los datos ingresados son correctos
+		  if (user) {
+			// Coincidencia encontrada, muestra alerta de inicio de sesión
+				setInformation({ email: '', password: '' });
+				setIncorrectData(false);
+				alert(`¡Bienvenido, ${user.Nombre}! Has iniciado sesión.`);
+		  } else {
+			// No hay coincidencia, muestra alerta de datos incorrectos
+				setInformation({ email: '', password: '' });
+				setIncorrectData(true);
+		  }
+		} catch (error) {
+		  // Manejar el error aquí
+		  alert(error);
+		}
+	  }
+
+	//Prueba
+	/* function handleButton(): void {
+		// Busca en el archivo JSON si hay coincidencia de correo y contraseña
+		const user = (async () => {
+
+			try{
+				return await axios.post('https://deportnortbox-api.ddns.net/login', {
+					firstName: 'Fred',
+					lastName: 'Flintstone'
+			  });
+			}catch(error){
+				alert('Error');
+			}
+
+		}); */
+
+	//Asegurar que los datos ingresados son ciertos
+
+	/* if (user) {
 		  // Coincidencia encontrada, muestra alerta de inicio de sesión
 		  setInformation({ email: '', password: '' });
 			setIncorrectData(false);
@@ -32,8 +73,8 @@ export default function LoginPage() {
 		  // No hay coincidencia, muestra alerta de datos incorrectos
 		  setInformation({ email: '', password: '' });
 		  setIncorrectData(true);
-		}
-	  }
+		} */
+	  //}
 
 	return(
 		<div className='flex justify-center align-center'>

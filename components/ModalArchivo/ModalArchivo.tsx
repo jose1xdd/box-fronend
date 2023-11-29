@@ -46,7 +46,7 @@ const ModalArchivo: React.FC<ModalArchivoProps> = ({ isOpen, onClose }) => {
 			isOpen={isOpen}
 			onRequestClose={onClose}
 			contentLabel="Modal"
-			className={isDragging ? 'dragging' : ''}
+			className={isDragging ? 'dragging react-modal' : 'react-modal'}
 		>
 			<div
 				onDragEnter={handleDragEnter}
