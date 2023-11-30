@@ -32,7 +32,7 @@ interface FormData {
 	contrasenia: string;
   }
 
-export default function Home() {
+export default function PerfilAdministrador() {
 	const formularioDatosPerfil: FormData = {
 		nombre: 'Texto',
 		apellido: 'Texto',
