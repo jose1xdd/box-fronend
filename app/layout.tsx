@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Footer from '@/components/footer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const metadata: Metadata = {
 	title: 'Home',

@@ -1,10 +1,11 @@
 'use client';
 //'use strict';
-
+import Image from 'next/image';
 import loginData from '@/pruebas/login.json';
 import { Form } from '@/components/form';
 import { useState } from 'react';
 import axios from 'axios';
+import imagen from '@/public/images/loginImage.png';
 
 export default function LoginPage() {
 
@@ -19,11 +20,22 @@ export default function LoginPage() {
 		setIncorrectData(false);
 	};
 
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
 	async function handleButton(): Promise<void> {
 		try {
-		  const response = await axios.post('https://deportnortbox-api.ddns.net/users/download/Deportistas', {
-				firstName: 'Fred',
-				lastName: 'Flintstone'
+		  const requestBody = {
+				email: information.email,
+				password: information.password,
+		  };
+
+		  const requestHeaders = {
+				'Content-Type': 'application/json',
+			// Agrega otros encabezados si son necesarios
+		  };
+
+		  const response = await axios.post(`${apiEndpoint}/login`, requestBody, {
+				headers: requestHeaders,
 		  });
 
 		  // Si la solicitud fue exitosa, puedes acceder a los datos de la respuesta
@@ -34,7 +46,7 @@ export default function LoginPage() {
 			// Coincidencia encontrada, muestra alerta de inicio de sesión
 				setInformation({ email: '', password: '' });
 				setIncorrectData(false);
-				alert(`¡Bienvenido, ${user.Nombre}! Has iniciado sesión.`);
+				alert('¡Bienvenido, Has iniciado sesión.');
 		  } else {
 			// No hay coincidencia, muestra alerta de datos incorrectos
 				setInformation({ email: '', password: '' });
@@ -42,43 +54,18 @@ export default function LoginPage() {
 		  }
 		} catch (error) {
 		  // Manejar el error aquí
-		  alert(error);
+		  alert('Ocurrió un error al procesar la solicitud.');
 		}
 	  }
 
-	//Prueba
-	/* function handleButton(): void {
-		// Busca en el archivo JSON si hay coincidencia de correo y contraseña
-		const user = (async () => {
-
-			try{
-				return await axios.post('https://deportnortbox-api.ddns.net/login', {
-					firstName: 'Fred',
-					lastName: 'Flintstone'
-			  });
-			}catch(error){
-				alert('Error');
-			}
-
-		}); */
-
-	//Asegurar que los datos ingresados son ciertos
-
-	/* if (user) {
-		  // Coincidencia encontrada, muestra alerta de inicio de sesión
-		  setInformation({ email: '', password: '' });
-			setIncorrectData(false);
-		  alert(`¡Bienvenido, ${user.Nombre}! Has iniciado sesión.`);
-		} else {
-		  // No hay coincidencia, muestra alerta de datos incorrectos
-		  setInformation({ email: '', password: '' });
-		  setIncorrectData(true);
-		} */
-	  //}
-
 	return(
 		<div className='flex justify-center align-center'>
-			<img src="https://raw.githubusercontent.com/Tkalejadro122/API/ProyectosSistemas/young-woman-1333600_1920%20(1).png" alt="Imagen de una mujer joven" className='w-4/6'></img>
+			<Image
+				src={imagen}
+				alt="Logo Liga de Boxeo de Norte de Santander"
+				className="w4/6"
+				priority
+			/>
 			<div className='flex flex-col items-end justify-center m-20'>
 				<Form title1='LIGA DE' title2='BOXEO' title3='NORTE' onSubmit = {()=>{}} description='' className=''>
 					<div className='my-[10px] flex flex-col gap-4'>
