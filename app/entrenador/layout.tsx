@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import NavbarEntrenador from '@/components/navbarEntrenador';
+import NavbarEntrenador from '@/components/navbar/navbarEntrenador';
 
 export const metadata: Metadata = {
 	title: 'Entrenador'
