@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import NavbarAdministrador from '@/components/navbarAdministrador';
+import NavbarAdministrador from '@/components/navbar/navbarAdministrador';
 
 export const metadata: Metadata = {
 	title: 'Administrador'
