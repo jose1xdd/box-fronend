@@ -1,5 +1,5 @@
 // components/Table.tsx
-import '@/app/usuarios/estilos.css';
+import '@/app/administrador/lista-usuarios/estilos.css';
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
