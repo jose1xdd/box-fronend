@@ -33,8 +33,6 @@ interface FormData {
 	contrasenia: string;
   }
 
-let response: AxiosResponse<any, any>;
-
 export default function Home() {
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -50,7 +48,6 @@ export default function Home() {
 
 	useEffect(() => {
 		const datos = localStorage.getItem('userData');
-		console.log(datos);
 		var json;
 
 		if (datos != null) {
@@ -83,8 +80,6 @@ export default function Home() {
 				telefono: response.data.user.phone,
 				correo: response.data.user.email,
 			});
-
-			console.log(response);
 		} catch (error) {
 			console.log(error);
 		}
