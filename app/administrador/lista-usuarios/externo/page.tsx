@@ -1,7 +1,7 @@
 // pages.tsx
 'use client';
 import React, { useState } from 'react';
-import Table from '@/components/Table';
+import Table from '@/components/tablas/Table';
 import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
 import data from '@/pruebas/usuarios.json';
 

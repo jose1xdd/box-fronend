@@ -6,6 +6,7 @@ import {
 	Bebas_Neue,
 	Exo_2
 } from 'next/font/google';
+import axios, { AxiosResponse } from 'axios';
 
 const barlow = Barlow_Semi_Condensed({
 	weight: ['500'],
@@ -32,19 +33,62 @@ interface FormData {
 	contrasenia: string;
   }
 
+let response: AxiosResponse<any, any>;
+
 export default function Home() {
-	const formularioDatosPerfil: FormData = {
+
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	const [datosPerfil, setDatosPerfil] = useState({
 		nombre: 'Texto',
 		apellido: 'Texto',
 		cedula: 'Texto',
 		direccion: 'Texto',
 		telefono: 'Texto',
 		correo: 'Texto',
-		contrasenia: 'Texto'
-	};
-
-	const [datosPerfil, setDatosPerfil] = useState<FormData>(formularioDatosPerfil);
+	});
 	const [esEditable, setEsEditable] = useState(false);
+
+	useEffect(() => {
+		const datos = localStorage.getItem('userData');
+		console.log(datos);
+		var json;
+
+		if (datos != null) {
+			json = JSON.parse(datos);
+		}
+
+		carga(json);
+	}, []);
+
+	async function carga(datos: { token: any; userId: any }): Promise<void> {
+		try {
+			const headers = {
+				sessiontoken: datos.token
+			};
+			const parametros = {
+				userId: datos.userId
+			};
+
+			const response = await axios.get(`${apiEndpoint}/users`, {
+				params: parametros,
+				headers: headers
+			});
+
+			// Actualizar el estado con los datos recibidos
+			setDatosPerfil({
+				nombre: response.data.user.name,
+				apellido: response.data.user.lastName,
+				cedula: response.data.user.cedula,
+				direccion: response.data.user.address,
+				telefono: response.data.user.phone,
+				correo: response.data.user.email,
+			});
+
+			console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	const handleChange = (field: keyof FormData, value: string) => {
 		setDatosPerfil((prevFormData) => ({
@@ -54,33 +98,11 @@ export default function Home() {
 	};
 
 	const handleToggleEdit = async () => {
-		if(esEditable) {
+		if (esEditable) {
 			//await handleSaveChanges();
 		}
 		setEsEditable((prevEsEditable) => !prevEsEditable);
 	};
-
-	/*const handleSaveChanges = async () => {
-		try {
-			const response = await fetch('URL_DEL_SERVIDOR', {
-				method: 'POST', // O el método que estés utilizando
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(datosPerfil),
-			});
-
-			if (response.ok) {
-				// Aquí puedes manejar la respuesta del servidor si es necesario
-				console.log('Cambios guardados exitosamente');
-			} else {
-				// Aquí puedes manejar errores de la solicitud al servidor
-				console.error('Error al guardar cambios');
-			}
-		} catch (error) {
-			console.error('Error en la solicitud:', error);
-		}
-	};*/
 
 	return (
 		<>
@@ -222,29 +244,6 @@ export default function Home() {
 										) : (
 											<div className={`${barlow.className} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black`}>
 												{datosPerfil.correo}
-											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={`${barlow.className} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black`}>
-										Contraseña:
-									</div>
-								</div>
-								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className={`${barlow.className} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
-												value={datosPerfil.contrasenia}
-												onChange={(e) => handleChange('contrasenia', e.target.value)}
-											/>
-										) : (
-											<div className={`${barlow.className} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black`}>
-												{datosPerfil.contrasenia}
 											</div>
 										)
 									}
