@@ -79,6 +79,7 @@ export default function Home() {
 				correo: response.data.user.email,
 			});
 		} catch (error) {
+			console.log(datos.token);
 			console.log(error);
 		}
 	}
