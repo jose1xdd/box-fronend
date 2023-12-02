@@ -1,33 +1,21 @@
-// components/Table.tsx
 import '@/app/administrador/lista-usuarios/estilos.css';
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
 // Definir las propiedades del componente Table
 interface TableProps {
-  data: {
-    id: number;
-    nombre: string;
-    documento: number;
-    rol: string;
-  }[];
-  filtroRol: string; // Nueva propiedad para filtrar por rol
+  data: tablaRanking []
 }
 
 // Definir el componente funcional Table
-const RankingTable: React.FC<TableProps> = ({ data, filtroRol }) => {
+const RankingTable: React.FC<TableProps> = ({ data }) => {
+	console.log(data);
 	// Estado para almacenar los datos filtrados
 	const [filteredData, setFilteredData] = useState(data);
 	// Estado para almacenar la página actual
 	const [currentPage, setCurrentPage] = useState(0);
 	// Número de usuarios por página
 	const usersPerPage = 10;
-
-	// Filtrar usuarios por rol al inicio
-	useEffect(() => {
-		const initialFilteredData = data.filter((user) => user.rol.toLowerCase() === filtroRol);
-		setFilteredData(initialFilteredData);
-	}, [data, filtroRol]);
 
 	// Función para manejar el cambio de página
 	const handlePageChange = (selectedPage: { selected: number }) => {
@@ -42,8 +30,7 @@ const RankingTable: React.FC<TableProps> = ({ data, filtroRol }) => {
 		const searchTerm = e.target.value.toLowerCase();
 		const filtered = data.filter(
 			(user) =>
-				user.nombre.toLowerCase().includes(searchTerm) &&
-        user.rol.toLowerCase() === filtroRol
+				user.nombre.toLowerCase().includes(searchTerm)
 		);
 		setFilteredData(filtered);
 		setCurrentPage(0);
@@ -56,9 +43,9 @@ const RankingTable: React.FC<TableProps> = ({ data, filtroRol }) => {
 		return filteredData.slice(start, end).map((item, index) => (
 			<tr key={item.id}>
 				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.nombre}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.rol}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.documento}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.documento}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.ranking.win}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.ranking.lose}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.ranking.draw}</td>
 			</tr>
 		));
 	};

@@ -33,7 +33,7 @@ export default function Home() {
 		}
 
 		carga(json);
-	}, []);
+	});
 
 	async function carga(datos: { token: any; userId: any }): Promise<void> {
 		try {
