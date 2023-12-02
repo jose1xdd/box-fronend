@@ -6,13 +6,20 @@ import Logo from '@/public/images/logo.png';
 
 export default function NavbarAdministrador() {
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
+	const [usuariosDesplegados, setUsuariosDesplegados] = useState(false);
 
 	const abrirBarraDesplegable = () => {
 		setBarraDesplegada(true);
 	};
-
 	const cerrarBarraDesplegable = () => {
 		setBarraDesplegada(false);
+	};
+
+	const abrirListaUsuarios = () => {
+		setUsuariosDesplegados(true);
+	};
+	const cerrarListaUsuarios = () => {
+		setUsuariosDesplegados(false);
 	};
 
 	return (
@@ -36,9 +43,11 @@ export default function NavbarAdministrador() {
 						</div>
 					</div>
 					<ul className='flex space-x-5 my-4 text-white' id='titulos-pequenos'>
-						<li>
-							<Link href='/administrador/usuarios'>USUARIOS</Link>
+
+						<li className='cursor-pointer' id='titulos-pequenos' onClick={abrirListaUsuarios}>
+							<div>USUARIOS</div>
 						</li>
+
 						<li>
 							<Link href='/administrador/calendario'>CALENDARIO</Link>
 						</li>
@@ -81,19 +90,19 @@ export default function NavbarAdministrador() {
 							</button>
 							<ul>
 								<li className='my-1'>
-									<Link href='/administrador/mi-perfil'>
+									<Link href='/administrador/mi-perfil' onClick={cerrarBarraDesplegable}>
 										Mi perfil
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='my-1'>
-									<Link href='/administrador/administracion'>
+									<Link href='/administrador/administracion'onClick={cerrarBarraDesplegable}>
 										Administración
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='text-[#cd1919] italic my-1'>
-									<Link href='/'>
+									<Link href='/'onClick={cerrarBarraDesplegable}>
 										Cerrar sesión
 									</Link>
 								</li>
@@ -102,6 +111,46 @@ export default function NavbarAdministrador() {
 						<div
 							className="bg-transparent"
 							onClick={cerrarBarraDesplegable}
+						/>
+					</div>
+				</>
+			)}
+
+			{usuariosDesplegados && (
+				<>
+					<div className="fixed inset-0">
+						<div
+							className='w-[14%] absolute left-[420px] top-16 px-1 bg-[#1e1e1e] border border-gray-500 rounded shadow text-center' id='titulos-pequenos'
+						>
+							<button
+								className="absolute top-0 right-0 mx-1 cursor-pointer"
+								onClick={cerrarListaUsuarios}
+							>
+                    			X
+							</button>
+							<ul>
+								<li className='my-1'>
+									<Link href='/administrador/lista-usuarios/entrenador' onClick={cerrarListaUsuarios}>
+										ENTRENADORES
+									</Link>
+								</li>
+								<div className="border-t border-gray-500"></div>
+								<li className='my-1'>
+									<Link href='/administrador/lista-usuarios/deportista' onClick={cerrarListaUsuarios}>
+										DEPORTISTAS
+									</Link>
+								</li>
+								<div className="border-t border-gray-500"></div>
+								<li className=' my-1'>
+									<Link href='/administrador/lista-usuarios/externo' onClick={cerrarListaUsuarios}>
+										EXTERNOS
+									</Link>
+								</li>
+							</ul>
+						</div>
+						<div
+							className="bg-transparent"
+							onClick={cerrarListaUsuarios}
 						/>
 					</div>
 				</>
