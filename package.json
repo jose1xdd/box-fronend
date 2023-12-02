@@ -11,8 +11,8 @@
     "check:ts": "npx tsc --project tsconfig.json"
   },
   "dependencies": {
-    "@next/font": "^14.0.3",
     "@tanstack/react-table": "^8.10.7",
+    "@types/dotenv": "^8.2.0",
     "axios": "^1.6.2",
     "next": "^14.0.1",
     "react": "^18.2.0",
