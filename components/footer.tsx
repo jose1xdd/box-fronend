@@ -1,32 +1,12 @@
-import {
-	Barlow_Semi_Condensed,
-	Bebas_Neue,
-	Exo_2
-} from 'next/font/google';
-
-const barlow = Barlow_Semi_Condensed({
-	weight: ['500'],
-	subsets: ['latin']
-});
-
-const bebas = Bebas_Neue({
-	weight: ['400'],
-	subsets: ['latin']
-});
-
-const exo = Exo_2({
-	weight: ['100'],
-	subsets: ['latin']
-});
 
 export default function Footer(){
 	return(
 		<footer className="bg-[#141414] p-4 mt-8">
 			<div className='grid grid-cols-3 items-center justify-center text-center'>
-				<div className={`${bebas.className} text-3xl text-white`}>
+				<div className=' text-3xl text-white' id='titulos-grandes'>
 					LIGA DE BOXEO DE NORTE DE SANTANDER
 				</div>
-				<div className={`${exo.className} grid grid-rows-2 items-center justify-center text-white`}>
+				<div className='grid grid-rows-2 items-center justify-center text-white' id='titulos-pequenos'>
 					<p>+57 3XX XXX XX XX</p>
 					<p>Av. 1 #4-45, Barrio Lleras Restrepo</p>
 				</div>
