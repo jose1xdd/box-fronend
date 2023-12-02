@@ -35,7 +35,7 @@ export default function Home() {
 						<div className="w-2/3 pr-4">
 							<h2 className={`${bebas.className} text-[380%]`}>MISIÓN</h2>
 							<div className={`${barlow.className} bg-neutral-200 rounded-lg w-full p-5 flex items-center justify-center text-black`}>
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate blanditiis omnis illo voluptas, tempore aspernatur. Dolores, tempora similique at vitae excepturi placeat nihil veniam inventore et expedita eligendi tenetur rerum.
+							Promover el desarrollo integral de los atletas y fomentar los valores éticos a través del boxeo, contribuyendo al bienestar físico, mental y social de la comunidad. Buscamos ofrecer un espacio inclusivo que impulse el crecimiento deportivo, la disciplina y el respeto, consolidando el boxeo como herramienta de transformación positiva.
 							</div>
 						</div>
 						<div className="w-1/3 flex justify-center items-center">
@@ -65,7 +65,7 @@ export default function Home() {
 						<div className="w-2/3 pr-4">
 							<h2 className={`${bebas.className} text-[380%]`}>VISIÓN</h2>
 							<div className={`${barlow.className} bg-neutral-200 rounded-lg w-full p-5 flex items-center justify-center text-black`}>
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate blanditiis omnis illo voluptas, tempore aspernatur. Dolores, tempora similique at vitae excepturi placeat nihil veniam inventore et expedita eligendi tenetur rerum.
+							Ser reconocidos como referentes en la formación de talento deportivo y en la promoción de un boxeo de alta calidad técnica y ética en la región. Buscamos consolidarnos como una entidad líder que inspira la excelencia deportiva, la igualdad de oportunidades y el compromiso social, construyendo un legado duradero que trascienda en la vida de nuestros deportistas y la comunidad en general.
 							</div>
 						</div>
 					</div>
