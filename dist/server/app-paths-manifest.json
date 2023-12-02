@@ -1,8 +1,7 @@
 {
+  "/page": "app/page.js",
   "/administrador/mi-perfil/page": "app/administrador/mi-perfil/page.js",
   "/administrador/lista-usuarios/deportista/page": "app/administrador/lista-usuarios/deportista/page.js",
   "/administrador/info-usuario/deportista/page": "app/administrador/info-usuario/deportista/page.js",
-  "/administrador/info-usuario/entrenador/page": "app/administrador/info-usuario/entrenador/page.js",
-  "/administrador/lista-usuarios/entrenador/page": "app/administrador/lista-usuarios/entrenador/page.js",
-  "/administrador/lista-usuarios/externo/page": "app/administrador/lista-usuarios/externo/page.js"
+  "/administrador/crear-usuario/deportista/page": "app/administrador/crear-usuario/deportista/page.js"
 }
