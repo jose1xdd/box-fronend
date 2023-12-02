@@ -70,7 +70,7 @@ export default function NavbarAdministrador() {
 							<Link href='/administrador/ranking'>RANKING</Link>
 						</li>
 					</ul>
-					<ul className="flex space-x-4 my-4">
+					<ul className="flex space-x-4 my-4 cursor-pointer">
 						<li className={`${exo.className} flex text-white`} onClick={abrirBarraDesplegable}>
 							<div>Nombre del usuario</div>
 						</li>
@@ -89,29 +89,45 @@ export default function NavbarAdministrador() {
 			</div>
 
 			{barraDesplegada && (
-				<div className={`${exo.className} w-[14%] absolute right-10 px-1 bg-[#1e1e1e] border border-gray-500 rounded shadow text-center`}>
-					<ul>
-						<li className='my-1'>
-							<Link href='/administrador/mi-perfil'>Mi perfil</Link>
-						</li>
-						<div className="border-t border-gray-500"></div>
-						<li className='my-1'>
-							<Link href='/administrador/administracion'>Administración</Link>
-						</li>
-						<div className="border-t border-gray-500"></div>
-						<li className='text-[#cd1919] italic my-1'>
-							<Link href='/'>Cerrar sesión</Link>
-						</li>
-					</ul>
-				</div>
+				<>
+					<div className="fixed inset-0">
+						<div
+							className={`${exo.className} w-[14%] absolute right-10 top-16 px-1 bg-[#1e1e1e] border border-gray-500 rounded shadow text-center`}
+						>
+							<button
+								className="absolute top-0 right-0 mx-1 cursor-pointer"
+								onClick={cerrarBarraDesplegable}
+							>
+                    			X
+							</button>
+							<ul>
+								<li className='my-1'>
+									<Link href='/administrador/mi-perfil'>
+										Mi perfil
+									</Link>
+								</li>
+								<div className="border-t border-gray-500"></div>
+								<li className='my-1'>
+									<Link href='/administrador/administracion'>
+										Administración
+									</Link>
+								</li>
+								<div className="border-t border-gray-500"></div>
+								<li className='text-[#cd1919] italic my-1'>
+									<Link href='/'>
+										Cerrar sesión
+									</Link>
+								</li>
+							</ul>
+						</div>
+						<div
+							className="bg-transparent"
+							onClick={cerrarBarraDesplegable}
+						/>
+					</div>
+				</>
 			)}
 
-			{barraDesplegada && (
-				<div
-					className="fixed inset-0 bg-transparent"
-					onClick={cerrarBarraDesplegable}
-				/>
-			)}
 		</nav>
 	);
 }
