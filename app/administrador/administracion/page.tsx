@@ -8,33 +8,12 @@ import gestionarRoles from '@/public/images/gestionarRoles.png';
 import gestionarClubes from '@/public/images/gestionarClubes.png';
 import gestionarIndex from '@/public/images/gestionarIndex.png';
 
-import {
-	Barlow_Semi_Condensed,
-	Bebas_Neue,
-	Exo_2
-} from 'next/font/google';
-
-const barlow = Barlow_Semi_Condensed({
-	weight: ['500'],
-	subsets: ['latin']
-});
-
-const bebas = Bebas_Neue({
-	weight: ['400'],
-	subsets: ['latin']
-});
-
-const exo = Exo_2({
-	weight: ['100'],
-	subsets: ['latin']
-});
-
 export default function AdministracionAdmin() {
 
 	return (
 		<>
 			<div className="container mx-auto mt-8">
-				<h1 className={`${bebas.className} text-center text-[400%]`}>MENÚ DE ADMINISTRADOR</h1>
+				<h1 className='text-center text-[400%]' id='titulos-grandes'>MENÚ DE ADMINISTRADOR</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-1/3 pr-4 m-0">
 						<div className='m-0 my-5'>
@@ -47,7 +26,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3 mb-5'>
-								<button className={`${exo.className} bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg`}>
+								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 							        Cambiar logo
 								</button>
 							</div>
@@ -62,7 +41,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className={`${exo.className} bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg`}>
+								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 							        Administrar categorías
 								</button>
 							</div>
@@ -79,7 +58,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className={`${exo.className} bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg`}>
+								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 							        Evaluación física
 								</button>
 							</div>
@@ -94,7 +73,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className={`${exo.className} bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg`}>
+								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 							        Gestionar roles
 								</button>
 							</div>
@@ -111,7 +90,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className={`${exo.className} bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg`}>
+								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 							        Gestionar clubes
 								</button>
 							</div>
@@ -126,7 +105,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className={`${exo.className} bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg`}>
+								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 							        Gestionar index
 								</button>
 							</div>

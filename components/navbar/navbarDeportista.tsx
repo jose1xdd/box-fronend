@@ -4,27 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/public/images/logo.png';
 
-import {
-	Barlow_Semi_Condensed,
-	Bebas_Neue,
-	Exo_2
-} from 'next/font/google';
-
-const barlow = Barlow_Semi_Condensed({
-	weight: ['100'],
-	subsets: ['latin']
-});
-
-const bebas = Bebas_Neue({
-	weight: ['400'],
-	subsets: ['latin']
-});
-
-const exo = Exo_2({
-	weight: ['100'],
-	subsets: ['latin']
-});
-
 export default function NavbarDeportista() {
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
 
@@ -56,7 +35,7 @@ export default function NavbarDeportista() {
 							</div>
 						</div>
 					</div>
-					<ul className={`${exo.className} flex space-x-5 my-4 text-white`}>
+					<ul className='flex space-x-5 my-4 text-white' id='titulos-pequenos'>
 						<li>
 							<Link href='/deportista/calendario'>CALENDARIO</Link>
 						</li>
@@ -65,7 +44,7 @@ export default function NavbarDeportista() {
 						</li>
 					</ul>
 					<ul className="flex space-x-4 my-4 cursor-pointer">
-						<li className={`${exo.className} flex text-white`} onClick={abrirBarraDesplegable}>
+						<li className='flex text-white' id='titulos-pequenos' onClick={abrirBarraDesplegable}>
 							<div>Nombre del usuario</div>
 						</li>
 						<svg
@@ -86,7 +65,7 @@ export default function NavbarDeportista() {
 				<>
 					<div className="fixed inset-0">
 						<div
-							className={`${exo.className} w-[14%] absolute right-10 top-16 px-1 bg-[#1e1e1e] border border-gray-500 rounded shadow text-center`}
+							className='w-[14%] absolute right-10 top-16 px-1 bg-[#1e1e1e] border border-gray-500 rounded shadow text-center' id='titulos-pequenos'
 						>
 							<button
 								className="absolute top-0 right-0 mx-1 cursor-pointer"
