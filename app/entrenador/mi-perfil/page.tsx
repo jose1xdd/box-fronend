@@ -13,6 +13,8 @@ interface FormData {
 
 export default function Home() {
 
+	var cargado = false;
+
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const [datosPerfil, setDatosPerfil] = useState({
 		nombre: 'Texto',
@@ -33,7 +35,8 @@ export default function Home() {
 		}
 
 		carga(json);
-	});
+		cargado = true;
+	}, [!cargado]);
 
 	async function carga(datos: { token: any; userId: any }): Promise<void> {
 		try {
@@ -63,6 +66,37 @@ export default function Home() {
 		}
 	}
 
+	//método para poder realizar el cambio de datos:
+	async function cambiar(datos: { token: any; userId: any}, info: { nombre: any; apellido: any; direccion: any; telefono: any }): Promise<void> {
+		try {
+			const headers = {
+				sessiontoken: datos.token
+			};
+			const parametros = {
+				userId: datos.userId
+			};
+			const cuerpo = {
+				name: info.nombre,
+				lastName: info.apellido,
+				phone: info.telefono,
+				address: info.direccion
+			};
+
+			console.log(parametros);
+			console.log(headers);
+			console.log(cuerpo);
+
+			const response = await axios.patch(`${apiEndpoint}/users`, cuerpo, {
+				params: parametros,
+				headers: headers
+			});
+
+			// Actualizar el estado con los datos recibidos
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	const handleChange = (field: keyof FormData, value: string) => {
 		setDatosPerfil((prevFormData) => ({
 			...prevFormData,
@@ -71,8 +105,17 @@ export default function Home() {
 	};
 
 	const handleToggleEdit = async () => {
-		if (esEditable) {
-			//await handleSaveChanges();
+		if (!esEditable) {
+			console.log(datosPerfil);
+		}
+		else{
+			const datos = localStorage.getItem('userData');
+			var arreglo;
+
+			if (datos != null) {
+				arreglo = JSON.parse(datos);
+			}
+			cambiar(arreglo, datosPerfil);
 		}
 		setEsEditable((prevEsEditable) => !prevEsEditable);
 	};
