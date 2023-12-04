@@ -24,7 +24,6 @@ export default function LoginPage() {
 	}
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
-
 	async function handleButton(): Promise<void> {
 		try {
 			const requestBody = {

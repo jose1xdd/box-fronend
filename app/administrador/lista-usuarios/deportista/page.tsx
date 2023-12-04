@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 
 	return (
 		<div className="w-full max-w-screen-xl mx-auto p-6">
-			<Table data={data} filtroRol="deportista" />
+			<Table rol='Deportista'/>
 			<div className="flex justify-between items-center mt-4">
 				<button
 					onClick={() => alert('Usuarios descargados')}
