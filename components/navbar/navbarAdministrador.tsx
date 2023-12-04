@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/public/images/logo.png';
@@ -8,9 +8,13 @@ export default function NavbarAdministrador() {
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
 	const [usuariosDesplegados, setUsuariosDesplegados] = useState(false);
 
+	// Agregar estado para el filtro
+	const [filtro, setFiltro] = useState('');
+
 	const abrirBarraDesplegable = () => {
 		setBarraDesplegada(true);
 	};
+
 	const cerrarBarraDesplegable = () => {
 		setBarraDesplegada(false);
 	};
@@ -18,9 +22,17 @@ export default function NavbarAdministrador() {
 	const abrirListaUsuarios = () => {
 		setUsuariosDesplegados(true);
 	};
+
 	const cerrarListaUsuarios = () => {
 		setUsuariosDesplegados(false);
 	};
+
+	// UseEffect para manejar el cambio en el filtro y actualizar el localStorage
+	useEffect(() => {
+		if (filtro) {
+			localStorage.setItem('filtro', filtro);
+		}
+	}, [filtro]);
 
 	return (
 		<nav className="bg-[#1e1e1e] p-4">
@@ -43,11 +55,9 @@ export default function NavbarAdministrador() {
 						</div>
 					</div>
 					<ul className='flex space-x-5 my-4 text-white' id='titulos-pequenos'>
-
 						<li className='cursor-pointer' id='titulos-pequenos' onClick={abrirListaUsuarios}>
 							<div>USUARIOS</div>
 						</li>
-
 						<li>
 							<Link href='/administrador/calendario'>CALENDARIO</Link>
 						</li>
@@ -86,24 +96,24 @@ export default function NavbarAdministrador() {
 								className="absolute top-0 right-0 mx-1 cursor-pointer"
 								onClick={cerrarBarraDesplegable}
 							>
-                    			X
+                X
 							</button>
 							<ul>
 								<li className='my-1'>
 									<Link href='/administrador/mi-perfil' onClick={cerrarBarraDesplegable}>
-										Mi perfil
+                    Mi perfil
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='my-1'>
-									<Link href='/administrador/administracion'onClick={cerrarBarraDesplegable}>
-										Administración
+									<Link href='/administrador/administracion' onClick={cerrarBarraDesplegable}>
+                    Administración
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='text-[#cd1919] italic my-1'>
-									<Link href='/'onClick={cerrarBarraDesplegable}>
-										Cerrar sesión
+									<Link href='/' onClick={cerrarBarraDesplegable}>
+                    Cerrar sesión
 									</Link>
 								</li>
 							</ul>
@@ -126,24 +136,24 @@ export default function NavbarAdministrador() {
 								className="absolute top-0 right-0 mx-1 cursor-pointer"
 								onClick={cerrarListaUsuarios}
 							>
-                    			X
+                X
 							</button>
 							<ul>
 								<li className='my-1'>
-									<Link href='/administrador/lista-usuarios/entrenador' onClick={cerrarListaUsuarios}>
-										ENTRENADORES
+									<Link href='/administrador/lista-usuarios/entrenador' onClick={() => { cerrarListaUsuarios(); setFiltro('Entrenador'); }}>
+                    ENTRENADORES
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='my-1'>
-									<Link href='/administrador/lista-usuarios/deportista' onClick={cerrarListaUsuarios}>
-										DEPORTISTAS
+									<Link href='/administrador/lista-usuarios/deportista' onClick={() => { cerrarListaUsuarios(); setFiltro('Deportista'); }}>
+                    DEPORTISTAS
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className=' my-1'>
-									<Link href='/administrador/lista-usuarios/externo' onClick={cerrarListaUsuarios}>
-										EXTERNOS
+									<Link href='/administrador/lista-usuarios/externo' onClick={() => { cerrarListaUsuarios(); setFiltro('Externo'); }}>
+                    EXTERNOS
 									</Link>
 								</li>
 							</ul>
