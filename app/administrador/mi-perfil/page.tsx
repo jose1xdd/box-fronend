@@ -39,6 +39,7 @@ export default function Home() {
 		cargado = true;
 	}, [!cargado]);
 
+	//Método que hace el get de la base de datos
 	async function carga(datos: { token: any; userId: any }): Promise<void> {
 		try {
 			const headers = {
