@@ -1,0 +1,18 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/forget-password/page": "app/forget-password/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/restore-password/page": "app/restore-password/page.js",
+  "/administrador/administracion/evaluacion-fisica/page": "app/administrador/administracion/evaluacion-fisica/page.js",
+  "/administrador/administracion/page": "app/administrador/administracion/page.js",
+  "/administrador/lista-usuarios/deportista/page": "app/administrador/lista-usuarios/deportista/page.js",
+  "/administrador/comunicados/page": "app/administrador/comunicados/page.js",
+  "/administrador/lista-usuarios/externo/page": "app/administrador/lista-usuarios/externo/page.js",
+  "/administrador/lista-usuarios/entrenador/page": "app/administrador/lista-usuarios/entrenador/page.js",
+  "/administrador/mi-perfil/page": "app/administrador/mi-perfil/page.js",
+  "/administrador/ranking/page": "app/administrador/ranking/page.js",
+  "/deportista/mi-perfil/page": "app/deportista/mi-perfil/page.js",
+  "/entrenador/mi-perfil/page": "app/entrenador/mi-perfil/page.js"
+}
