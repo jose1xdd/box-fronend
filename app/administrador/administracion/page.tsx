@@ -17,13 +17,12 @@ export default function AdministracionAdmin() {
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-1/3 pr-4 m-0">
 						<div className='m-0 my-5'>
-							<div className='flex items-center justify-center'>
-								<Image
-									src={cambiarLogo}
-									alt="Logo Liga de Boxeo de Norte de Santander"
-									width={200}
-									priority
-								/>
+							<div className='flex items-center justify-center'> <Image
+								src={cambiarLogo}
+								alt="Logo Liga de Boxeo de Norte de Santander"
+								width={200}
+								priority
+							/>
 							</div>
 							<div className='flex items-center justify-center mt-3 mb-5'>
 								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
