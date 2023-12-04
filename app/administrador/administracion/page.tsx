@@ -7,6 +7,7 @@ import evaluacionFisica from '@/public/images/evaluacionFisica.png';
 import gestionarRoles from '@/public/images/gestionarRoles.png';
 import gestionarClubes from '@/public/images/gestionarClubes.png';
 import gestionarIndex from '@/public/images/gestionarIndex.png';
+import Link from 'next/link';
 
 export default function AdministracionAdmin() {
 
@@ -27,7 +28,7 @@ export default function AdministracionAdmin() {
 							</div>
 							<div className='flex items-center justify-center mt-3 mb-5'>
 								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
-							        Cambiar logo
+									Cambiar logo
 								</button>
 							</div>
 						</div>
@@ -41,9 +42,11 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
-							        Administrar categorías
-								</button>
+								<Link href=''>
+									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										Administrar categorías
+									</button>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -58,9 +61,11 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
-							        Evaluación física
-								</button>
+								<Link href='/administrador/administracion/evaluacion-fisica'>
+									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										Evaluación física
+									</button>
+								</Link>
 							</div>
 						</div>
 						<div className='mx-0 my-5'>
@@ -73,9 +78,11 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
-							        Gestionar roles
-								</button>
+								<Link href='/administrador/administracion/gestionar-roles'>
+									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										Gestionar roles
+									</button>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -90,9 +97,11 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
-							        Gestionar clubes
-								</button>
+								<Link href=''>
+									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										Gestionar clubes
+									</button>
+								</Link>
 							</div>
 						</div>
 						<div className='mx-0 my-5'>
@@ -105,9 +114,11 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
-							        Gestionar index
-								</button>
+								<Link href=''>
+									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										Gestionar index
+									</button>
+								</Link>
 							</div>
 						</div>
 					</div>
