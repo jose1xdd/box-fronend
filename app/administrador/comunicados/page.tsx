@@ -5,9 +5,9 @@ interface FormData {
 	destinatarios: string[];
 	asunto: string;
 	cuerpo: string;
-  }
+}
 
-export default function PerfilAdministrador() {
+export default function ComunicadosAdministrador() {
 	const formularioCorreo: FormData = {
 		destinatarios: ['Texto'],
 		asunto: 'Texto',
@@ -41,7 +41,7 @@ export default function PerfilAdministrador() {
 										type="text"
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
 										value={datosCorreo.destinatarios.join(', ')}
-
+										onChange={(e) => handleChange('destinatarios', e.target.value.split(', '))}
 									/>
 								</div>
 							</div>
@@ -80,7 +80,7 @@ export default function PerfilAdministrador() {
 						</div>
 						<div className="w-1/3 flex flex-col items-center ml-4">
 							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-							    Destinatarios
+								Destinatarios
 							</div>
 							<input
 								readOnly
@@ -93,7 +93,7 @@ export default function PerfilAdministrador() {
 									type="button"
 									className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 								>
-                                    Enviar correo electrónico
+									Enviar correo electrónico
 								</button>
 							</div>
 						</div>
