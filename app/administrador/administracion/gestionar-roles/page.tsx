@@ -1,38 +1,38 @@
 'use client';
 
 import React, { useState } from 'react';
-import criteriosData from '@/pruebas/criterios.json';
+import usuariosData from '@/pruebas/usuarios.json';
 
-export default function EvaluacionFisicaAdmin() {
-	const [nombreCriterio, setNombreCriterio] = useState('');
-	const [criterioEliminar, setCriterioEliminar] = useState('');
+export default function GestionarRolesAdmin() {
+	const [rol, setRol] = useState('');
+	const [rolEliminar, setRolEliminar] = useState('');
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setNombreCriterio(e.target.value);
+		setRol(e.target.value);
 	};
 
 	const handleEliminarChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setCriterioEliminar(e.target.value);
+		setRolEliminar(e.target.value);
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!nombreCriterio.trim()) {
+		if (!rol.trim()) {
 			alert('Por favor ingrese un rol para poder continuar');
 			return;
 		}
 
 		// Enviar rol al endpoint correspondiente
-		console.log('Rol enviado:', nombreCriterio);
-		setNombreCriterio('');
+		console.log('Rol enviado:', rol);
+		setRol('');
 	};
 
 	const handleEliminarSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!criterioEliminar) {
+		if (!rolEliminar) {
 			alert('Por favor seleccione una opción para poder continuar');
 			return;
 		}
@@ -41,9 +41,9 @@ export default function EvaluacionFisicaAdmin() {
 	};
 
 	const handleConfirmEliminar = () => {
-		console.log('Criterio a eliminar:', criterioEliminar);
+		console.log('Rol a eliminar:', rolEliminar);
 
-		// Enviar criterioEliminar al endpoint correspondiente
+		// Enviar RolEliminar al endpoint correspondiente
 		setShowConfirmation(false);
 	};
 
@@ -51,24 +51,33 @@ export default function EvaluacionFisicaAdmin() {
 		setShowConfirmation(false);
 	};
 
+	const rolesUnicos = Array.from(new Set(usuariosData.map((usuario) => usuario.rol)));
+
 	return (
 		<>
 			<div className="container mx-auto mt-8">
 				<h1 className="text-center text-[400%]" id="titulos-grandes">
-					EVALUACIÓN FÍSICA
+                    EVALUACIÓN FÍSICA
 				</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-2/3">
 						<table className="w-full">
 							<thead>
 								<tr>
-									<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>Criterio</th>
+									<th
+										className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+										id="titulos-grandes"
+									>
+                                        Rol
+									</th>
 								</tr>
 							</thead>
 							<tbody>
-								{criteriosData.map((criterio, index) => (
+								{rolesUnicos.map((rol, index) => (
 									<tr key={index}>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{criterio.Nombre}</td>
+										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
+											{rol}
+										</td>
 									</tr>
 								))}
 							</tbody>
@@ -79,16 +88,16 @@ export default function EvaluacionFisicaAdmin() {
 							<div className="flex items-center">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL CRITERIO
+                                        ROL
 									</h3>
 									<input
 										type="text"
-										name="nombre"
-										value={nombreCriterio}
+										name="rol"
+										value={rol}
 										onChange={handleInputChange}
 										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
-										placeholder="Ingrese el nombre del criterio"
+										placeholder="Ingrese el rol"
 									/>
 								</div>
 							</div>
@@ -98,7 +107,7 @@ export default function EvaluacionFisicaAdmin() {
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
-									Crear criterio de evaluación
+                                    Crear rol de evaluación
 								</button>
 							</div>
 						</form>
@@ -106,21 +115,21 @@ export default function EvaluacionFisicaAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL CRITERIO
+                                        ROL
 									</h3>
 									<select
-										name="nombreCriterioEliminar"
-										value={criterioEliminar}
+										name="rolEliminar"
+										value={rolEliminar}
 										onChange={handleEliminarChange}
 										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
 									>
 										<option value="" disabled>
-											Seleccione el criterio a eliminar
+                                            Seleccione el rol a eliminar
 										</option>
-										{criteriosData.map((criterio, index) => (
-											<option key={index} value={criterio.Nombre}>
-												{criterio.Nombre}
+										{rolesUnicos.map((rol, index) => (
+											<option key={index} value={rol}>
+												{rol}
 											</option>
 										))}
 									</select>
@@ -132,7 +141,7 @@ export default function EvaluacionFisicaAdmin() {
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
-									Eliminar criterio de evaluación
+                                    Eliminar rol de evaluación
 								</button>
 							</div>
 						</form>
@@ -142,8 +151,8 @@ export default function EvaluacionFisicaAdmin() {
 			{showConfirmation && (
 				<div className="fixed inset-0 flex items-center justify-center z-50">
 					<div className="bg-[#141414] p-10 rounded-lg">
-						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-							¿ESTÁ SEGURO DE QUERER ELIMINAR ESTE CRITERIO?
+						<h3 className="text-white text-center mb-4 text-[175%]" id="titulos-grandes">
+                            ¿ESTÁ SEGURO DE QUERER ELIMINAR ESTE ROL?
 						</h3>
 						<div className="flex justify-center">
 							<button
@@ -151,14 +160,14 @@ export default function EvaluacionFisicaAdmin() {
 								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 								id="titulos-pequenos"
 							>
-								ELIMINAR
+                                ELIMINAR
 							</button>
 							<button
 								onClick={handleCancelEliminar}
 								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 								id="titulos-pequenos"
 							>
-								CANCELAR
+                                CANCELAR
 							</button>
 						</div>
 					</div>
@@ -167,4 +176,3 @@ export default function EvaluacionFisicaAdmin() {
 		</>
 	);
 }
-
