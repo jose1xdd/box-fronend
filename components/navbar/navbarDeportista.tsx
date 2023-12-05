@@ -37,7 +37,7 @@ export default function NavbarDeportista() {
 					</div>
 					<ul className='flex space-x-5 my-4 text-white' id='titulos-pequenos'>
 						<li>
-							<Link href='/deportista/calendario'>CALENDARIO</Link>
+							<Link href='/deportista/calendario'>CALENDARIOO</Link>
 						</li>
 						<li>
 							<Link href='/deportista/ranking'>RANKING</Link>
