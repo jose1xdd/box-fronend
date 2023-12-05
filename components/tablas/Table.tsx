@@ -86,9 +86,9 @@ const Table: React.FC<TableProps> = ({ rol, link }) => {
 		//console.log(usersToRender);
 		return usersToRender.slice(start, end).map((item) => (
 			<tr key={item._id}>
-				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">{item.name + ' ' + item.lastName}</td>
-				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">{item.role}</td>
-				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">{item.cedula}</td>
+				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.name + ' ' + item.lastName}</td>
+				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.role}</td>
+				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.cedula}</td>
 				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">
 					<Link href={`${link}?id=${item._id}`}>
 						<button className="bg-[#cd1919] text-white rounded p-2 mr-2">
@@ -117,12 +117,13 @@ const Table: React.FC<TableProps> = ({ rol, link }) => {
 
 	return (
 		<div className="w-80% mx-auto">
-			<h1 className="text-5xl text-white mb-4">USUARIOS</h1>
+			<h1 className="text-5xl text-white mb-4">USUARIOS </h1>
 			<input
 				type="text"
 				placeholder="Filtrar por nombre"
 				onChange={handleSearch}
-				className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4"
+				className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
+				id='texto-general'
 			/>
 			<table className="w-full">
 				<thead>
