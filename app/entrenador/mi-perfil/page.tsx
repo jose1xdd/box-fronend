@@ -83,10 +83,6 @@ export default function Home() {
 				address: info.direccion
 			};
 
-			console.log(parametros);
-			console.log(headers);
-			console.log(cuerpo);
-
 			const response = await axios.patch(`${apiEndpoint}/users`, cuerpo, {
 				params: parametros,
 				headers: headers
