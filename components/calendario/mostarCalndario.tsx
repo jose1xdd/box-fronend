@@ -14,6 +14,7 @@ export default function Calendario() {
 			rol = JSON.parse(datos).role;
 		}
 		if(rol == 'Admin') rol = 'administrador';
+		if(rol == 'Entrenador') rol = 'entrenador';
 		router.push('/' + rol + '/eventos/Crear' + route);
 	};
 	useEffect(()=>{
