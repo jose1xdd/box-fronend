@@ -84,9 +84,9 @@ const Table: React.FC<TableProps> = ({ rol }) => {
 		//console.log(usersToRender);
 		return usersToRender.slice(start, end).map((item) => (
 			<tr key={item._id}>
-				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">{item.name + ' ' + item.lastName}</td>
-				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">{item.role}</td>
-				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">{item.cedula}</td>
+				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.name + ' ' + item.lastName}</td>
+				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.role}</td>
+				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.cedula}</td>
 				<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">
 					<button onClick={() => alert('Vista completa')} className="bg-[#cd1919] text-white rounded p-2 mr-2">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
@@ -118,7 +118,8 @@ const Table: React.FC<TableProps> = ({ rol }) => {
 				type="text"
 				placeholder="Filtrar por nombre"
 				onChange={handleSearch}
-				className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4"
+				className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
+				id='texto-general'
 			/>
 			<table className="w-full">
 				<thead>
