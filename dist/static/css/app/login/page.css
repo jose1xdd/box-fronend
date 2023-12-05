@@ -1,0 +1,94 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[12].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[12].oneOf[9].use[5]!./components/form/components/styles.module.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.styles_inputContainer__KJtlI {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.styles_inputContainer__KJtlI label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.styles_inputContainer__KJtlI input {
+  color: black;
+  padding: 0.6rem 1rem;
+  background-color: white;
+  border: 0.5px solid #878787;
+  font-size: 14px;
+  border-radius: 20px;
+  transition-duration: 0.3s;
+  outline: 0.5px solid transparent;
+}
+.styles_inputContainer__KJtlI input:focus {
+  outline: 1.5px solid black;
+  color: black;
+}
+.styles_inputContainer__KJtlI input::-moz-placeholder {
+  color: #646464;
+}
+.styles_inputContainer__KJtlI input::placeholder {
+  color: #646464;
+}
+
+.styles_submitButton__F9DnH {
+  margin-top: 1rem;
+  width: 60%;
+  background: #cd1919;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: 0.4rem 0;
+  border: 1px solid transparent;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.styles_submitButton__F9DnH:hover {
+  background-color: white;
+  color: #cd1919;
+  border: 1px solid black;
+}
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[12].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[12].oneOf[9].use[5]!./components/loader/styles.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.styles_spinner__Miq1S {
+  border: 4px solid rgba(38, 37, 37, 0.5019607843);
+  border-radius: 50%;
+  border-left-color: white;
+  animation: styles_spin__KnoVM 0.8s ease infinite;
+}
+
+@keyframes styles_spin__KnoVM {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[12].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[12].oneOf[9].use[5]!./components/form/styles.module.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.styles_form__It2iO {
+  color: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 2rem;
+  min-width: 450px;
+}
+.styles_form__It2iO .styles_descriptionContainer__HqjiZ {
+  text-align: center;
+}
+.styles_form__It2iO .styles_descriptionContainer__HqjiZ h2 {
+  font-weight: 700;
+  font-size: 60px;
+  text-shadow: 3px 2px 0px #cd1919;
+  margin-bottom: -20px;
+}
+.styles_form__It2iO .styles_descriptionContainer__HqjiZ p {
+  font-weight: 400;
+  font-size: 16px;
+}

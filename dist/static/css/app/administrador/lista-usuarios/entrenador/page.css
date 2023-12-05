@@ -1,0 +1,73 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./app/administrador/lista-usuarios/estilos.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************/
+/* Estilo personalizado para los números de página */
+.page-link {
+    background-color: #cd1919; /* Cambia el color de fondo según tus preferencias */
+    color: white; /* Color de texto blanco */
+    padding: 0.5rem 0.8rem; /* Ajusta el espaciado interno según tus preferencias */
+    margin: 0.2rem; /* Ajusta el margen según tus preferencias */
+    border-radius: 5px; /* Ajusta el radio de las esquinas según tus preferencias */
+  }
+  
+  /* Alinea los elementos de paginación horizontalmente */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Ajusta el margen superior según tus preferencias */
+  }
+  
+  /* Estilo para los botones de Previous y Next */
+  .pagination button {
+    background-color: #cd1919;
+    color: white;
+    padding: 0.5rem 0.8rem;
+    margin: 0.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilo para el botón activo (número de página actual) */
+  .pagination .active {
+    background-color: #cd1919;
+    padding: 0.6rem 0.7rem;
+    margin: 0.1rem;
+    border-radius: 5px;
+  }
+  
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./components/ModalArchivo/ModalArchivo.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/* styles para el modal */
+.react-modal {
+  width: 800px;
+  height: 450px;
+}
+
+.drop-zone {
+  background-color: #1e1e1e;
+  border: 2px dashed #ddd;
+  padding: 20px;
+  text-align: center;
+  width: 600px; /* Tamaño horizontal */
+  height: 250px; /* Tamaño vertical */
+  margin: auto; /* Centrar la drop zone */
+}
+
+.dragging .drop-zone {
+  border-color: #33adff;
+}
+
+/* Otros estilos según tus necesidades */
+
+/* Estilos para el fondo oscuro */
+.overlay-custom {
+  background: rgba(0, 0, 0, 0.8); /* Fondo negro con 80% de transparencia */
+}
+
+/* Estilos para el texto */
+.text-white {
+  color: white;
+}
+
