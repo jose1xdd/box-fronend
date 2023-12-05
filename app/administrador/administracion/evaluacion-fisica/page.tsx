@@ -1,12 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import criteriosData from '@/pruebas/criterios.json';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
+interface crtierios {
+	_id: string,
+	name: string
+}
 export default function EvaluacionFisicaAdmin() {
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const [nombreCriterio, setNombreCriterio] = useState('');
 	const [criterioEliminar, setCriterioEliminar] = useState('');
 	const [showConfirmation, setShowConfirmation] = useState(false);
+	const [criteriosData, setCriteriosData] = useState<crtierios[]>([]);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setNombreCriterio(e.target.value);
@@ -51,6 +57,33 @@ export default function EvaluacionFisicaAdmin() {
 		setShowConfirmation(false);
 	};
 
+	const getCriterios = async (token : string) => {
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const response = await axios.get(`${apiEndpoint}/testCritery`, {
+				headers: headers,
+			});
+			return response.data.critery;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const cargarCriterios = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		setCriteriosData(await getCriterios(token));
+	};
+
+	useEffect(()=>{
+		cargarCriterios();
+	}, []);
+
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -68,7 +101,7 @@ export default function EvaluacionFisicaAdmin() {
 							<tbody>
 								{criteriosData.map((criterio, index) => (
 									<tr key={index}>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{criterio.Nombre}</td>
+										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{criterio.name}</td>
 									</tr>
 								))}
 							</tbody>
@@ -119,8 +152,8 @@ export default function EvaluacionFisicaAdmin() {
 											Seleccione el criterio a eliminar
 										</option>
 										{criteriosData.map((criterio, index) => (
-											<option key={index} value={criterio.Nombre}>
-												{criterio.Nombre}
+											<option key={index} value={criterio._id}>
+												{criterio.name}
 											</option>
 										))}
 									</select>
