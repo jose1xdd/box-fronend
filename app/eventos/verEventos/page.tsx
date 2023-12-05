@@ -1,6 +1,16 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 export default function VerEvento() {
+	const [event, setEvent] = useState(false);
+	useEffect(()=>{
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if(datos != null){
+			rol = JSON.parse(datos).role;
+		}
+	}, []);
 	return (
 		<div className="container mx-auto mt-8">
 			<div className="p-4 ">

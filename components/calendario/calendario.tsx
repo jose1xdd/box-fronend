@@ -85,8 +85,13 @@ export default function CalendarioEventos() {
 					events={events}
 					eventClick={(info) => {
 						const e = info.event;
-						router.push('/eventos/verEventos?EventId=' + info.event.id as string, // La ruta a la que quieres navegar
-						  );
+						const datos = localStorage.getItem('userData');
+						let role;
+						if(datos != null){
+							role = JSON.parse(datos).role;
+						}
+						if(role == 'Admin') role = 'administrador';
+						router.push('/' + (role as string).toLowerCase() + '/eventos/VerEvento?EventId=' + info.event.id as string);
 					}}
 					height={'90vh'}
 				/>

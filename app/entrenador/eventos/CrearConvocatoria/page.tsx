@@ -311,7 +311,7 @@ export default function CrearConvocatoria() {
 						</div>
 					</div>
 					<div className="flex justify-center items-center mt-4 ">
-						<button type='button' onClick={() => handlerSubmit()}className="bg-[#cd1919] text-white rounded p-2 mx-5">
+						<button onClick={() => handlerSubmit()}className="bg-[#cd1919] text-white rounded p-2 mx-5">
 					        Agregar convocatoria
 						</button>
 						<button onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
