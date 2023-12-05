@@ -1,41 +1,66 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
-
-interface FormData {
-  nombre: string;
-  apellido: string;
-  cedula: string;
-  direccion: string;
-  telefono: string;
-  correo: string;
-}
+import axios from 'axios';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function InfoEntrenador() {
 
-	const [esEditable, setEsEditable] = useState(false);
 	const [datosEntrenador, setDatosEntrenador] = useState({
-		nombre: '',
-		apellido: '',
+		name: '',
+		lastName: '',
 		cedula: '',
-		direccion: '',
-		telefono: '',
-		correo: '',
+		address: '',
+		phone: '',
+		email: '',
 	});
 
-	const handleChange = (field: keyof FormData, value: string) => {
-		setDatosEntrenador((prevFormData) => ({
-			...prevFormData,
-			[field]: value
-		}));
+	//Valores para traer el id del URL
+	const valor = useSearchParams();
+	const id = valor.get('id');
+
+	var cargado = false;
+
+	//UseEffect para pruebas
+	useEffect(() => {
+		cargarUsuarios();
+		cargado = true;
+	}, [!cargado]);
+
+	const cargarUsuarios = async () => {
+		const datos = localStorage.getItem('userData');
+		var arreglo;
+
+		if (datos != null) {
+			arreglo = JSON.parse(datos);
+		}
+		const dataDeportista = await cargaEntrenador(arreglo);
+		setDatosEntrenador(dataDeportista.data.user);
 	};
 
-	const handleToggleEdit = async () => {
-		if (esEditable) {
-			//await handleSaveChanges();
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	async function cargaEntrenador(datos: { token: any }): Promise<any> {
+		try {
+			const headers = {
+				sessiontoken: datos.token
+			};
+			const parametros = {
+				userId: id
+			};
+
+			const response = await axios.get(`${apiEndpoint}/users`, {
+				params: parametros,
+				headers: headers
+			});
+
+			return response;
+
+			//console.log(response);
+		} catch (error) {
+			console.log(error);
 		}
-		setEsEditable((prevEsEditable) => !prevEsEditable);
-	};
+	}
 
 	return (
 		<>
@@ -62,21 +87,9 @@ export default function InfoEntrenador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="nombre"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosEntrenador.nombre}
-												onChange={(e) => handleChange('nombre', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosEntrenador.nombre}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosEntrenador.name}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -86,21 +99,9 @@ export default function InfoEntrenador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="apellido"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosEntrenador.apellido}
-												onChange={(e) => handleChange('apellido', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosEntrenador.apellido}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosEntrenador.lastName}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -110,21 +111,9 @@ export default function InfoEntrenador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="cedula"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosEntrenador.cedula}
-												onChange={(e) => handleChange('cedula', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosEntrenador.cedula}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosEntrenador.cedula}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -136,21 +125,9 @@ export default function InfoEntrenador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="direccion"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosEntrenador.direccion}
-												onChange={(e) => handleChange('direccion', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosEntrenador.direccion}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosEntrenador.address}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -160,21 +137,9 @@ export default function InfoEntrenador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="telefono"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosEntrenador.telefono}
-												onChange={(e) => handleChange('telefono', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosEntrenador.telefono}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosEntrenador.phone}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -184,39 +149,22 @@ export default function InfoEntrenador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="correo"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosEntrenador.correo}
-												onChange={(e) => handleChange('correo', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosEntrenador.correo}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosEntrenador.email}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="mt-5 flex justify-center">
-						<button
-							type="button"
-							onClick={handleToggleEdit}
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-							{esEditable ? 'Guardar cambios' : 'Editar información'}
-						</button>
-						<button
-							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-                            Cargar nueva foto de perfil
-						</button>
+						<Link href='/administrador/lista-usuarios/entrenador'>
+							<button
+								type="button"
+								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold' id='titulos-pequenos'
+							>
+                            Volver
+							</button>
+						</Link>
 					</div>
 				</form>
 			</div>
