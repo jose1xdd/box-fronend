@@ -1,0 +1,59 @@
+{
+  "pages": {
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/login/page.css",
+      "static/chunks/app/login/page.js"
+    ],
+    "/administrador/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/administrador/layout.js"
+    ],
+    "/administrador/mi-perfil/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/administrador/mi-perfil/page.js"
+    ],
+    "/administrador/lista-usuarios/deportista/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/administrador/lista-usuarios/deportista/page.css",
+      "static/chunks/app/administrador/lista-usuarios/deportista/page.js"
+    ],
+    "/administrador/info-usuario/deportista/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/administrador/info-usuario/deportista/page.js"
+    ],
+    "/administrador/lista-usuarios/entrenador/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/administrador/lista-usuarios/entrenador/page.css",
+      "static/chunks/app/administrador/lista-usuarios/entrenador/page.js"
+    ],
+    "/administrador/info-usuario/entrenador/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/administrador/info-usuario/entrenador/page.js"
+    ],
+    "/administrador/lista-usuarios/externo/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/administrador/lista-usuarios/externo/page.css",
+      "static/chunks/app/administrador/lista-usuarios/externo/page.js"
+    ]
+  }
+}
