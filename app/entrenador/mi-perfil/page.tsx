@@ -35,6 +35,7 @@ export default function Home() {
 		}
 
 		carga(json);
+
 		cargado = true;
 	}, [!cargado]);
 
@@ -81,10 +82,6 @@ export default function Home() {
 				phone: info.telefono,
 				address: info.direccion
 			};
-
-			console.log(parametros);
-			console.log(headers);
-			console.log(cuerpo);
 
 			const response = await axios.patch(`${apiEndpoint}/users`, cuerpo, {
 				params: parametros,

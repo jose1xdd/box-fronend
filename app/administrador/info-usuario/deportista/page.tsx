@@ -1,46 +1,133 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
-
-interface FormData {
-  nombre: string;
-  apellido: string;
-  documento: string;
-  direccion: string;
-  telefono: string;
-  correo: string;
-  club: string;
-  categoria: string;
-}
+import axios from 'axios';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function InfoDeportista() {
 
-	const [esEditable, setEsEditable] = useState(false);
+	//////////////////////CARGA DE DATOS PERSONALES//////////////////////////
+
 	const [datosDeportista, setDatosDeportista] = useState({
-		nombre: '',
-		apellido: '',
-		documento: '',
-		direccion: '',
-		telefono: '',
-		correo: '',
+		name: '',
+		lastName: '',
+		cedula: '',
+		address: '',
+		phone: '',
+		email: '',
 		club: '',
-		categoria: '',
+		weightCategory: '',
 	});
 
-	const handleChange = (field: keyof FormData, value: string) => {
-		setDatosDeportista((prevFormData) => ({
-			...prevFormData,
-			[field]: value
-		}));
-	};
+	const [datoClub, setDatoClub] = useState({
+		name: '',
+	});
 
-	const handleToggleEdit = async () => {
-		if (esEditable) {
-			//await handleSaveChanges();
+	const [datoCategoria, setDatCategoria] = useState({
+		name: '',
+	});
+
+	//Valores para traer el id del URL
+	const valor = useSearchParams();
+	const id = valor.get('id');
+
+	var cargado = false;
+
+	//UseEffect para pruebas
+	useEffect(() => {
+		cargarUsuarios();
+		cargado = true;
+	}, [!cargado]);
+
+	//Método de cargar los usuarios del localStorage
+	const cargarUsuarios = async () => {
+		const datos = localStorage.getItem('userData');
+		var arreglo;
+
+		if (datos != null) {
+			arreglo = JSON.parse(datos);
 		}
-		setEsEditable((prevEsEditable) => !prevEsEditable);
+		const dataDeportista = await cargaDeportista(arreglo);
+		setDatosDeportista(dataDeportista.data.user);
+		const dataClub = await cargaClub(arreglo, dataDeportista.data.user.club);
+		setDatoClub(dataClub.data.club);
+		const dataCategoria = await cargaCategoria(arreglo, dataDeportista.data.user.weightCategory);
+		setDatCategoria(dataCategoria.data.Category);
 	};
 
+	//Consumir endpoint
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	async function cargaDeportista(datos: { token: any }): Promise<any> {
+		try {
+			const headers = {
+				sessiontoken: datos.token
+			};
+			const parametros = {
+				userId: id
+			};
+
+			const response = await axios.get(`${apiEndpoint}/users`, {
+				params: parametros,
+				headers: headers
+			});
+
+			return response;
+
+			//console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	///////MÉTODO PARA CARGAR EL DATO DEL CLUB POR MEDIO DEL AXIOS
+
+	async function cargaClub(datos: { token: any }, idClub:any): Promise<any> {
+		try {
+			const headers = {
+				sessiontoken: datos.token
+			};
+			const parametros = {
+				clubId: idClub
+			};
+
+			const response = await axios.get(`${apiEndpoint}/club`, {
+				params: parametros,
+				headers: headers
+			});
+			return response;
+
+			//console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	/////MÉTODO PARA CARGAR LA CATEGORÍA POR USO DEL AXIOS
+
+	async function cargaCategoria(datos: { token: any }, idCategoria:any): Promise<any> {
+		try {
+			const headers = {
+				sessiontoken: datos.token
+			};
+			const parametros = {
+				weightCategoryId: idCategoria
+			};
+
+			const response = await axios.get(`${apiEndpoint}/weightCategory`, {
+				params: parametros,
+				headers: headers
+			});
+			//console.log(response);
+			return response;
+
+			//console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	///////////////////Retorno del render////////////////////
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -66,21 +153,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="nombre"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosDeportista.nombre}
-												onChange={(e) => handleChange('nombre', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.nombre}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosDeportista.name}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -90,21 +165,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="apellido"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosDeportista.apellido}
-												onChange={(e) => handleChange('apellido', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.apellido}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosDeportista.lastName}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -114,21 +177,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="documento"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosDeportista.documento}
-												onChange={(e) => handleChange('documento', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.documento}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosDeportista.cedula}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -138,21 +189,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="direccion"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosDeportista.direccion}
-												onChange={(e) => handleChange('direccion', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.direccion}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosDeportista.address}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -164,21 +203,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="telefono"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosDeportista.telefono}
-												onChange={(e) => handleChange('telefono', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.telefono}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosDeportista.phone}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -188,21 +215,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<input
-												type="text"
-												name="correo"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-												value={datosDeportista.correo}
-												onChange={(e) => handleChange('correo', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.correo}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosDeportista.email}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -212,26 +227,9 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<select
-												name="club"
-												value={datosDeportista.club}
-												onChange={(e) => handleChange('club', e.target.value)}
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-											>
-												<option value="">Seleccione un club</option>
-												<option value="norte">Norte</option>
-												<option value="sur">Sur</option>
-												<option value="este">Este</option>
-												<option value="oeste">Oeste</option>
-											</select>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.club}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datoClub.name}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -241,43 +239,22 @@ export default function InfoDeportista() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									{esEditable ?
-										(
-											<select
-												name="categoria"
-												value={datosDeportista.categoria}
-												onChange={(e) => handleChange('categoria', e.target.value)}
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
-											>
-												<option value="">Seleccione una categoria</option>
-												<option value="pluma">Pluma</option>
-												<option value="pesado">Pesado</option>
-												<option value="mosca">Mosca</option>
-											</select>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosDeportista.categoria}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datoCategoria.name}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="mt-5 flex justify-center">
-						<button
-							type="button"
-							onClick={handleToggleEdit}
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-							{esEditable ? 'Guardar cambios' : 'Editar información'}
-						</button>
-						<button
-							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-                            Cargar nueva foto de perfil
-						</button>
+						<Link href='/administrador/lista-usuarios/deportista'>
+							<button
+								type="button"
+								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold' id='titulos-pequenos'
+							>
+                            Volver
+							</button>
+						</Link>
 					</div>
 				</form>
 			</div>
