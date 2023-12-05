@@ -35,6 +35,7 @@ export default function Home() {
 		}
 
 		carga(json);
+
 		cargado = true;
 	}, [!cargado]);
 
