@@ -82,7 +82,6 @@ export default function VerEvento() {
 				headers: headers,
 				params: parametros
 			});
-			console.log(response.data);
 			return response.data.evento;
 		} catch (error) {
 			console.log(error);
@@ -103,7 +102,6 @@ export default function VerEvento() {
 				headers: headers,
 				params: parametros
 			});
-			console.log(response.data);
 			return response.data.user;
 		} catch (error) {
 			console.log(error);
@@ -152,7 +150,6 @@ export default function VerEvento() {
 	}, []);
 
 	useEffect(()=>{
-		console.log(eventInfo);
 		if(eventInfo._id != ''){
 			cargarTiempos();
 			cargarEntrenador();
