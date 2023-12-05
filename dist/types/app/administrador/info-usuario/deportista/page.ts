@@ -1,4 +1,4 @@
-// File: /home/tkalejadro122/Documentos/box-fronend/app/administrador/info-usuario/deportista/page.tsx
+// File: /home/josej/box-fronend/app/administrador/info-usuario/deportista/page.tsx
 import * as entry from '../../../../../../app/administrador/info-usuario/deportista/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
