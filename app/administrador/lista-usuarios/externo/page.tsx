@@ -26,7 +26,7 @@ const Home: React.FC = () => {
 	};
 
 	return (
-		<div className="w-full max-w-screen-xl mx-auto p-6">
+		<div className="w-full max-w-screen-xl mx-auto mt-[6%] p-6">
 			<Table rol='Generico'/>
 			<div className="flex justify-between items-center mt-4">
 				<button

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
 import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
 import data from '@/pruebas/usuarios.json';
+import Link from 'next/link';
 
 const Home: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,8 +27,8 @@ const Home: React.FC = () => {
 	};
 
 	return (
-		<div className="w-full max-w-screen-xl mx-auto p-6">
-			<Table rol='Deportista'/>
+		<div className="w-full max-w-screen-xl mx-auto mt-[6%] p-6">
+			<Table rol='Deportista' />
 			<div className="flex justify-between items-center mt-4">
 				<button
 					onClick={() => alert('Usuarios descargados')}
@@ -45,12 +46,14 @@ const Home: React.FC = () => {
 						style={{ display: 'none' }}
 						onChange={handleFileInputChange}
 					/>
-					<button
-						onClick={() => alert('Agregar usuario')}
-						className="bg-[#cd1919] text-white rounded p-2"
-					>
-						+
-					</button>
+					<Link href=''>
+						<button
+							onClick={() => alert('Agregar usuario')}
+							className="bg-[#cd1919] text-white rounded p-2"
+						>
+							+
+						</button>
+					</Link>
 				</div>
 			</div>
 			{/* <ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} /> */}
