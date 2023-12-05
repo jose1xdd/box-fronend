@@ -9,10 +9,16 @@ interface crtierios {
 }
 export default function EvaluacionFisicaAdmin() {
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	//Criterio a agregar
 	const [nombreCriterio, setNombreCriterio] = useState('');
+	//Criterio para eliminar
 	const [criterioEliminar, setCriterioEliminar] = useState('');
+	//Mensaje de confirmacion
 	const [showConfirmation, setShowConfirmation] = useState(false);
+	//Lista de criterios
 	const [criteriosData, setCriteriosData] = useState<crtierios[]>([]);
+	// Esta repetido
+	const [repeat, setRepeat] = useState (false);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setNombreCriterio(e.target.value);
@@ -22,35 +28,57 @@ export default function EvaluacionFisicaAdmin() {
 		setCriterioEliminar(e.target.value);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (!nombreCriterio.trim()) {
-			alert('Por favor ingrese un rol para poder continuar');
-			return;
+	const crearCriterio = async (token: string, name:string) => {
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const body = {
+				name: name,
+			};
+			const response = await axios.post(`${apiEndpoint}/testCritery`, body, { headers: headers });
+			return response.data.critery;
+		} catch (error) {
+			setRepeat(true);
 		}
-
-		// Enviar rol al endpoint correspondiente
-		console.log('Rol enviado:', nombreCriterio);
-		setNombreCriterio('');
 	};
 
-	const handleEliminarSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (!criterioEliminar) {
-			alert('Por favor seleccione una opción para poder continuar');
-			return;
+	const handleSubmit = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
 		}
+		const nuevoCriterio = await crearCriterio(token, nombreCriterio);
+		cargarCriterios();
+	};
 
+	const handleEliminarSubmit = () => {
 		setShowConfirmation(true);
 	};
 
-	const handleConfirmEliminar = () => {
-		console.log('Criterio a eliminar:', criterioEliminar);
-
-		// Enviar criterioEliminar al endpoint correspondiente
-		setShowConfirmation(false);
+	const handleConfirmEliminar = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const params = {
+				criteryId: criterioEliminar
+			};
+			const response = await axios.delete(`${apiEndpoint}/testCritery`, {
+				headers: headers,
+				params: params
+			});
+			cargarCriterios();
+			setShowConfirmation(false);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleCancelEliminar = () => {
@@ -82,7 +110,7 @@ export default function EvaluacionFisicaAdmin() {
 
 	useEffect(()=>{
 		cargarCriterios();
-	}, []);
+	}, [criteriosData, repeat]);
 
 	return (
 		<>
@@ -117,6 +145,7 @@ export default function EvaluacionFisicaAdmin() {
 									<input
 										type="text"
 										name="nombre"
+										required
 										value={nombreCriterio}
 										onChange={handleInputChange}
 										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
@@ -127,7 +156,8 @@ export default function EvaluacionFisicaAdmin() {
 							</div>
 							<div className="mt-3 flex justify-center">
 								<button
-									type="submit"
+									type="button"
+									onClick={handleSubmit}
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
@@ -142,6 +172,7 @@ export default function EvaluacionFisicaAdmin() {
 										NOMBRE DEL CRITERIO
 									</h3>
 									<select
+										required
 										name="nombreCriterioEliminar"
 										value={criterioEliminar}
 										onChange={handleEliminarChange}
@@ -161,7 +192,8 @@ export default function EvaluacionFisicaAdmin() {
 							</div>
 							<div className="mt-3 flex justify-center">
 								<button
-									type="submit"
+									type="button"
+									onClick={()=>handleEliminarSubmit()}
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
@@ -192,6 +224,24 @@ export default function EvaluacionFisicaAdmin() {
 								id="titulos-pequenos"
 							>
 								CANCELAR
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
+			{repeat && (
+				<div className="fixed inset-0 flex items-center justify-center z-50">
+					<div className="bg-[#141414] p-10 rounded-lg">
+						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
+							Ese criterio se encuentra repetido, intenta con otro
+						</h3>
+						<div className="flex justify-center">
+							<button
+								onClick={()=>setRepeat(false)}
+								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+								id="titulos-pequenos"
+							>
+								Aceptar
 							</button>
 						</div>
 					</div>
