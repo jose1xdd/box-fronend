@@ -6,8 +6,15 @@ import { useState, useEffect } from 'react';
 export default function Calendario() {
 	const [crear, setCrear] = useState(false);
 	const router = useRouter();
+
 	const handlerCrear = (route:string)=> {
-		router.push('/eventos/crear' + route);
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if(datos != null){
+			rol = JSON.parse(datos).role;
+		}
+		if(rol == 'Admin') rol = 'administrador';
+		router.push('/' + rol + '/eventos/Crear' + route);
 	};
 	useEffect(()=>{
 		const datos = localStorage.getItem('userData');
