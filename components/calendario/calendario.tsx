@@ -5,6 +5,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { useRouter } from 'next/navigation';
 
 interface formatedEvents {
     id: string,
@@ -18,6 +19,7 @@ export default function CalendarioEventos() {
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const[events, setEvents] = useState<formatedEvents[]>([]);
+	const router = useRouter();
 
 	const cargaEventos = async () => {
 		const datos = localStorage.getItem('userData');
@@ -70,21 +72,25 @@ export default function CalendarioEventos() {
 
 	return (
 		<div>
-			<h1 className="text-5xl text-white mb-4">Calendario de eventos</h1>
-			<FullCalendar
-				plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-				initialView={'dayGridMonth'}
-				headerToolbar={{
-					start: 'today prev,next',
-					center: 'title',
-					end: 'dayGridMonth,timeGridWeek,timeGridDay',
-				}}
-				events={events}
-				eventDidMount={(info) => {
-
-				}}
-				height={'90vh'}
-			/>
+			<div>
+				<h1 className="text-5xl text-white mb-4">Calendario de eventos</h1>
+				<FullCalendar
+					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+					initialView={'dayGridMonth'}
+					headerToolbar={{
+						start: 'today prev,next',
+						center: 'title',
+						end: 'dayGridMonth,timeGridWeek,timeGridDay',
+					}}
+					events={events}
+					eventClick={(info) => {
+						const e = info.event;
+						router.push('/eventos/verEventos?EventId=' + info.event.id as string, // La ruta a la que quieres navegar
+						  );
+					}}
+					height={'90vh'}
+				/>
+			</div>
 		</div>
 	);
 }

@@ -1,51 +1,323 @@
 {
   "pages": {
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+    "/_not-found": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/_not-found-1c922da90aaac865.js"
     ],
     "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/css/925be513777be7ee.css",
+      "static/chunks/app/layout-cbb435445c7d3c0f.js"
+    ],
+    "/eventos/crearConvocatoria/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/app/eventos/crearConvocatoria/page-362956606d32afdf.js"
+    ],
+    "/eventos/verEventos/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/eventos/verEventos/page-a6495dd2b8a613be.js"
     ],
     "/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/login/page.css",
-      "static/chunks/app/login/page.js"
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/413-f928b1ccfee246bd.js",
+      "static/css/4f961f0e72ca3065.css",
+      "static/chunks/app/login/page-5d40bab70bd2255a.js"
+    ],
+    "/eventos/crearTorneo/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/eventos/crearTorneo/page-f4b7f00dc9812d6b.js"
+    ],
+    "/forget-password/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/8520-5a167140fec4951b.js",
+      "static/css/4f961f0e72ca3065.css",
+      "static/chunks/app/forget-password/page-3330ef3d88bbb25b.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/413-f928b1ccfee246bd.js",
+      "static/chunks/app/page-4624996ecbea3c84.js"
+    ],
+    "/restore-password/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/8520-5a167140fec4951b.js",
+      "static/css/4f961f0e72ca3065.css",
+      "static/chunks/app/restore-password/page-302c22ed7651b69e.js"
     ],
     "/deportista/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/deportista/layout.js"
-    ],
-    "/deportista/mi-perfil/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/deportista/mi-perfil/page.js"
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/413-f928b1ccfee246bd.js",
+      "static/chunks/app/deportista/layout-05b86a1bae202b6c.js"
     ],
     "/deportista/calendario/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/deportista/calendario/page.js"
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/a6eb9415-211700dd0d8e6edd.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/2783-35eb72ea691b5feb.js",
+      "static/chunks/app/deportista/calendario/page-167e016aae8dc68e.js"
+    ],
+    "/deportista/mi-perfil/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/app/deportista/mi-perfil/page-36a2c3b5900ea561.js"
     ],
     "/administrador/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/administrador/layout.js"
-    ],
-    "/administrador/mi-perfil/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/administrador/mi-perfil/page.js"
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/413-f928b1ccfee246bd.js",
+      "static/chunks/app/administrador/layout-2f9a80d519048ae9.js"
     ],
     "/administrador/calendario/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/administrador/calendario/page.js"
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/a6eb9415-211700dd0d8e6edd.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/2783-35eb72ea691b5feb.js",
+      "static/chunks/app/administrador/calendario/page-e7ff41f876af51a4.js"
+    ],
+    "/administrador/eventos/CrearConvocatoria/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/app/administrador/eventos/CrearConvocatoria/page-f205258dd9c4cb35.js"
+    ],
+    "/administrador/eventos/VerEvento/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/eventos/VerEvento/page-899ae91320b542c5.js"
+    ],
+    "/administrador/administracion/evaluacion-fisica/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/administracion/evaluacion-fisica/page-b771e92f61973f02.js"
+    ],
+    "/administrador/crear-usuario/externo/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/crear-usuario/externo/page-bbf50eced2a3a002.js"
+    ],
+    "/administrador/administracion/gestionar-roles/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/administracion/gestionar-roles/page-cd913de201b49cd7.js"
+    ],
+    "/administrador/eventos/CrearTorneo/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/eventos/CrearTorneo/page-5f17f1d630e0c82a.js"
+    ],
+    "/administrador/administracion/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/413-f928b1ccfee246bd.js",
+      "static/chunks/app/administrador/administracion/page-b2b1bd0d6b267985.js"
+    ],
+    "/administrador/comunicados/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/comunicados/page-5b90a4046a5439f7.js"
+    ],
+    "/administrador/crear-usuario/deportista/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/crear-usuario/deportista/page-a155d75cf20a745d.js"
+    ],
+    "/administrador/crear-usuario/entrenador/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/crear-usuario/entrenador/page-97db7dfbb153d4cd.js"
+    ],
+    "/administrador/lista-usuarios/deportista/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/css/60cbc35348bd4cb5.css",
+      "static/chunks/app/administrador/lista-usuarios/deportista/page-3b3627a836a8c678.js"
+    ],
+    "/administrador/info-usuario/entrenador/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/app/administrador/info-usuario/entrenador/page-5c31c8da6a5507fd.js"
+    ],
+    "/administrador/info-usuario/deportista/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/app/administrador/info-usuario/deportista/page-da65fa74731fcf14.js"
+    ],
+    "/administrador/info-usuario/externo/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/administrador/info-usuario/externo/page-6126f1708948daeb.js"
+    ],
+    "/administrador/lista-usuarios/entrenador/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/9047-71ae6b372bcdd252.js",
+      "static/css/ac060742ee477c93.css",
+      "static/chunks/app/administrador/lista-usuarios/entrenador/page-f3ecce90a566a418.js"
+    ],
+    "/administrador/lista-usuarios/externo/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/9047-71ae6b372bcdd252.js",
+      "static/css/ac060742ee477c93.css",
+      "static/chunks/app/administrador/lista-usuarios/externo/page-cf15089fbf0c1650.js"
+    ],
+    "/administrador/mi-perfil/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/app/administrador/mi-perfil/page-03f295b659c59e55.js"
+    ],
+    "/administrador/ranking/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/css/60cbc35348bd4cb5.css",
+      "static/chunks/app/administrador/ranking/page-b555df141940a7a3.js"
+    ],
+    "/entrenador/layout": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/8326-1647c94e0ec67778.js",
+      "static/chunks/413-f928b1ccfee246bd.js",
+      "static/chunks/app/entrenador/layout-c7bf916e63b14660.js"
+    ],
+    "/entrenador/eventos/CrearConvocatoria/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/app/entrenador/eventos/CrearConvocatoria/page-e23f2eb6a475d654.js"
+    ],
+    "/entrenador/calendario/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/a6eb9415-211700dd0d8e6edd.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/2783-35eb72ea691b5feb.js",
+      "static/chunks/app/entrenador/calendario/page-a6eb335ecac4c351.js"
+    ],
+    "/entrenador/eventos/CrearTorneo/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/entrenador/eventos/CrearTorneo/page-db5fd2786e54e1e6.js"
+    ],
+    "/entrenador/eventos/VerEvento/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/app/entrenador/eventos/VerEvento/page-880d283285bc8242.js"
+    ],
+    "/entrenador/mi-perfil/page": [
+      "static/chunks/webpack-d3da8627e4c3890e.js",
+      "static/chunks/fd9d1056-b69c5e86097fc926.js",
+      "static/chunks/2472-d8faf82e412fb0fc.js",
+      "static/chunks/main-app-0c6fc8f1c5bb6bff.js",
+      "static/chunks/5580-a456d8dc25bbb61b.js",
+      "static/chunks/app/entrenador/mi-perfil/page-a2e32f6308606435.js"
     ]
   }
 }
