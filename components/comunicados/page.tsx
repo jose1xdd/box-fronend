@@ -7,7 +7,7 @@ interface FormData {
 	cuerpo: string;
 }
 
-export default function ComunicadosAdministrador() {
+export default function Comunicados() {
 	const formularioCorreo: FormData = {
 		destinatarios: ['Texto'],
 		asunto: 'Texto',
