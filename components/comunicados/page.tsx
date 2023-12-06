@@ -7,7 +7,7 @@ interface FormData {
 	cuerpo: string;
 }
 
-export default function ComunicadosAdministrador() {
+export default function Comunicados() {
 	const formularioCorreo: FormData = {
 		destinatarios: ['Texto'],
 		asunto: 'Texto',
@@ -68,8 +68,7 @@ export default function ComunicadosAdministrador() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2">
-									<input
-										type="text"
+									<textarea
 										className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black' id='texto-general'
 										value={datosCorreo.cuerpo}
 										onChange={(e) => handleChange('cuerpo', e.target.value)}
