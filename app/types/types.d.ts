@@ -6,6 +6,7 @@ export declare global {
     }
     interface tablaRanking {
         nombre: string,
+        apellido: string,
         id: string,
         ranking: ranking
     }

@@ -7,15 +7,30 @@ interface TableProps {
   data: tablaRanking []
 }
 
+interface User{
+	id: string,
+	nombre: string,
+	apellido: string,
+	puntos: number,
+	Ranking: Ranking,
+}
+
+interface Ranking{
+	draw: number,
+	lose: number,
+	win: number,
+}
+
 // Definir el componente funcional Table
 const RankingTable: React.FC<TableProps> = ({ data }) => {
-	console.log(data);
-	// Estado para almacenar los datos filtrados
-	const [filteredData, setFilteredData] = useState(data);
-	// Estado para almacenar la página actual
+	//console.log(data);
+
+	const [users, setUsers] = useState<User[]>([]);
+	const [filteredData, setFilteredData] = useState<User[]>([]);
 	const [currentPage, setCurrentPage] = useState(0);
-	// Número de usuarios por página
 	const usersPerPage = 10;
+
+	// Estado para almacenar los datos filtrados
 
 	// Función para manejar el cambio de página
 	const handlePageChange = (selectedPage: { selected: number }) => {
@@ -28,24 +43,44 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 	// Función para manejar la búsqueda por nombre y rol
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const searchTerm = e.target.value.toLowerCase();
-		const filtered = data.filter(
-			(user) =>
-				user.nombre.toLowerCase().includes(searchTerm)
+		const filtered = users.filter(
+			(user: User) => (user.nombre + ' ' + user.apellido).toLowerCase().includes(searchTerm)
 		);
 		setFilteredData(filtered);
 		setCurrentPage(0);
 	};
+	//Función para cargar los usuarios
+	useEffect(() => {
+		// Mapear el array y crear instancias de la interfaz User
+		const mappedUsers: User[] = data.map((item) => ({
+		  id: item.id,
+		  nombre: item.nombre,
+		  apellido: item.apellido,
+		  puntos: (item.ranking.win * 2) + item.ranking.draw,
+		  Ranking: {
+				draw: item.ranking.draw,
+				lose: item.ranking.lose,
+				win: item.ranking.win,
+		  },
+		  // ... otras propiedades
+		}));
 
-	// Función para renderizar las filas de usuarios
+		// Establecer los usuarios en el estado
+		const sortedUsers = mappedUsers.sort((a, b) => b.puntos - a.puntos);
+		setUsers(sortedUsers);
+		setFilteredData(users);
+	  }, [data]);
+
+	  // Función para renderizar las filas de usuarios
 	const renderUsers = () => {
 		const start = currentPage * usersPerPage;
 		const end = start + usersPerPage;
 		return filteredData.slice(start, end).map((item, index) => (
 			<tr key={item.id}>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.nombre}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.ranking.win}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.ranking.lose}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.ranking.draw}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.nombre + ' ' + item.apellido}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.Ranking.win}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.Ranking.lose}</td>
+				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.Ranking.draw}</td>
 			</tr>
 		));
 	};
