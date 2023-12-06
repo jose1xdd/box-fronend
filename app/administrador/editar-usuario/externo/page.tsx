@@ -1,84 +1,38 @@
 'use client';
 
-import fechaCompleta from '@/app/types/funcionesDate';
-import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 
 interface FormData {
-  nombre: string;
-  apellido: string;
-  nacimiento: Date;
-  cedula: string;
-  direccion: string;
-  telefono: string;
-  correo: string;
+    nombre: string;
+    apellido: string;
+    cedula: string;
+    direccion: string;
+    telefono: string;
+    correo: string;
 }
 
-export default function CrearEntrenador() {
+export default function EditarExterno() {
 
-	const [datosNuevoEntrenador, setDatosNuevoEntrenador] = useState<FormData>({
+	const [datosExterno, setDatosExterno] = useState<FormData>({
 		nombre: '',
 		apellido: '',
-		nacimiento: new Date(),
 		cedula: '',
 		direccion: '',
 		telefono: '',
 		correo: '',
 	});
 
-	const handleChange = (field: keyof FormData, value: string) => {
-		setDatosNuevoEntrenador((prevFormData) => ({
-			...prevFormData,
-			[field]: value
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+
+		setDatosExterno((prevData) => ({
+			...prevData,
 		}));
-	};
-
-	const handleChangeFecha = (field: keyof FormData, value: string) => {
-		var fecha = new Date(value);
-		setDatosNuevoEntrenador((prevFormData) => ({
-			...prevFormData,
-			[field]: fecha
-		}));
-	};
-
-	async function handleGuardarCambios(): Promise<void> {
-		const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
-		try{
-			const datos = localStorage.getItem('userData');
-			var arreglo;
-
-			if (datos != null) {
-				arreglo = JSON.parse(datos);
-			}
-
-			const cabeza = {
-				sessiontoken: arreglo.token,
-			};
-
-			const body = {
-				name: datosNuevoEntrenador.nombre,
-				lastName: datosNuevoEntrenador.apellido,
-				birthDate: fechaCompleta(datosNuevoEntrenador.nacimiento),
-				cedula: datosNuevoEntrenador.cedula,
-				email: datosNuevoEntrenador.correo,
-				phone: datosNuevoEntrenador.telefono,
-				address: datosNuevoEntrenador.direccion
-			};
-
-			const response = await axios.post(`${apiEndpoint}/users/Entrenador`, body, {
-				headers: cabeza,
-			});
-			window.location.href = `/administrador/info-usuario/entrenador?id=${response.data.user._id}`;
-		} catch (error) {
-			console.log(error);
-		}
-
 	};
 
 	return (
 		<>
 			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR ENTRENADOR</h1>
+				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR USUARIO</h1>
 				<div className='flex items-center justify-center'>
 					<svg
 						className="my-1"
@@ -103,8 +57,8 @@ export default function CrearEntrenador() {
 									<input
 										type="text"
 										name="nombre"
-										value={datosNuevoEntrenador.nombre}
-										onChange={(e) => handleChange('nombre', e.target.value)}
+										value={datosExterno.nombre}
+										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el nombre'
 									/>
@@ -120,8 +74,8 @@ export default function CrearEntrenador() {
 									<input
 										type="text"
 										name="apellido"
-										value={datosNuevoEntrenador.apellido}
-										onChange={(e) => handleChange('apellido', e.target.value)}
+										value={datosExterno.apellido}
+										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el apellido'
 									/>
@@ -137,28 +91,10 @@ export default function CrearEntrenador() {
 									<input
 										type="text"
 										name="cedula"
-										value={datosNuevoEntrenador.cedula}
-										onChange={(e) => handleChange('cedula', e.target.value)}
+										value={datosExterno.cedula}
+										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el número de cedula'
-									/>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Fecha de nacimiento
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="date"
-										name="fecha"
-										value={fechaCompleta(datosNuevoEntrenador.nacimiento)}
-										onChange={(e) => handleChangeFecha('nacimiento', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										min="1900-01-01"
-										required
 									/>
 								</div>
 							</div>
@@ -174,8 +110,8 @@ export default function CrearEntrenador() {
 									<input
 										type="text"
 										name="direccion"
-										value={datosNuevoEntrenador.direccion}
-										onChange={(e) => handleChange('direccion', e.target.value)}
+										value={datosExterno.direccion}
+										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese la dirección'
 									/>
@@ -191,8 +127,8 @@ export default function CrearEntrenador() {
 									<input
 										type="text"
 										name="telefono"
-										value={datosNuevoEntrenador.telefono}
-										onChange={(e) => handleChange('telefono', e.target.value)}
+										value={datosExterno.telefono}
+										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el teléfono'
 									/>
@@ -208,8 +144,8 @@ export default function CrearEntrenador() {
 									<input
 										type="text"
 										name="correo"
-										value={datosNuevoEntrenador.correo}
-										onChange={(e) => handleChange('correo', e.target.value)}
+										value={datosExterno.correo}
+										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el correo'
 									/>
@@ -220,16 +156,15 @@ export default function CrearEntrenador() {
 					<div className="mt-5 flex justify-center">
 						<button
 							type="button"
-							onClick={handleGuardarCambios}
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Crear entrenador
+                            Guardar cambios
 						</button>
 						<button
 							type="button"
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Cargar foto de perfil
+                            Cargar nueva foto de perfil
 						</button>
 					</div>
 				</form>

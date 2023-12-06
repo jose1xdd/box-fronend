@@ -1,5 +1,4 @@
 'use client';
-import Ranking from '@/components/ranking/page';
 
 import RankingTable from '@/components/tablas/ranking';
 import axios from 'axios';
@@ -9,7 +8,7 @@ import {
 	useState
 } from 'react';
 
-export default function RankingAdmin() {
+export default function Ranking() {
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const [info, setInfo] = useState<tablaRanking[]>([]);
@@ -39,7 +38,6 @@ export default function RankingAdmin() {
 				};
 				const dato: tablaRanking = {
 					nombre: user.name,
-					apellido: user.lastName,
 					id: user._id,
 					ranking
 				};

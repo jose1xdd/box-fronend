@@ -13,7 +13,7 @@ interface FormData {
 
 export default function CrearExterno() {
 
-	const [datosNuevoExterno, setDatosNuevoExterno] = useState<FormData>({
+	const [datosExterno, setDatosExterno] = useState<FormData>({
 		nombre: '',
 		apellido: '',
 		cedula: '',
@@ -24,20 +24,10 @@ export default function CrearExterno() {
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
-		setDatosNuevoExterno((prevData) => ({
+		setDatosExterno((prevData) => ({
 			...prevData,
 		}));
 	};
-
-	/*const handleGuardarCambios = () => {
-		axios.post('/', datosNuevoExterno)
-			.then((response) => {
-				console.log('Datos guardados exitosamente', response.data);
-			})
-			.catch((error) => {
-				console.error('Error al guardar los datos', error);
-			});
-	};*/
 
 	return (
 		<>
@@ -67,7 +57,7 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="nombre"
-										value={datosNuevoExterno.nombre}
+										value={datosExterno.nombre}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el nombre'
@@ -84,7 +74,7 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="apellido"
-										value={datosNuevoExterno.apellido}
+										value={datosExterno.apellido}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el apellido'
@@ -101,7 +91,7 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="cedula"
-										value={datosNuevoExterno.cedula}
+										value={datosExterno.cedula}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el número de cedula'
@@ -120,7 +110,7 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="direccion"
-										value={datosNuevoExterno.direccion}
+										value={datosExterno.direccion}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese la dirección'
@@ -137,7 +127,7 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="telefono"
-										value={datosNuevoExterno.telefono}
+										value={datosExterno.telefono}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el teléfono'
@@ -154,7 +144,7 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="correo"
-										value={datosNuevoExterno.correo}
+										value={datosExterno.correo}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el correo'
@@ -166,10 +156,9 @@ export default function CrearExterno() {
 					<div className="mt-5 flex justify-center">
 						<button
 							type="button"
-							//onClick={handleGuardarCambios}
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Guardar cambios
+                            Crear usuario
 						</button>
 						<button
 							type="button"
