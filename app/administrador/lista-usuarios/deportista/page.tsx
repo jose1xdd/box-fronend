@@ -46,14 +46,14 @@ const Home: React.FC = () => {
 						style={{ display: 'none' }}
 						onChange={handleFileInputChange}
 					/>
-					<Link href=''>
+					<Link href='/administrador/crear-usuario/deportista'>
 						<button
-							onClick={() => alert('Agregar usuario')}
 							className="bg-[#cd1919] text-white rounded p-2"
 						>
-							+
+						+
 						</button>
 					</Link>
+
 				</div>
 			</div>
 			{/* <ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} /> */}
