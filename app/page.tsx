@@ -1,6 +1,8 @@
 import NavbarHome from '@/components/navbar/navbarHome';
 import Image from 'next/image';
 import Logo from '@/public/images/logo.png';
+import Mision from '@/public/images/mision.png';
+import Vision from '@/public/images/vision.png';
 
 export default function Home() {
 	return (
@@ -19,11 +21,10 @@ export default function Home() {
 						</div>
 						<div className="w-1/3 flex justify-center items-center">
 							<Image
-								src={Logo}
+								src={Mision}
 								alt="Logo Liga de Boxeo de Norte de Santander"
 								className="transform translate-x-[10px] translate-y-[20px]"
-								width={125}
-								height={25}
+								width={250}
 								priority
 							/>
 						</div>
@@ -33,11 +34,10 @@ export default function Home() {
 					<div className="flex">
 						<div className="w-1/3 flex justify-center items-center">
 							<Image
-								src={Logo}
+								src={Vision}
 								alt="Logo Liga de Boxeo de Norte de Santander"
 								className="transform translate-x-[10px] translate-y-[20px]"
-								width={125}
-								height={25}
+								width={250}
 								priority
 							/>
 						</div>
