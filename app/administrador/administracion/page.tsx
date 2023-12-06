@@ -41,7 +41,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<Link href=''>
+								<Link href='/administrador/administracion/administrar-categorias'>
 									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 										Administrar categorías
 									</button>
@@ -96,7 +96,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<Link href=''>
+								<Link href='/administrador/administracion/gestionar-clubes'>
 									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 										Gestionar clubes
 									</button>
@@ -113,7 +113,7 @@ export default function AdministracionAdmin() {
 								/>
 							</div>
 							<div className='flex items-center justify-center mt-3'>
-								<Link href=''>
+								<Link href='/administrador/administracion/gestionar-index'>
 									<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 										Gestionar index
 									</button>

@@ -117,7 +117,7 @@ const Table: React.FC<TableProps> = ({ rol, link }) => {
 
 	return (
 		<div className="w-80% mx-auto">
-			<h1 className="text-5xl text-white mb-4">USUARIOS </h1>
+			<h1 className="text-5xl text-white mb-4">USUARIOS</h1>
 			<input
 				type="text"
 				placeholder="Filtrar por nombre"
