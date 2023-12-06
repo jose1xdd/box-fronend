@@ -38,6 +38,7 @@ export default function Ranking() {
 				};
 				const dato: tablaRanking = {
 					nombre: user.name,
+					apellido: user.lastName,
 					id: user._id,
 					ranking
 				};
