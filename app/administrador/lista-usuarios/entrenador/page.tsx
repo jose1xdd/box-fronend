@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
 import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
 import data from '@/pruebas/usuarios.json';
+import Link from 'next/link';
 
 const Home: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,12 +46,14 @@ const Home: React.FC = () => {
 						style={{ display: 'none' }}
 						onChange={handleFileInputChange}
 					/>
-					<button
-						onClick={() => alert('Agregar usuario')}
-						className="bg-[#cd1919] text-white rounded p-2"
-					>
+					<Link href='/administrador/crear-usuario/entrenador'>
+						<button
+							className="bg-[#cd1919] text-white rounded p-2"
+						>
 						+
-					</button>
+						</button>
+					</Link>
+
 				</div>
 			</div>
 			<ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} />
