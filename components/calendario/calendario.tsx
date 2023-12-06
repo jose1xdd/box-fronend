@@ -73,7 +73,7 @@ export default function CalendarioEventos() {
 	return (
 		<div>
 			<div>
-				<h1 className="text-5xl text-white mb-4">Calendario de eventos</h1>
+				<h1 className="text-5xl text-white mb-4 mt-[5%]">CALENDARIO DE EVENTOS</h1>
 				<FullCalendar
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView={'dayGridMonth'}
