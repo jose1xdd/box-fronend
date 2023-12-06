@@ -26,11 +26,25 @@ export default function AdministrarCategorias() {
 		}
 	};
 
+	const handleCategoriaChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		setCategoria(e.target.value);
+	};
+
+	const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		const newValue = parseInt(e.target.value, 10);
+		setMin(isNaN(newValue) ? 0 : newValue);
+	};
+
+	const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		const newValue = parseInt(e.target.value, 10);
+		setMax(isNaN(newValue) ? 0 : newValue);
+	};
+
 	return (
 		<>
 			<div className='w-[80%] mx-auto mt-[6%]'>
 				<h1 className='text-[300%]' id='textos-grandes'>
-                    CATEGORÍAS
+					CATEGORÍAS
 				</h1>
 			</div>
 			<Tabla />
@@ -43,7 +57,7 @@ export default function AdministrarCategorias() {
 						<input
 							type='text'
 							value={categoria}
-							onChange={(e) => setCategoria(e.target.value)}
+							onChange={handleCategoriaChange}
 							className="bg-neutral-200 rounded-full w-full h-10 pl-5 text-black"
 							id="texto-general"
 							placeholder="Ingrese el nombre de la categoría de peso que desea agregar"
@@ -59,11 +73,12 @@ export default function AdministrarCategorias() {
 								onClick={() => decrement('min')}
 								className='p-2'
 							>
-                                -
+								-
 							</button>
 							<input
 								type='text'
 								value={min}
+								onChange={handleMinChange}
 								className="bg-neutral-200 rounded-full w-full h-10 text-black text-center"
 								id="texto-general"
 							/>
@@ -72,7 +87,7 @@ export default function AdministrarCategorias() {
 								onClick={() => increment('min')}
 								className='p-2'
 							>
-                                +
+								+
 							</button>
 						</div>
 					</div>
@@ -86,11 +101,12 @@ export default function AdministrarCategorias() {
 								onClick={() => decrement('max')}
 								className='p-2'
 							>
-                                -
+								-
 							</button>
 							<input
 								type='text'
 								value={max}
+								onChange={handleMaxChange}
 								className="bg-neutral-200 rounded-full w-full h-10 text-black text-center"
 								id="texto-general"
 							/>
@@ -99,7 +115,7 @@ export default function AdministrarCategorias() {
 								onClick={() => increment('max')}
 								className='p-2'
 							>
-                                +
+								+
 							</button>
 						</div>
 					</div>
@@ -110,7 +126,7 @@ export default function AdministrarCategorias() {
 					type="button"
 					className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 				>
-                    Agregar categoría de peso
+					Agregar categoría de peso
 				</button>
 			</div>
 		</>
