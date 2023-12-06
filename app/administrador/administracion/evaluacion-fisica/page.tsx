@@ -90,6 +90,7 @@ export default function EvaluacionFisicaAdmin() {
 			const headers = {
 				sessiontoken: token,
 			};
+
 			const response = await axios.get(`${apiEndpoint}/testCritery`, {
 				headers: headers,
 			});
