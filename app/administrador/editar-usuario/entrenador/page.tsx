@@ -11,9 +11,9 @@ interface FormData {
   correo: string;
 }
 
-export default function CrearExterno() {
+export default function EditarEntrenador() {
 
-	const [datosExterno, setDatosExterno] = useState<FormData>({
+	const [datosEntrenador, setDatosEntrenador] = useState<FormData>({
 		nombre: '',
 		apellido: '',
 		cedula: '',
@@ -24,7 +24,7 @@ export default function CrearExterno() {
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
-		setDatosExterno((prevData) => ({
+		setDatosEntrenador((prevData) => ({
 			...prevData,
 		}));
 	};
@@ -32,7 +32,7 @@ export default function CrearExterno() {
 	return (
 		<>
 			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR USUARIO</h1>
+				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR ENTRENADOR</h1>
 				<div className='flex items-center justify-center'>
 					<svg
 						className="my-1"
@@ -57,10 +57,9 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="nombre"
-										value={datosExterno.nombre}
+										value={datosEntrenador.nombre}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										placeholder='Ingrese el nombre'
 									/>
 								</div>
 							</div>
@@ -74,10 +73,9 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="apellido"
-										value={datosExterno.apellido}
+										value={datosEntrenador.apellido}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										placeholder='Ingrese el apellido'
 									/>
 								</div>
 							</div>
@@ -91,10 +89,9 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="cedula"
-										value={datosExterno.cedula}
+										value={datosEntrenador.cedula}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										placeholder='Ingrese el número de cedula'
 									/>
 								</div>
 							</div>
@@ -110,10 +107,9 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="direccion"
-										value={datosExterno.direccion}
+										value={datosEntrenador.direccion}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										placeholder='Ingrese la dirección'
 									/>
 								</div>
 							</div>
@@ -127,10 +123,9 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="telefono"
-										value={datosExterno.telefono}
+										value={datosEntrenador.telefono}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										placeholder='Ingrese el teléfono'
 									/>
 								</div>
 							</div>
@@ -144,10 +139,9 @@ export default function CrearExterno() {
 									<input
 										type="text"
 										name="correo"
-										value={datosExterno.correo}
+										value={datosEntrenador.correo}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-										placeholder='Ingrese el correo'
 									/>
 								</div>
 							</div>
@@ -158,13 +152,13 @@ export default function CrearExterno() {
 							type="button"
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Crear usuario
+                            Guardar cambios
 						</button>
 						<button
 							type="button"
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Cargar foto de perfil
+                            Cargar nueva foto de perfil
 						</button>
 					</div>
 				</form>
