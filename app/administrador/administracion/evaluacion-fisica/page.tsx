@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import criteriosData from '@/pruebas/criterios.json';
+import Tabla from '@/components/tablas/criteriosEvaluacion';
 
 export default function EvaluacionFisicaAdmin() {
 	const [nombreCriterio, setNombreCriterio] = useState('');
@@ -59,20 +60,7 @@ export default function EvaluacionFisicaAdmin() {
 				</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-2/3">
-						<table className="w-full">
-							<thead>
-								<tr>
-									<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>Criterio</th>
-								</tr>
-							</thead>
-							<tbody>
-								{criteriosData.map((criterio, index) => (
-									<tr key={index}>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{criterio.Nombre}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+						<Tabla />
 					</div>
 					<div className="w-2/3 flex flex-col items-center pl-4">
 						<form onSubmit={handleSubmit}>

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import usuariosData from '@/pruebas/usuarios.json';
+import Tabla from '@/components/tablas/roles';
 
 export default function GestionarRolesAdmin() {
 	const [rol, setRol] = useState('');
@@ -61,27 +62,7 @@ export default function GestionarRolesAdmin() {
 				</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-2/3">
-						<table className="w-full">
-							<thead>
-								<tr>
-									<th
-										className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
-										id="titulos-grandes"
-									>
-                                        Rol
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{rolesUnicos.map((rol, index) => (
-									<tr key={index}>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
-											{rol}
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+						<Tabla />
 					</div>
 					<div className="w-2/3 flex flex-col items-center pl-4">
 						<form onSubmit={handleSubmit}>

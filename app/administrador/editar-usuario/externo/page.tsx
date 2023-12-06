@@ -3,15 +3,15 @@
 import { ChangeEvent, useState } from 'react';
 
 interface FormData {
-  nombre: string;
-  apellido: string;
-  cedula: string;
-  direccion: string;
-  telefono: string;
-  correo: string;
+    nombre: string;
+    apellido: string;
+    cedula: string;
+    direccion: string;
+    telefono: string;
+    correo: string;
 }
 
-export default function CrearExterno() {
+export default function EditarExterno() {
 
 	const [datosExterno, setDatosExterno] = useState<FormData>({
 		nombre: '',
@@ -158,13 +158,13 @@ export default function CrearExterno() {
 							type="button"
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Crear usuario
+                            Guardar cambios
 						</button>
 						<button
 							type="button"
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
-                            Cargar foto de perfil
+                            Cargar nueva foto de perfil
 						</button>
 					</div>
 				</form>

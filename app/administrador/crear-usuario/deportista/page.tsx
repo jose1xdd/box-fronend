@@ -15,7 +15,7 @@ interface FormData {
 
 export default function CrearDeportista() {
 
-	const [datosNuevoDeportista, setDatosNuevoDeportista] = useState<FormData>({
+	const [datosDeportista, setDatosDeportista] = useState<FormData>({
 		nombre: '',
 		apellido: '',
 		documento: '',
@@ -27,20 +27,10 @@ export default function CrearDeportista() {
 	});
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		setDatosNuevoDeportista((prevData) => ({
+		setDatosDeportista((prevData) => ({
 			...prevData,
 		}));
 	};
-
-	/*const handleGuardarCambios = () => {
-		axios.post('/', datosNuevoDeportista)
-			.then((response) => {
-				console.log('Datos guardados exitosamente', response.data);
-			})
-			.catch((error) => {
-				console.error('Error al guardar los datos', error);
-			});
-	};*/
 
 	return (
 		<>
@@ -70,7 +60,7 @@ export default function CrearDeportista() {
 									<input
 										type="text"
 										name="nombre"
-										value={datosNuevoDeportista.nombre}
+										value={datosDeportista.nombre}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el nombre'
@@ -87,7 +77,7 @@ export default function CrearDeportista() {
 									<input
 										type="text"
 										name="apellido"
-										value={datosNuevoDeportista.apellido}
+										value={datosDeportista.apellido}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el apellido'
@@ -104,7 +94,7 @@ export default function CrearDeportista() {
 									<input
 										type="text"
 										name="documento"
-										value={datosNuevoDeportista.documento}
+										value={datosDeportista.documento}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el número de documento'
@@ -121,7 +111,7 @@ export default function CrearDeportista() {
 									<input
 										type="text"
 										name="direccion"
-										value={datosNuevoDeportista.direccion}
+										value={datosDeportista.direccion}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese la dirección'
@@ -140,7 +130,7 @@ export default function CrearDeportista() {
 									<input
 										type="text"
 										name="telefono"
-										value={datosNuevoDeportista.telefono}
+										value={datosDeportista.telefono}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el teléfono'
@@ -157,7 +147,7 @@ export default function CrearDeportista() {
 									<input
 										type="text"
 										name="correo"
-										value={datosNuevoDeportista.correo}
+										value={datosDeportista.correo}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el correo'
@@ -173,7 +163,7 @@ export default function CrearDeportista() {
 								<div className="w-2/3 mx-2" id='texto-general'>
 									<select
 										name="club"
-										value={datosNuevoDeportista.club}
+										value={datosDeportista.club}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 									>
@@ -194,7 +184,7 @@ export default function CrearDeportista() {
 								<div className="w-2/3 mx-2" id='texto-general'>
 									<select
 										name="categoria"
-										value={datosNuevoDeportista.categoria}
+										value={datosDeportista.categoria}
 										onChange={handleInputChange}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
 									>
@@ -210,10 +200,9 @@ export default function CrearDeportista() {
 					<div className="mt-5 flex justify-center">
 						<button
 							type="button"
-							//onClick={handleGuardarCambios}
 							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
 						>
-                            Guardar cambios
+                            Crear deportista
 						</button>
 						<button
 							type="button"
