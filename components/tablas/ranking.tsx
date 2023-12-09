@@ -68,7 +68,7 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 		// Establecer los usuarios en el estado
 		const sortedUsers = mappedUsers.sort((a, b) => b.puntos - a.puntos);
 		setUsers(sortedUsers);
-		setFilteredData(users);
+		setFilteredData(sortedUsers);
 	  }, [data]);
 
 	  // Función para renderizar las filas de usuarios
