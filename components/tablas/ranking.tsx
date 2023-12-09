@@ -93,7 +93,7 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 				type="text"
 				placeholder="Filtrar por nombre"
 				onChange={handleSearch}
-				className="px-5 py-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4"
+				className="px-5 py-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
 			/>
 			<table className="w-full">
 				<thead>
