@@ -70,7 +70,7 @@ export default function LoginPage() {
 			/>
 			<div className='flex flex-col items-end justify-center m-20'>
 				<Form title1='LIGA DE' title2='BOXEO' title3='NORTE' onSubmit={() => { }} description='' className=''>
-					<div className='my-[10px] flex flex-col gap-4'>
+					<div className='flex flex-col gap-4 mt-7 mb-5'>
 						{incorrectData && (
 							<p className='text-red-500 mb-2'>Los datos ingresados son incorrectos</p>
 						)}
@@ -94,7 +94,7 @@ export default function LoginPage() {
 						/>
 					</div>
 
-					<div className='flex gap-4 '>
+					<div className='flex gap-4 items-center'>
 						<Form.SubmitButton buttonText='INGRESAR' handleButton={handleButton} />
 						<Form.Footer
 							description=''
