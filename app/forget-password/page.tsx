@@ -4,6 +4,8 @@ import loginData from '@/pruebas/login.json';
 import { Modal } from '@/components/Modal';
 import { Form } from '@/components/form';
 import { useState } from 'react';
+import Link from 'next/link';
+import { log } from 'winston';
 
 export default function LoginPage() {
 	const [information, setInformation] = useState({
@@ -28,6 +30,7 @@ export default function LoginPage() {
 	}
 
 	function handleSubmit(): void {
+
 	  if (information.email.trim() === '') {
 			setIsEmpty(true);
 			return;
@@ -67,9 +70,9 @@ export default function LoginPage() {
 	}
 
 	return (
-	  <>
+	  <div className='w-full h-screen flex justify-center align-middle items-center'>
 			<Form
-		  className='flex flex-col space-y-4'
+		  className='w-full space-y-7'
 		  title1=""
 		  title2=""
 		  title3="Recuperar contraseña"
@@ -94,23 +97,21 @@ export default function LoginPage() {
 					)}
 		  </div>
 
-		  <div className="flex gap-4">
+		  <div className="flex gap-4 justify-center items-center">
 					<Form.SubmitButton
 			  buttonText="ENVIAR CORREO"
 			  handleButton={handleSubmit}
 					/>
-					<Form.Footer
-			  description=""
-			  link="../login"
-			  textLink="Volver a inicio"
-					/>
+					<Link className='font-bold text-[18px] text-center mt-4 mx-10'
+			  href="../login">
+				Volver a inicio
+			  </Link>
 		  </div>
 			</Form>
-
 			{/* Modal para mensajes */}
 			<Modal isOpen={isModalOpen} onClose={handleModalClose} title={modalContent.title} imagen={modalContent.imagen}>
 		  <p>{modalContent.message}</p>
 			</Modal>
-	  </>
+	  </div>
 	);
 }

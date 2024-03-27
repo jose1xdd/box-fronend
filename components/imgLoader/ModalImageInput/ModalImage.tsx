@@ -1,0 +1,71 @@
+'use client';
+import React, {
+	useState,
+	useEffect,
+	useRef
+} from 'react';
+import { InputImageArea } from './InputImageArea';
+
+export interface fileImageFormat {
+	'nombre': string;
+	'valor': string;
+};
+
+const noAllowed = 'No se eligió ningún archivo';
+
+export function ModalImage({ setView }: { setView: React.Dispatch<React.SetStateAction<boolean>> }) {
+	const [isHovered, setIsHovered] = useState(false);
+	const [file, setFile] = useState({ 'nombre': noAllowed, 'valor': '' });
+
+	const myInput = useRef<HTMLInputElement>(null);
+
+	const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if(event && event.target){
+			const file = event.target.files?.[0];
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = () => {
+					const imageDataURL = reader.result as string;
+					let aux: fileImageFormat = { 'nombre': '', 'valor': '' };
+					aux.nombre = file.name;
+					aux.valor = imageDataURL;
+					setFile(aux);
+					// Hacer algo con la imagen si es necesario
+				};
+				reader.readAsDataURL(file);
+			}
+		}
+	};
+
+	const handleInput = () => {
+		if(myInput) myInput.current?.click();
+	};
+
+	console.log(file);
+
+	return (
+		<div className='flex'>
+			<div className="fixed inset-0 flex justify-center items-center">
+				<div className="bg-black bg-opacity-40 w-full h-full flex items-center justify-center" onClick={()=> setView(false)}>
+					<div className="bg-[#1e1e1e] p-8 rounded-[30PX] w-[800px] h-[550px] text-white flex flex-col justify-center items-center gap-4" onClick={(e) => {e.stopPropagation()}}>
+						<InputImageArea setFile={setFile}/>
+						<input type='file' className='hidden' onChange={handleFile} ref={myInput}></input>
+						<div className='flex space-x-6 align-middle text-center items-center'>
+							<button className='bg-gray-200 text-black px-5 py-2' onClick={handleInput}>Seleccionar archivo</button>
+							<label>{file.nombre}</label>
+						</div>
+						<h3>Solo se admiten imagenes en formato .jpg y .png</h3>
+						{file != null &&
+							<button
+								className={`mt-4 ${isHovered ? 'bg-white text-[#cd1919]' : 'bg-[#cd1919] text-white'} px-4 py-2 rounded transition-all duration-300 ease-in-out`}
+								onMouseEnter={() => setIsHovered(true)}
+								onMouseLeave={() => setIsHovered(false)}
+							>
+                      Cargar Archivo
+							</button>}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
