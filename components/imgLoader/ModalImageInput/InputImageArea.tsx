@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { fileImageFormat } from './ModalImage';
+import { fileImageFormat, noAllowed } from './ModalImage';
 
 export function InputImageArea({ setFile }: { setFile: React.Dispatch<React.SetStateAction<fileImageFormat>> }) {
 
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
 		const file = event.dataTransfer.files[0];
-		if (file) {
+		const fileName = file?.name.toLocaleLowerCase();
+		if (file && fileName && (fileName.endsWith('.jpg') || fileName.endsWith('.png') || fileName.endsWith('.jpge'))) {
 			const reader = new FileReader();
 			reader.onload = () => {
 				const imageDataURL = reader.result as string;
@@ -17,6 +18,9 @@ export function InputImageArea({ setFile }: { setFile: React.Dispatch<React.SetS
 				// Hacer algo con la imagen si es necesario
 			};
 			reader.readAsDataURL(file);
+		}
+		else{
+			setFile(noAllowed);
 		}
 
 	};

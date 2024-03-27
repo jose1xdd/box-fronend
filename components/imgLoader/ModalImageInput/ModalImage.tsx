@@ -11,18 +11,19 @@ export interface fileImageFormat {
 	'valor': string;
 };
 
-const noAllowed = 'No se eligió ningún archivo';
+export const noAllowed = { 'nombre': 'No se eligió ningún archivo válido', 'valor': '' };
 
 export function ModalImage({ setView }: { setView: React.Dispatch<React.SetStateAction<boolean>> }) {
 	const [isHovered, setIsHovered] = useState(false);
-	const [file, setFile] = useState({ 'nombre': noAllowed, 'valor': '' });
+	const [file, setFile] = useState(noAllowed);
 
 	const myInput = useRef<HTMLInputElement>(null);
 
 	const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if(event && event.target){
 			const file = event.target.files?.[0];
-			if (file) {
+			const fileName = file?.name.toLocaleLowerCase();
+			if (file && fileName && (fileName.endsWith('.jpg') || fileName.endsWith('.png') || fileName.endsWith('.jpge'))) {
 				const reader = new FileReader();
 				reader.onload = () => {
 					const imageDataURL = reader.result as string;
@@ -33,6 +34,9 @@ export function ModalImage({ setView }: { setView: React.Dispatch<React.SetState
 					// Hacer algo con la imagen si es necesario
 				};
 				reader.readAsDataURL(file);
+			}
+			else{
+				setFile(noAllowed);
 			}
 		}
 	};
@@ -47,9 +51,9 @@ export function ModalImage({ setView }: { setView: React.Dispatch<React.SetState
 		<div className='flex'>
 			<div className="fixed inset-0 flex justify-center items-center">
 				<div className="bg-black bg-opacity-40 w-full h-full flex items-center justify-center" onClick={()=> setView(false)}>
-					<div className="bg-[#1e1e1e] p-8 rounded-[30PX] w-[800px] h-[550px] text-white flex flex-col justify-center items-center gap-4" onClick={(e) => {e.stopPropagation()}}>
+					<div className="bg-[#1e1e1e] p-8 rounded-[30PX] w-[800px] h-[550px] text-white flex flex-col justify-center items-center gap-4" onClick={(e) => {e.stopPropagation();}}>
 						<InputImageArea setFile={setFile}/>
-						<input type='file' className='hidden' onChange={handleFile} ref={myInput}></input>
+						<input type='file' className='hidden' onChange={handleFile} ref={myInput} accept='.png, .jpg, .jpge'></input>
 						<div className='flex space-x-6 align-middle text-center items-center'>
 							<button className='bg-gray-200 text-black px-5 py-2' onClick={handleInput}>Seleccionar archivo</button>
 							<label>{file.nombre}</label>
