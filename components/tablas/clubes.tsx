@@ -94,15 +94,21 @@ export default function TableClubes() {
 					</tbody>
 				</table>
 			</div>
-			<div className='w-[80%] mx-auto mt-4 flex justify-end'>
-				<Link href='/administrador/administracion/gestionar-clubes/crear-club'>
-					<button
-						className="bg-[#cd1919] text-white rounded p-2"
-					>
-                        Crear club
-					</button>
-				</Link>
+			<div className='w-[80%] mx-auto mt-4 flex justify-between items-center'>
+				<div>
+					<Link href="../administracion">
+						<button className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+        Volver
+						</button>
+					</Link>
+				</div>
+				<div>
+					<Link href='/administrador/administracion/gestionar-clubes/crear-club' className="bg-[#cd1919] text-white rounded p-2">
+						Crear club
+					</Link>
+				</div>
 			</div>
+
 		</>
 	);
 }
