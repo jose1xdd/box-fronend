@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import {
 	ChangeEvent,
 	FormEvent,
+	useEffect,
 	useState
 } from 'react';
 
@@ -22,6 +23,35 @@ export default function EditarClub() {
 		name: '',
 		description: ''
 	});
+
+	const getClub = async (token:string, clubId: string) => {
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const params = {
+				clubId: clubId,
+			};
+			const response = await axios.get(`${apiEndpoint}/club`, {
+				headers: headers,
+				params: params
+			});
+			return response.data.club;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const cargarClub = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		setNuevosDatosClub(await getClub(token, clubId as string));
+	};
+	useEffect(()=>{
+		cargarClub();
+	}, []);
 	const router = useRouter();
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
