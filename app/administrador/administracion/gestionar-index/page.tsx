@@ -84,6 +84,11 @@ export default function GestionarIndex() {
 							</button>
 						</Link>
 					</div>
+					<div className="flex justify-center">
+						<Link href="../administracion" className="bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+							Volver
+						</Link>
+					</div>
 				</div>
 			</div>
 		</>
