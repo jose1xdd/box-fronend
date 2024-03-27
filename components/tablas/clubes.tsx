@@ -21,7 +21,6 @@ export default function TableClubes() {
 			const response = await axios.get(`${apiEndpoint}/club/List`, {
 				headers: headers,
 			});
-			console.log(response.data);
 			return response.data.clubs;
 		} catch (error) {
 			console.log(error);
@@ -35,6 +34,35 @@ export default function TableClubes() {
 		}
 		setClubes(await getClubes(token));
 	};
+
+	async function handleBorrar(id: string): Promise <void>{
+		try{
+			const datos = localStorage.getItem('userData');
+			var arreglo;
+
+			if (datos != null) {
+				arreglo = JSON.parse(datos);
+			}
+
+			const parametro = {
+				clubId: id,
+			};
+
+			const cabeza = {
+				sessiontoken: arreglo.token,
+			};
+
+			await axios.delete(`${apiEndpoint}/club/Delete`, {
+				headers: cabeza,
+				params: parametro,
+			});
+			window.location.reload();
+		} catch (error) {
+			console.log(error);
+			alert('No se puede borrar el usuario.');
+		}
+	};
+
 	useEffect(()=>{
 		cargarClubes();
 	}, []);
@@ -83,7 +111,7 @@ export default function TableClubes() {
 										</button>
 									</Link>
 
-									<button onClick={() => alert('Borrar')} className="bg-[#cd1919] text-white rounded p-2 mr-2">
+									<button onClick={() => handleBorrar(club._id)} className="bg-[#cd1919] text-white rounded p-2 mr-2">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill-dash" viewBox="0 0 16 16">
 											<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
 										</svg>
