@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import FullCalendar from '@fullcalendar/react';
+import esLocale from '@fullcalendar/core/locales/es';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -58,7 +59,7 @@ export default function CalendarioEventos() {
 			e.end = new Date(event.endsAt);
 			e.end.setHours(e.end.getHours() + 5);
 			let color = '#cd1919';
-			if(event.type == 'Reunion') color = '3F8BD8';
+			if(event.type == 'Reunion') color = '#cd1919';
 			e.backgroundColor = color;
 			e.extendedProps.description = event.description;
 			result.push(e);
@@ -76,6 +77,7 @@ export default function CalendarioEventos() {
 				<h1 className="text-5xl text-white mb-4 mt-[5%]">CALENDARIO DE EVENTOS</h1>
 				<FullCalendar
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+					locales={[esLocale]}
 					initialView={'dayGridMonth'}
 					headerToolbar={{
 						start: 'today prev,next',
