@@ -34,6 +34,7 @@ export default function InfoClub() {
 				headers: headers,
 				params: params
 			});
+			console.log(response.data.club);
 			return response.data.club;
 		} catch (error) {
 			console.log(error);
