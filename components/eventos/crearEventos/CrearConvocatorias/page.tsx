@@ -1,8 +1,6 @@
 'use client';
-import Calendario from '@/components/calendario/calendario';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { Router } from 'next/router';
 import { useEffect, useState } from 'react';
 interface User {
     _id: string;
