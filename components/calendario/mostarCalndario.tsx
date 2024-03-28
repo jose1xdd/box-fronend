@@ -40,7 +40,7 @@ export default function Calendario() {
 										Crear convocatoria
 					</button>
 					<button onClick={() => handlerCrear('Torneo')} className="bg-[#cd1919] text-white rounded p-2">
-										CrearTorneo
+										Crear Torneo
 					</button>
 				</div>
 			)}
