@@ -169,7 +169,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.nombre}
 												onChange={(e) => handleChange('nombre', e.target.value)}
 											/>
@@ -192,7 +192,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.apellido}
 												onChange={(e) => handleChange('apellido', e.target.value)}
 											/>
@@ -229,7 +229,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.direccion}
 												onChange={(e) => handleChange('direccion', e.target.value)}
 											/>
@@ -252,7 +252,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.telefono}
 												onChange={(e) => handleChange('telefono', e.target.value)}
 											/>
