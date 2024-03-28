@@ -54,7 +54,7 @@ export default function TableCategorias({ categorias, cargarCategorias }:props) 
 								className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 								id="titulos-grandes"
 							>
-								CLUB
+								CATEGORÍA
 							</th>
 							<th
 								className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
