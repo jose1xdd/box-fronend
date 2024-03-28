@@ -27,3 +27,16 @@ body {
   font-weight: bold;
 }
 
+.fc-button.fc-button-primary {
+  background-color: #cd1919 !important;
+  border-color: #a20c0c;
+  transition: background-color 0.3s ease; 
+}
+
+.fc-button.fc-button-primary:hover {
+  background-color: #a20c0c !important; 
+}
+
+.fc-daygrid-day.fc-day-today .fc-daygrid-day-frame {
+  background-color: rgba(255, 24, 24, 0.507);
+}

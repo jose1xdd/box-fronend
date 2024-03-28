@@ -112,10 +112,10 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 				containerClassName="pagination flex gap-2 justify-center"
 				activeClassName="active"
 				pageLinkClassName="page-link"
-				previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Previous</button>}
-				nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Next</button>}
-				pageRangeDisplayed={0}
-				marginPagesDisplayed={0}
+				previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Anterior</button>}
+				nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Siguiente</button>}
+				pageRangeDisplayed={2}
+				marginPagesDisplayed={1}
 			/>
 		</div>
 	);
