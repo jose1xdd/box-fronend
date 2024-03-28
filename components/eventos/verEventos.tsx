@@ -179,8 +179,8 @@ export default function VerEvento() {
 						<h1 className='text-center text-[400%]' id='titulos-grandes'>Información del evento</h1>
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
-										Nombre del evento:
+								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+										Nombre del evento
 								</div>
 							</div>
 							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -189,8 +189,8 @@ export default function VerEvento() {
 						</div>
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
-										Nombre del evento:
+								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+										Tipo de evento
 								</div>
 							</div>
 							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -199,8 +199,8 @@ export default function VerEvento() {
 						</div>
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
-										Entrenador encargado:
+								<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+										Entrenador a cargo
 								</div>
 							</div>
 							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -210,7 +210,7 @@ export default function VerEvento() {
 
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+								<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
 										Fecha del evento
 								</div>
 							</div>
@@ -221,35 +221,35 @@ export default function VerEvento() {
 						<div className='flex'>
 							<div className="flex w-full">
 								<div className="w-1/3 mx-2">
-									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
 										Descripcion del evento
 									</div>
 								</div>
-								<textarea readOnly defaultValue={eventInfo?.description as string} className='bg-neutral-200  h-[200px] rounded-[20px] w-2/3 h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<textarea readOnly defaultValue={eventInfo?.description as string} className='bg-neutral-200  h-[100px] rounded-lg w-2/3 ms-[35px] my-2 p-4 flex items-center justify-center text-black' id='texto-general'>
 
 								</textarea>
 							</div>
 							<div>
 								<div className="flex w-full justify-items-end justify-end">
-									<div className=' h-10 mx-5 my-2 flex w-[70px] items-center justify-center text-white ' id='texto-general'>
+									<div className=' h-10 ms-5 me-3 my-2 flex w-[70px] items-center justify-center text-white ' id='texto-general'>
 										Hora inicio
 									</div>
-									<div className='bg-neutral-200 rounded-full w-[100px] h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{horaI}
 									</div>
 								</div>
 								<div className="flex w-full justify-items-end justify-end">
-									<div className='h-10 mx-5 my-2 flex  w-[70px] items-center justify-center text-white ' id='texto-general'>
+									<div className='h-10 ms-5 me-3 my-2 flex  w-[70px] items-center justify-center text-white ' id='texto-general'>
 										Hora fin
 									</div>
-									<div className='bg-neutral-200 rounded-full w-[100px] h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{horaF}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="w-2/3 pr-4">
+					<div className="w-1/3 pr-4">
 						{(eventInfo.type == 'Reunion') && (
 							<div className=" w-full  pr-4">
 								<div className='flex justify-center'>
@@ -260,7 +260,7 @@ export default function VerEvento() {
 										required
 										value={correos}
 										readOnly
-										className='bg-neutral-200 h-full w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
+										className='bg-neutral-200 rounded-lg h-full w-full mx-5 my-2 p-4 text-black' id='texto-general'
 										placeholder='Participantes del evento'
 									/>
 								</div>

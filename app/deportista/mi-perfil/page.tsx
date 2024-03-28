@@ -139,7 +139,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.nombre}
 												onChange={(e) => handleChange('nombre', e.target.value)}
 											/>
@@ -162,7 +162,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.apellido}
 												onChange={(e) => handleChange('apellido', e.target.value)}
 											/>
@@ -181,20 +181,9 @@ export default function Home() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-												value={datosPerfil.cedula}
-												onChange={(e) => handleChange('cedula', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosPerfil.cedula}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosPerfil.cedula}
+									</div>
 								</div>
 							</div>
 							<div className="flex">
@@ -208,7 +197,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.direccion}
 												onChange={(e) => handleChange('direccion', e.target.value)}
 											/>
@@ -231,7 +220,7 @@ export default function Home() {
 										(
 											<input
 												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
 												value={datosPerfil.telefono}
 												onChange={(e) => handleChange('telefono', e.target.value)}
 											/>
@@ -250,20 +239,9 @@ export default function Home() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-												value={datosPerfil.correo}
-												onChange={(e) => handleChange('correo', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosPerfil.correo}
-											</div>
-										)
-									}
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{datosPerfil.correo}
+									</div>
 								</div>
 							</div>
 							<div className="mt-5 flex justify-center">
