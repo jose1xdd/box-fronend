@@ -1,12 +1,49 @@
-'use client';
 
-import categoriasData from '@/pruebas/categorias.json';
-import Link from 'next/link';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-export default function TableClubes() {
+interface categoria {
+	_id: string,
+	name: string,
+	maxWeight: number,
+	minWeight: number,
+}
+interface props {
+	categorias: categoria[],
+	cargarCategorias: () => void;
+}
+export default function TableCategorias({ categorias, cargarCategorias }:props) {
+	const [confirmEliminar, setConfirmEliminar] = useState(false);
+	const [categoriaEliminar, setCategoriaEliminar] = useState('');
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	const categorias = categoriasData.weightCategory;
+	useEffect(()=>{
+		if(categoriaEliminar != '') setConfirmEliminar(true);
+	}, [categoriaEliminar]);
 
+	const elminarCategoria = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const params = {
+				weightCategoryId: categoriaEliminar
+			};
+
+			const response = await axios.delete(`${apiEndpoint}/weightCategory`, {
+				headers: headers,
+				params: params,
+			});
+			cargarCategorias();
+			setConfirmEliminar(false);
+		} catch (error) {
+		}
+	};
 	return (
 		<>
 			<div className='flex justify-center items-center'>
@@ -43,7 +80,7 @@ export default function TableClubes() {
 									[{categoria.minWeight} - {categoria.maxWeight}]
 								</td>
 								<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
-									<button onClick={() => alert('Visualizar')} className="bg-[#cd1919] text-white rounded p-2">
+									<button onClick={() => setCategoriaEliminar(categoria._id)} className="bg-[#cd1919] text-white rounded p-2">
 										<svg
 											className="ml-0.5"
 											xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +96,33 @@ export default function TableClubes() {
 						))}
 					</tbody>
 				</table>
+				{confirmEliminar && (
+					<div className="fixed inset-0 flex items-center justify-center z-50">
+						<div className="bg-[#141414] p-10 rounded-lg">
+							<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
+								¿Seguro que quieres eliminar esta categoria de peso?
+							</h3>
+							<div className="flex justify-center">
+								<button
+									onClick={()=>elminarCategoria()}
+									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+									id="titulos-pequenos"
+								>
+								Aceptar
+								</button>
+							</div>
+							<div className="flex justify-center mt-5">
+								<button
+									onClick={()=>{setConfirmEliminar(false); setCategoriaEliminar('');}}
+									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+									id="titulos-pequenos"
+								>
+								Cancelar
+								</button>
+							</div>
+						</div>
+					</div>
+				)}
 			</div>
 		</>
 	);

@@ -1,28 +1,56 @@
 'use client';
 
+import axios from 'axios';
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import {
+	ChangeEvent,
+	useEffect,
+	useState
+} from 'react';
 
 interface FormData {
-    nombre: string;
-    descripcion: string;
+    name: string;
+    description: string;
 }
 
 export default function InfoClub() {
-
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	const clubId = useSearchParams().get('clubId');
 	const [datosClub, setDatosClub] = useState<FormData>({
-		nombre: '',
-		descripcion: ''
+		name: '',
+		description: ''
 	});
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		const { name, value } = e.target;
-		setDatosClub((prevData) => ({
-			...prevData,
-			[name]: value,
-		}));
+	const getClub = async (token:string, clubId: string) => {
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const params = {
+				clubId: clubId,
+			};
+			const response = await axios.get(`${apiEndpoint}/club`, {
+				headers: headers,
+				params: params
+			});
+			console.log(response.data.club);
+			return response.data.club;
+		} catch (error) {
+			console.log(error);
+		}
 	};
-
+	const cargarClub = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		setDatosClub(await getClub(token, clubId as string));
+	};
+	useEffect(()=>{
+		cargarClub();
+	}, []);
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -48,7 +76,7 @@ export default function InfoClub() {
 							</div>
 							<div className="w-2/3 mx-2" id='texto-general'>
 								<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-									{datosClub.nombre}
+									{datosClub.name}
 								</div>
 							</div>
 						</div>
@@ -60,7 +88,7 @@ export default function InfoClub() {
 							</div>
 							<div className="w-2/3 mx-2" id='texto-general'>
 								<div className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-									{datosClub.descripcion}
+									{datosClub.description}
 								</div>
 							</div>
 						</div>
