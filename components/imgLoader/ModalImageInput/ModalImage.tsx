@@ -14,7 +14,7 @@ export interface fileImageFormat {
 
 export const noAllowed = { 'nombre': 'No se eligió ningún archivo válido', 'valor': '' };
 
-export function ModalImage({ setView }: { setView: React.Dispatch<React.SetStateAction<boolean>> }) {
+export function ModalImage({ setView, id }: { setView: React.Dispatch<React.SetStateAction<boolean>>, id?: string}) {
 	const [isHovered, setIsHovered] = useState(false);
 	const [file, setFile] = useState(noAllowed);
 
@@ -47,7 +47,7 @@ export function ModalImage({ setView }: { setView: React.Dispatch<React.SetState
 	};
 
 	const handleButton = async () => {
-		await ActualizarFotoPerfil(file.valor);
+		await ActualizarFotoPerfil(file.valor, id);
 		window.location.reload();
 	};
 

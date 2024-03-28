@@ -1,3 +1,4 @@
+import { throws } from 'assert';
 import axios from 'axios';
 
 const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -24,12 +25,13 @@ export const cargarInformacionIndex = async () : Promise<indexInformation | null
 	}
 };
 
-export const obtenerFotoPerfil = async () : Promise<string> => {
+export const obtenerFotoPerfil = async (id = '') : Promise<string> => {
 	const datos = localStorage.getItem('userData');
 	let token, userId;
 	if(datos != null){
 		token = JSON.parse(datos).token;
-		userId = JSON.parse(datos).userId;
+		if(id == '') userId = JSON.parse(datos).userId;
+		else userId = id;
 	}
 	const headers = {
 		sessiontoken: token
@@ -42,6 +44,9 @@ export const obtenerFotoPerfil = async () : Promise<string> => {
 			params: parametros,
 			headers: headers
 		});
+		if(response.data.image == undefined){
+			throw new Error('No Posee Imagen');
+		}
 		return response.data.image;
 	} catch (error) {
 		console.log(error);
@@ -66,12 +71,13 @@ function base64StringToFile(base64String: string, filename: string) {
 	return file;
 }
 
-export const ActualizarFotoPerfil = async (nImagen: string) : Promise<void> => {
+export const ActualizarFotoPerfil = async (nImagen: string, id = '') : Promise<void> => {
 	const datos = localStorage.getItem('userData');
 	let token, userId;
 	if(datos != null){
 		token = JSON.parse(datos).token;
-		userId = JSON.parse(datos).userId;
+		if(id == '') userId = JSON.parse(datos).userId;
+		else userId = id;
 	}
 	const headers = {
 		sessiontoken: token
