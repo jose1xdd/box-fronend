@@ -190,8 +190,8 @@ export default function CrearConvocatoria() {
 							<h1 className='text-center text-[400%]' id='titulos-grandes'>Nueva Convocatoria</h1>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
-										Entrenador encargado:
+									<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+										Entrenador encargado
 									</div>
 								</div>
 								<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
@@ -205,7 +205,7 @@ export default function CrearConvocatoria() {
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 
-									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+									<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Fecha del evento
 									</div>
 								</div>
@@ -218,15 +218,15 @@ export default function CrearConvocatoria() {
 							</div>
 							{fechainvalida && (
 								<div className='flex justify-center'>
-									<p className='text-red-500 mb-2'>La fecha no puede ser en un dia pasado</p>
+									<p className='text-red-500 mb-2'>La fecha no puede ser en un día anterior a la fecha de hoy</p>
 								</div>
 
 							)}
 
 							<div className="flex items-center justify-center">
 								<div className="flex">
-									<div className="w-1/3 mx-2">
-										<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+									<div className="w-1/3 mx-4">
+										<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Hora inicio
 										</div>
 									</div>
@@ -255,7 +255,7 @@ export default function CrearConvocatoria() {
 							</div>
 							{horaInvalida && (
 								<div className='flex justify-center'>
-									<p className='text-red-500 mb-2'>La hora de inicio no puede ser antes que la de fin</p>
+									<p className='text-red-500 mb-2'>La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
 								</div>
 
 							)}
@@ -273,7 +273,7 @@ export default function CrearConvocatoria() {
 									required
 									type="text"
 									onChange={(event)=>{setDescripcionEvento(event.target.value);}}
-									className='bg-neutral-200 rounded-full w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
+									className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
 									placeholder='Descripcion general del evento'
 								/>
 							</div>
@@ -296,7 +296,7 @@ export default function CrearConvocatoria() {
 									required
 									value={correos}
 									readOnly
-									className='bg-neutral-200 h-full w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
+									className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black' id='texto-general'
 									placeholder='Participantes del evento'
 								/>
 							</div>
