@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import usuariosData from '@/pruebas/usuarios.json';
 import Tabla from '@/components/tablas/roles';
+import Link from 'next/link';
 
 export default function GestionarRolesAdmin() {
 	const [rol, setRol] = useState('');
@@ -154,6 +155,11 @@ export default function GestionarRolesAdmin() {
 					</div>
 				</div>
 			)}
+			<div className="flex justify-center mt-8">
+				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+					Volver
+				</Link>
+			</div>
 		</>
 	);
 }

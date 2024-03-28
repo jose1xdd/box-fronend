@@ -1,6 +1,7 @@
 'use client';
 
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 interface crtierios {
@@ -90,6 +91,7 @@ export default function EvaluacionFisicaAdmin() {
 			const headers = {
 				sessiontoken: token,
 			};
+
 			const response = await axios.get(`${apiEndpoint}/testCritery`, {
 				headers: headers,
 			});
@@ -247,6 +249,13 @@ export default function EvaluacionFisicaAdmin() {
 					</div>
 				</div>
 			)}
+
+			<div className="flex justify-center mt-8">
+				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+					Volver
+				</Link>
+			</div>
+
 		</>
 	);
 }

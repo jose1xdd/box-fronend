@@ -63,6 +63,22 @@ export default function Home() {
 				telefono: response.data.user.phone,
 				correo: response.data.user.email,
 			});
+
+			// Obtén los datos de nombre y apellido de tu variable "response"
+			const nombre = response.data.user.name;
+			const apellido = response.data.user.lastName;
+
+			// Define un objeto con los datos que deseas guardar
+			const datosUsuario = {
+				nombre: nombre,
+				apellido: apellido
+			};
+
+			// Convierte el objeto a una cadena JSON
+			const datosUsuarioJSON = JSON.stringify(datosUsuario);
+
+			// Guarda la cadena JSON en localStorage
+			localStorage.setItem('datosUsuario', datosUsuarioJSON);
 		} catch (error) {
 			console.log(error);
 		}

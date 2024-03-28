@@ -5,6 +5,19 @@ import Link from 'next/link';
 import Logo from '@/public/images/logo.png';
 
 export default function NavbarAdministrador() {
+
+	const [nombreUsuario, setNombreUsuario] = useState('');
+
+	useEffect(() => {
+		// Obtener datos del localStorage
+		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
+		if (datosUsuarioJSON) {
+			const datosUsuario = JSON.parse(datosUsuarioJSON);
+			// Actualizar el estado con el nombre y apellido del usuario
+			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+		}
+	}, []);
+
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
 	const [usuariosDesplegados, setUsuariosDesplegados] = useState(false);
 
@@ -70,7 +83,7 @@ export default function NavbarAdministrador() {
 					</ul>
 					<ul className="flex space-x-4 my-4 cursor-pointer">
 						<li className='flex text-white' id='titulos-pequenos' onClick={abrirBarraDesplegable}>
-							<div>Nombre del usuario</div>
+							<div>{nombreUsuario}</div>
 						</li>
 						<svg
 							className="my-1"

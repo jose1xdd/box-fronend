@@ -7,13 +7,13 @@ export default function Footer(){
 					LIGA DE BOXEO DE NORTE DE SANTANDER
 				</div>
 				<div className='grid grid-rows-2 items-center justify-center text-white' id='titulos-pequenos'>
-					<p>+57 3XX XXX XX XX</p>
+					<a href="https://wa.me/3108107341" target="Blank">+57 310 810 7341</a>
 					<p>Av. 1 #4-45, Barrio Lleras Restrepo</p>
 				</div>
 				<div className='grid grid-flow-col auto-cols-max items-center justify-center'>
 					<a href='https://www.instagram.com/' target="_blank">
 						<svg
-							xmlns="http://www.w3.org/2000/svg"
+						    xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
 							viewBox="0 0 512 512"
 							fill="#cd1919"

@@ -1,4 +1,4 @@
-'use client';
+
 import Calendario from '@/components/calendario/calendario';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -154,12 +154,9 @@ export default function CrearConvocatoria() {
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		const check = fechainvalida || horaInvalida || (correos.length == 0);
-		console.log(check);
-		alert(1);
 		if(check){
 			setDatosInvalido(true);
 		}else{
-			alert(1);
 			let token;
 			const datos = localStorage.getItem('userData');
 			if(datos != null){
@@ -185,7 +182,6 @@ export default function CrearConvocatoria() {
 			}
 			if(rol == 'Entrenador') route = 'entrenador';
 			else route = 'administrador';
-			alert(1);
 			try {
 				await axios.post(`${apiEndpoint}/event/meet`, body, { headers: headers });
 				router.push('/' + route + '/calendario');
@@ -209,6 +205,9 @@ export default function CrearConvocatoria() {
 									</div>
 								</div>
 								<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}}required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
+									<option value="" disabled>
+											Seleccione el entrenador
+									</option>
 									{entrenadores.map((entrenador) => (
 										<option key={entrenador._id} value={entrenador._id} placeholder='Entrenador encargado'>
 											{entrenador.name + entrenador.lastName + ' - ' + entrenador.cedula}
@@ -296,21 +295,30 @@ export default function CrearConvocatoria() {
 							<div className='flex justify-center'>
 								<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
 							</div>
-							<div className="flex">
-								<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-									{usuarios.map((usuario) => (
-										<option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
+							<div className="flex ">
+								<select
+									required
+									name="nombreCriterioEliminar"
+									onChange={(event)=>{setNuevoParticipante((event.target.value));}}
+									className="bg-neutral-200 rounded-full w-full h-10 my-2 pl-4 text-black"
+									id="texto-general"
+								>
+									<option value="" disabled>
+											Seleccione el usuario a agregar
+									</option>
+									{usuarios.map((usuario, index) => (
+										<option key={index} value={usuario.email}>
 											{usuario.email}
 										</option>
 									))}
 								</select>
 							</div>
-							<div className="flex items-center justify-center">
+							<div className="flex items-center justify-center h-[250px]">
 								<textarea
 									required
 									value={correos}
 									readOnly
-									className='bg-neutral-200 h-full w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
+									className='bg-neutral-200 h-full w-full mx-5 my-2 pl-4 text-black' id='texto-general'
 									placeholder='Participantes del evento'
 								/>
 							</div>
@@ -331,7 +339,7 @@ export default function CrearConvocatoria() {
 						>
                             Agregar Convocatoria
 						</button>
-						<button onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
+						<button type='button' onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
 					        Cancelar
 						</button>
 					</div>
