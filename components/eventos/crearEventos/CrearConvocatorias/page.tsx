@@ -1,13 +1,9 @@
-
+'use client';
 import Calendario from '@/components/calendario/calendario';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Router } from 'next/router';
-import {
-	FormEvent,
-	useEffect,
-	useState
-} from 'react';
+import { useEffect, useState } from 'react';
 interface User {
     _id: string;
     name: string;
@@ -30,7 +26,7 @@ export default function CrearConvocatoria() {
 	const [horaInvalida, setHoraInvalida] = useState(false);
 	const [nuevoParticipante, setNuevoParticipante] = useState('');
 	const [selectedUsuarios, setSelectedUsuarios] = useState<String[]>([]);
-	const [datosInvalido, setDatosInvalido] = useState(false);
+	const [eliminar, setEliminar] = useState(false);
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const getEntrenadores = async (token:string) => {
@@ -151,63 +147,54 @@ export default function CrearConvocatoria() {
 		setCorreos(nuevosCorreos);
 	}, [selectedUsuarios]);
 
-	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		const check = fechainvalida || horaInvalida || (correos.length == 0);
-		if(check){
-			setDatosInvalido(true);
-		}else{
-			let token;
-			const datos = localStorage.getItem('userData');
-			if(datos != null){
-				token = JSON.parse(datos).token;
-			}
-			const headers = {
-				sessiontoken: token,
-			};
+	async function handlerSubmit() {
+		let token;
+		const datos = localStorage.getItem('userData');
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		const headers = {
+			sessiontoken: token,
+		};
 
-			const body = {
-				trainer: selectedEntrenador,
-				date: fechaEvento,
-				startsAt: horaInicio,
-				endsAt: horaFin,
-				name: nombreEvento,
-				description: descripcionEvento,
-				participants: selectedUsuarios,
-			};
-			let rol;
-			let route;
-			if(datos != null){
-				rol = JSON.parse(datos).role;
-			}
-			if(rol == 'Entrenador') route = 'entrenador';
-			else route = 'administrador';
-			try {
-				await axios.post(`${apiEndpoint}/event/meet`, body, { headers: headers });
-				router.push('/' + route + '/calendario');
-			}catch(error){
-				console.log(error);
-			}
+		const body = {
+			trainer: selectedEntrenador,
+			date: fechaEvento,
+			startsAt: horaInicio,
+			endsAt: horaFin,
+			name: nombreEvento,
+			description: descripcionEvento,
+			participants: selectedUsuarios,
+		};
+		let rol;
+		let route;
+		if(datos != null){
+			rol = JSON.parse(datos).role;
+		}
+		if(rol == 'Entrenador') route = 'entrenador';
+		else route = 'administrador';
+		try {
+			await axios.post(`${apiEndpoint}/event/meet`, body, { headers: headers });
+			router.push('/' + route + '/calendario');
+		}catch(error){
+			console.log(error);
 		}
 	}
 
 	return (
 		<div className="container mx-auto mt-8">
 			<div className="p-4 ">
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handlerSubmit}>
 					<div className='flex'>
 						<div className="w-2/3 pr-4">
 							<h1 className='text-center text-[400%]' id='titulos-grandes'>Nueva Convocatoria</h1>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
-										Entrenador encargado:
+									<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+										Entrenador encargado
 									</div>
 								</div>
-								<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}}required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-									<option value="" disabled>
-											Seleccione el entrenador
-									</option>
+								<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
 									{entrenadores.map((entrenador) => (
 										<option key={entrenador._id} value={entrenador._id} placeholder='Entrenador encargado'>
 											{entrenador.name + entrenador.lastName + ' - ' + entrenador.cedula}
@@ -218,7 +205,7 @@ export default function CrearConvocatoria() {
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 
-									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+									<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Fecha del evento
 									</div>
 								</div>
@@ -231,15 +218,15 @@ export default function CrearConvocatoria() {
 							</div>
 							{fechainvalida && (
 								<div className='flex justify-center'>
-									<p className='text-red-500 mb-2'>La fecha no puede ser en un dia pasado</p>
+									<p className='text-red-500 mb-2'>La fecha no puede ser en un día anterior a la fecha de hoy</p>
 								</div>
 
 							)}
 
 							<div className="flex items-center justify-center">
 								<div className="flex">
-									<div className="w-1/3 mx-2">
-										<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
+									<div className="w-1/3 mx-4">
+										<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Hora inicio
 										</div>
 									</div>
@@ -268,7 +255,7 @@ export default function CrearConvocatoria() {
 							</div>
 							{horaInvalida && (
 								<div className='flex justify-center'>
-									<p className='text-red-500 mb-2'>La hora de inicio no puede ser antes que la de fin</p>
+									<p className='text-red-500 mb-2'>La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
 								</div>
 
 							)}
@@ -286,7 +273,7 @@ export default function CrearConvocatoria() {
 									required
 									type="text"
 									onChange={(event)=>{setDescripcionEvento(event.target.value);}}
-									className='bg-neutral-200 rounded-full w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
+									className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
 									placeholder='Descripcion general del evento'
 								/>
 							</div>
@@ -295,30 +282,21 @@ export default function CrearConvocatoria() {
 							<div className='flex justify-center'>
 								<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
 							</div>
-							<div className="flex ">
-								<select
-									required
-									name="nombreCriterioEliminar"
-									onChange={(event)=>{setNuevoParticipante((event.target.value));}}
-									className="bg-neutral-200 rounded-full w-full h-10 my-2 pl-4 text-black"
-									id="texto-general"
-								>
-									<option value="" disabled>
-											Seleccione el usuario a agregar
-									</option>
-									{usuarios.map((usuario, index) => (
-										<option key={index} value={usuario.email}>
+							<div className="flex">
+								<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
+									{usuarios.map((usuario) => (
+										<option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
 											{usuario.email}
 										</option>
 									))}
 								</select>
 							</div>
-							<div className="flex items-center justify-center h-[250px]">
+							<div className="flex items-center justify-center">
 								<textarea
 									required
 									value={correos}
 									readOnly
-									className='bg-neutral-200 h-full w-full mx-5 my-2 pl-4 text-black' id='texto-general'
+									className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black' id='texto-general'
 									placeholder='Participantes del evento'
 								/>
 							</div>
@@ -333,36 +311,15 @@ export default function CrearConvocatoria() {
 						</div>
 					</div>
 					<div className="flex justify-center items-center mt-4 ">
-						<button
-							type="submit"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-                            Agregar Convocatoria
+						<button onClick={() => handlerSubmit()}className="bg-[#cd1919] text-white rounded p-2 mx-5">
+					        Agregar convocatoria
 						</button>
-						<button type='button' onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
+						<button onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
 					        Cancelar
 						</button>
 					</div>
 				</form>
 			</div>
-			{datosInvalido && (
-				<div className="fixed inset-0 flex items-center justify-center z-50">
-					<div className="bg-[#141414] p-10 rounded-lg">
-						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-								Los datos ingresados no son válidos, porfavor proporciona datos válidos
-						</h3>
-						<div className="flex justify-center">
-							<button
-								onClick={()=>setDatosInvalido(false)}
-								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-								id="titulos-pequenos"
-							>
-								Aceptar
-							</button>
-						</div>
-					</div>
-				</div>
-			)}
 		</div>
 	);
 }
