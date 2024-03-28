@@ -5,6 +5,7 @@ import React, {
 	useRef
 } from 'react';
 import { InputImageArea } from './InputImageArea';
+import { ActualizarFotoPerfil } from '@/app/lib/basic_request';
 
 export interface fileImageFormat {
 	'nombre': string;
@@ -45,7 +46,10 @@ export function ModalImage({ setView }: { setView: React.Dispatch<React.SetState
 		if(myInput) myInput.current?.click();
 	};
 
-	console.log(file);
+	const handleButton = async () => {
+		await ActualizarFotoPerfil(file.valor);
+		window.location.reload();
+	};
 
 	return (
 		<div className='flex'>
@@ -59,11 +63,12 @@ export function ModalImage({ setView }: { setView: React.Dispatch<React.SetState
 							<label>{file.nombre}</label>
 						</div>
 						<h3>Solo se admiten imagenes en formato .jpg y .png</h3>
-						{file != null &&
+						{file.valor != '' &&
 							<button
 								className={`mt-4 ${isHovered ? 'bg-white text-[#cd1919]' : 'bg-[#cd1919] text-white'} px-4 py-2 rounded transition-all duration-300 ease-in-out`}
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
+								onClick={handleButton}
 							>
                       Cargar Archivo
 							</button>}

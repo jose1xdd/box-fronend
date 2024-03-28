@@ -21,7 +21,7 @@ export function ModalUltraBasic({ setIsOpen, user }: ModalProps) {
 		<div className='flex fle'>
 			<div className="fixed inset-0 flex justify-center items-center">
 				<div className="bg-opacity-40 w-full h-full flex items-center justify-center">
-					<div className="bg-[#1e1e1e] bg-opacity-80 p-8 rounded-[30PX] w-[600px] h-[350px] text-white flex flex-col justify-center items-center gap-4 space-y-5">
+					<div className="bg-[#1e1e1e] bg-opacity-80 p-8 rounded-[30PX] w-[600px] h-[350px] text-white flex flex-col justify-center items-center gap-4 space-y-10">
 						<div id='texto-general' className='font-extrabold text-2xl'>{`¿Está seguro de querer deshabilitar al usuario ${user.lastName} ${user.name}?`.toUpperCase()}</div>
 						<div className='flex space-x-5 items-center justify-center'>
 							<button
