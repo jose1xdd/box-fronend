@@ -1,7 +1,9 @@
 'use client';
 
+import { obtenerFotoPerfil } from '@/app/lib/basic_request';
 import OpcionesCategorias from '@/components/OpcionesCategorias';
 import OpcionesClubes from '@/components/OpcionesClubes';
+import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,6 +15,7 @@ interface FormData {
 	club: string;
 	weightCategory: string;
 	weight: number;
+	image: string
   }
 
 export default function EditarDeportista() {
@@ -20,6 +23,7 @@ export default function EditarDeportista() {
 	//TRAER ID DE USUARIO DE LA URL
 	const valor = useSearchParams();
 	const id = valor.get('id');
+	const [viewModal, setViewModal] = useState(false);
 
 	const [datosDeportista, setDatosDeportista] = useState<FormData>({
 		name: '',
@@ -28,6 +32,7 @@ export default function EditarDeportista() {
 		club: '',
 		weightCategory: '',
 		weight: 0,
+		image: ''
 	});
 
 	const handleChange = (field: keyof FormData, value: string) => {
@@ -46,7 +51,7 @@ export default function EditarDeportista() {
 			arreglo = JSON.parse(datos);
 		}
 		const dataDeportista = await cargaDeportista(arreglo);
-		setDatosDeportista(dataDeportista.data.user);
+		if(id != null) setDatosDeportista({ ... dataDeportista.data.user, ['image']: await obtenerFotoPerfil(id) });
 	};
 
 	//Consumir endpoint
@@ -72,6 +77,10 @@ export default function EditarDeportista() {
 			console.log(error);
 		}
 	}
+
+	const handleChangeImage = () => {
+		setViewModal(true);
+	};
 
 	//FUNCIÓN PARA GUARDAR LA INFO Y ENVIAR A LA BASE DE DATOS
 	async function handleGuardarCambios(): Promise<void> {
@@ -124,15 +133,8 @@ export default function EditarDeportista() {
 			<div className="container mx-auto mt-8">
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR DEPORTISTA</h1>
 				<div className='flex items-center justify-center'>
-					<svg
-						className="my-1"
-						xmlns="http://www.w3.org/2000/svg"
-						height="6em"
-						viewBox="0 0 512 512"
-						fill="#ffffff"
-					>
-						<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-					</svg>
+					{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
+
 				</div>
 				<form>
 					<div className="p-4 max-w-5xl mx-auto flex">
@@ -240,22 +242,23 @@ export default function EditarDeportista() {
 							</div>
 						</div>
 					</div>
-					<div className="mt-5 flex justify-center">
+					<div className="mt-5 flex justify-center items-center">
 						<button
 							onClick={handleGuardarCambios}
 							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
 						>
                             Guardar cambios
 						</button>
-						<button
-							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
-						>
-                            Cargar nueva foto de perfil
-						</button>
+						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos' onClick={(event) => {
+							event.preventDefault();
+							handleChangeImage();
+						}}>
+							Cargar nueva foto de perfil
+		  				</button>
 					</div>
 				</form>
+				{(viewModal && id) && <ModalImage setView={setViewModal} id={id}></ModalImage>}
 			</div>
 		</>
 	);
