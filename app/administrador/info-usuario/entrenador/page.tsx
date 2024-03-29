@@ -1,5 +1,6 @@
 'use client';
 
+import { obtenerFotoPerfil } from '@/app/lib/basic_request';
 import axios from 'axios';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -14,6 +15,7 @@ export default function InfoEntrenador() {
 		address: '',
 		phone: '',
 		email: '',
+		image: ''
 	});
 
 	//Valores para traer el id del URL
@@ -36,7 +38,7 @@ export default function InfoEntrenador() {
 			arreglo = JSON.parse(datos);
 		}
 		const dataDeportista = await cargaEntrenador(arreglo);
-		setDatosEntrenador(dataDeportista.data.user);
+		if (id != null) setDatosEntrenador({ ...dataDeportista.data.user, ['image']: await obtenerFotoPerfil(id) });
 	};
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -67,15 +69,7 @@ export default function InfoEntrenador() {
 			<div className="container mx-auto mt-8">
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN ENTRENADOR</h1>
 				<div className='flex items-center justify-center'>
-					<svg
-						className="my-1"
-						xmlns="http://www.w3.org/2000/svg"
-						height="6em"
-						viewBox="0 0 512 512"
-						fill="#ffffff"
-					>
-						<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-					</svg>
+					{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-40 h-40'></img>}
 				</div>
 				<form>
 					<div className="p-4 max-w-5xl mx-auto flex">
