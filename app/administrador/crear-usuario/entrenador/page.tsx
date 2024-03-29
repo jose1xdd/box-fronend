@@ -225,12 +225,6 @@ export default function CrearEntrenador() {
 						>
                             Crear entrenador
 						</button>
-						<button
-							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-                            Cargar foto de perfil
-						</button>
 					</div>
 				</form>
 			</div>

@@ -11,7 +11,7 @@ interface InputProps {
     label: string; // Etiqueta del campo de entrada
     placeholder?: string; // Texto de marcador de posición opcional
 	value: string;
-	className: string;
+	className?: string;
 	onChange : (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
