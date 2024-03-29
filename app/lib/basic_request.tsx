@@ -24,6 +24,49 @@ export const cargarInformacionIndex = async () : Promise<indexInformation | null
 		return null;
 	}
 };
+/**
+ *
+ * @param email
+ * @returns -1 -> No existe, 0 -> exitoso, 1 -> Código pendiente
+ */
+export const SolicitarCambioContrasenia = async (email: string): Promise<boolean> => {
+
+	try {
+		const body = {
+			email: email
+		};
+		const response = await axios.post(`${apiEndpoint}/users/generate-password-code`, body);
+
+		return true;
+
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+};
+
+/**
+ *
+ * @param email
+ * @returns -1 -> No existe, 0 -> exitoso, 1 -> Código pendiente
+ */
+export const RealizarCambioContrasenia = async (email: string, codigo: string, contrasenia: string): Promise<boolean> => {
+
+	try {
+		const body = {
+			email: email,
+			code: codigo,
+			password: contrasenia
+		};
+		const response = await axios.patch(`${apiEndpoint}/users/update-password`, body);
+
+		return true;
+
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+};
 
 export const obtenerFotoPerfil = async (id = '') : Promise<string> => {
 	const datos = localStorage.getItem('userData');
