@@ -75,6 +75,8 @@ export default function RecoveryPassword() {
 
 	}
 
+	const [emptyCode, setEmptyCode] = useState(false);
+
 	async function handleChangePassword(){
 		if (information.email.trim() === '') {
 			  setIsEmpty(true);
@@ -86,8 +88,13 @@ export default function RecoveryPassword() {
 			  return;
 		}
 
-		if(information._contrasenia != information.contrasenia){
+		if(information._contrasenia == '' || information._contrasenia != information.contrasenia){
 			setNoEquals(true);
+			return;
+		}
+
+		if(information.codigo == ''){
+			setEmptyCode(true);
 			return;
 		}
 
@@ -211,12 +218,15 @@ export default function RecoveryPassword() {
 						value={information.codigo}
 						type="text"
 					  />
+					  {emptyCode && (
+						<p className="text-red-600">El campo de código no puede estar vacío</p>
+					  )}
 					  <label>Contraseña Nueva</label>
 					  <Form.Input
 					  className={noEquals ? 'border-red-500' : ''}
 						label=""
 						name="contrasenia"
-						placeholder="Ingresa el código que recibiste"
+						placeholder="Ingresa la contraseña nueva"
 						onChange={handleInput}
 						value={information.contrasenia}
 						type="text"
@@ -226,7 +236,7 @@ export default function RecoveryPassword() {
 					  className={noEquals ? 'border-red-500' : ''}
 						label=""
 						name="_contrasenia"
-						placeholder="Ingresa el código que recibiste"
+						placeholder="Ingresa nuevamente la contraseña"
 						onChange={handleInput}
 						value={information._contrasenia}
 						type="text"
