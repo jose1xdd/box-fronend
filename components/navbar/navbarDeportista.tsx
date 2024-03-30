@@ -1,11 +1,31 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/public/images/logo.png';
+import { ObtenerLogo } from '@/app/lib/basic_request';
 
 export default function NavbarDeportista() {
+
+	const [logo, setLogo] = useState('');
+
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
+
+	const [nombreUsuario, setNombreUsuario] = useState('');
+
+	useEffect(() => {
+		// Obtener datos del localStorage
+		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
+		if (datosUsuarioJSON) {
+			const datosUsuario = JSON.parse(datosUsuarioJSON);
+			// Actualizar el estado con el nombre y apellido del usuario
+			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+		}
+		const f = async () => {
+			setLogo(await ObtenerLogo());
+		};
+		f();
+	}, []);
 
 	const abrirBarraDesplegable = () => {
 		setBarraDesplegada(true);
@@ -23,14 +43,11 @@ export default function NavbarDeportista() {
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
 								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
-									<Image
-										src={Logo}
+									{logo != '' && <img
+										src={logo}
 										alt="Logo Liga de Boxeo de Norte de Santander"
-										className="transform translate-x-[10px] translate-y-[20px]"
-										width={125}
-										height={25}
-										priority
-									/>
+										className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"
+									/>}
 								</div>
 							</div>
 						</div>
@@ -45,7 +62,7 @@ export default function NavbarDeportista() {
 					</ul>
 					<ul className="flex space-x-4 my-4 cursor-pointer">
 						<li className='flex text-white' id='titulos-pequenos' onClick={abrirBarraDesplegable}>
-							<div>Nombre del usuario</div>
+							<div>{nombreUsuario}</div>
 						</li>
 						<svg
 							className="my-1"

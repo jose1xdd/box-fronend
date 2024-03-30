@@ -10,6 +10,21 @@ export interface indexInformation {
     'section': []
 };
 
+export const ObtenerLogo = async () : Promise<string> => {
+	// const datos = localStorage.getItem('userData');
+	// let token;
+	// if(datos != null){
+	// 	token = JSON.parse(datos).token;
+	// }
+	try {
+		const response = await axios.get(`${apiEndpoint}/indexPag/get-logo`);
+		return response.data.image;
+	} catch (error) {
+		console.log(error);
+		return '';
+	}
+};
+
 export const cargarInformacionIndex = async () : Promise<indexInformation | null> => {
 	// const datos = localStorage.getItem('userData');
 	// let token;
@@ -134,6 +149,35 @@ export const ActualizarFotoPerfil = async (nImagen: string, id = '') : Promise<v
 
 	try {
 		const response = await axios.post(`${apiEndpoint}/users/${userId}/uploadImage`, formData, {
+			headers: headers,
+			params: parametros,
+		});
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		return;
+	}
+};
+
+export const ActualizarLogo = async (nImagen: string) : Promise<void> => {
+	const datos = localStorage.getItem('userData');
+	let token, userId;
+	if(datos != null){
+		token = JSON.parse(datos).token;
+		userId = JSON.parse(datos).userId;
+	}
+	const headers = {
+		sessiontoken: token
+	};
+	const parametros = {
+		userId: userId
+	};
+	const formData = new FormData();
+	const FileImage = base64StringToFile(nImagen, 'Logo.png');
+	formData.append('image', FileImage);
+
+	try {
+		const response = await axios.post(`${apiEndpoint}/indexPag/upload-logo`, formData, {
 			headers: headers,
 			params: parametros,
 		});
