@@ -8,8 +8,28 @@ import gestionarRoles from '@/public/images/gestionarRoles.png';
 import gestionarClubes from '@/public/images/gestionarClubes.png';
 import gestionarIndex from '@/public/images/gestionarIndex.png';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
+import { ObtenerLogo } from '@/app/lib/basic_request';
 
 export default function AdministracionAdmin() {
+
+	const [logo, setLogo] = useState('');
+
+	const [viewModal, setViewModal] = useState(false);
+
+	const handleChangeImage = () => {
+		setViewModal(true);
+	};
+
+	useEffect(
+		() => {
+			const f = async () => {
+				setLogo(await ObtenerLogo());
+			};
+			f();
+		}
+		, []);
 
 	return (
 		<>
@@ -17,20 +37,19 @@ export default function AdministracionAdmin() {
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>MENÚ DE ADMINISTRADOR</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-1/3 pr-4 m-0">
-						<div className='m-0 my-5'>
-							<div className='flex items-center justify-center'> <Image
-								src={cambiarLogo}
+						{logo != '' && <div className='m-0 my-5'>
+							<div className='flex items-center justify-center'> <img
+								className='h-[200px] w-[200px]'
+								src={logo}
 								alt="Logo Liga de Boxeo de Norte de Santander"
-								width={200}
-								priority
 							/>
 							</div>
 							<div className='flex items-center justify-center mt-3 mb-5'>
-								<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+								<button onClick={(e) => {e.preventDefault; handleChangeImage();}} className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 									Cambiar logo
 								</button>
 							</div>
-						</div>
+						</div>}
 						<div className='mx-0 my-5'>
 							<div className='flex items-center justify-center'>
 								<Image
@@ -123,6 +142,7 @@ export default function AdministracionAdmin() {
 					</div>
 				</div>
 			</div>
+			{(viewModal) && <ModalImage setView={setViewModal} type={1}></ModalImage>}
 		</>
 	);
 }

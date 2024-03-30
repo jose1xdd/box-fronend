@@ -5,7 +5,7 @@ import React, {
 	useRef
 } from 'react';
 import { InputImageArea } from './InputImageArea';
-import { ActualizarFotoPerfil } from '@/app/lib/basic_request';
+import { ActualizarFotoPerfil, ActualizarLogo } from '@/app/lib/basic_request';
 
 export interface fileImageFormat {
 	'nombre': string;
@@ -14,7 +14,12 @@ export interface fileImageFormat {
 
 export const noAllowed = { 'nombre': 'No se eligió ningún archivo válido', 'valor': '' };
 
-export function ModalImage({ setView, id }: { setView: React.Dispatch<React.SetStateAction<boolean>>, id?: string}) {
+/**
+ *
+ * @param setView, id -> id del usuario de la imagen a cargar, type -> 0 o vacío si para usuarios, 1 si es para logos
+ * @returns
+ */
+export function ModalImage({ setView, id, type }: { setView: React.Dispatch<React.SetStateAction<boolean>>, id?: string, type?: number}) {
 	const [isHovered, setIsHovered] = useState(false);
 	const [file, setFile] = useState(noAllowed);
 
@@ -47,7 +52,10 @@ export function ModalImage({ setView, id }: { setView: React.Dispatch<React.SetS
 	};
 
 	const handleButton = async () => {
-		await ActualizarFotoPerfil(file.valor, id);
+		if(type != null && type == 1){
+			await ActualizarLogo(file.valor);
+		}
+		else await ActualizarFotoPerfil(file.valor, id);
 		window.location.reload();
 	};
 

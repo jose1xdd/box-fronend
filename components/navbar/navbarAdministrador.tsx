@@ -3,8 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/public/images/logo.png';
+import { ObtenerLogo } from '@/app/lib/basic_request';
 
 export default function NavbarAdministrador() {
+
+	const [logo, setLogo] = useState('');
 
 	const [nombreUsuario, setNombreUsuario] = useState('');
 
@@ -16,6 +19,10 @@ export default function NavbarAdministrador() {
 			// Actualizar el estado con el nombre y apellido del usuario
 			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
 		}
+		const f = async () => {
+			setLogo(await ObtenerLogo());
+		};
+		f();
 	}, []);
 
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
@@ -55,14 +62,11 @@ export default function NavbarAdministrador() {
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
 								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
-									<Image
-										src={Logo}
+									{logo != '' && <img
+										src={logo}
 										alt="Logo Liga de Boxeo de Norte de Santander"
-										className="transform translate-x-[10px] translate-y-[20px]"
-										width={125}
-										height={25}
-										priority
-									/>
+										className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"
+									/>}
 								</div>
 							</div>
 						</div>
