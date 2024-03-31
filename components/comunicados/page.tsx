@@ -81,6 +81,9 @@ export default function Comunicados() {
 		};
 		try {
 			await axios.post(`${apiEndpoint}/users/send-comunicates`, body, { headers: headers });
+			setSelectedUsuarios([]);
+			setAsunto('');
+			setCuerpo('');
 		}catch(error){
 			console.log(error);
 		}
