@@ -189,6 +189,7 @@ export const ActualizarLogo = async (nImagen: string) : Promise<void> => {
 };
 
 export const CargaMasiva = async (archivo: File): Promise<any> => {
+	
 	const datos = localStorage.getItem('userData');
 	let token;
 
@@ -204,12 +205,10 @@ export const CargaMasiva = async (archivo: File): Promise<any> => {
 	formData.append('excel', archivo);
 
 	try {
-		let endpoint = `${apiEndpoint}/users/upload-masive-sportsman`; // Endpoint por defecto
+		let endpoint = `${apiEndpoint}/users/upload-masive-sportsman`;
 
-		// Obtener la URL actual
 		const urlActual = window.location.href;
 
-		// Verificar la URL actual y asignar el endpoint correspondiente
 		if (urlActual.includes('/administrador/lista-usuarios/deportista')) {
 			endpoint = 'users/upload-masive-sportsman';
 		} else if (urlActual.includes('/administrador/lista-usuarios/entrenador')) {
