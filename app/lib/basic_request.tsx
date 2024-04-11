@@ -189,7 +189,6 @@ export const ActualizarLogo = async (nImagen: string) : Promise<void> => {
 };
 
 export const CargaMasiva = async (archivo: File): Promise<any> => {
-	
 	const datos = localStorage.getItem('userData');
 	let token;
 
