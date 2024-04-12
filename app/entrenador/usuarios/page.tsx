@@ -2,31 +2,10 @@
 'use client';
 import React, { useState } from 'react';
 import TableDeportistas from '@/components/tablas/TableDeportistasEntrenador';
-import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
-import data from '@/pruebas/usuarios.json';
 import Link from 'next/link';
 import axios from 'axios';
-import * as xlsx from 'xlsx';
 
 const Home: React.FC = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const handleOpenModal = () => {
-		setIsModalOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const files = e.target.files;
-		if (files && files.length > 0) {
-			// Aquí puedes manejar la lógica relacionada con el archivo si es necesario
-			// Por ejemplo, puedes mostrar la información del archivo antes de abrir el modal
-			handleOpenModal();
-		}
-	};
 
 	const handleDownload = async () => {
 		const datos = localStorage.getItem('userData');
@@ -78,34 +57,6 @@ const Home: React.FC = () => {
 	return (
 		<div className="w-full max-w-screen-xl mx-auto mt-[6%] p-6">
 			<TableDeportistas rol='Deportista'/>
-			<div className="flex justify-between items-center mt-4">
-				<button
-					onClick={handleDownload}
-					className="bg-[#cd1919] text-white rounded p-2"
-				>
-					Descargar usuarios
-				</button>
-				<div className="flex gap-2">
-					<label htmlFor="fileInput" className="bg-[#cd1919] text-white rounded p-2 cursor-pointer">
-						Carga masiva
-					</label>
-					<input
-						type="file"
-						id="fileInput"
-						style={{ display: 'none' }}
-						onChange={handleFileInputChange}
-					/>
-					<Link href='/administrador/crear-usuario/deportista'>
-						<button
-							className="bg-[#cd1919] text-white rounded p-2"
-						>
-						+
-						</button>
-					</Link>
-
-				</div>
-			</div>
-			{/* <ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} /> */}
 		</div>
 	);
 };

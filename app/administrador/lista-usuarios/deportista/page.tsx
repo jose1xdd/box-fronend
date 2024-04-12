@@ -2,30 +2,20 @@
 'use client';
 import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
-import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
-import data from '@/pruebas/usuarios.json';
 import Link from 'next/link';
 import axios from 'axios';
-import * as xlsx from 'xlsx';
+import { ModalArchivo } from '../../../../components/ModalArchivo/ModalArchivo';
 
 const Home: React.FC = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const handleOpenModal = () => {
-		setIsModalOpen(true);
+		setModalOpen(true);
 	};
 
 	const handleCloseModal = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const files = e.target.files;
-		if (files && files.length > 0) {
-			// Aquí puedes manejar la lógica relacionada con el archivo si es necesario
-			// Por ejemplo, puedes mostrar la información del archivo antes de abrir el modal
-			handleOpenModal();
-		}
+		setModalOpen(false);
 	};
 
 	const handleDownload = async () => {
@@ -86,15 +76,9 @@ const Home: React.FC = () => {
 					Descargar usuarios
 				</button>
 				<div className="flex gap-2">
-					<label htmlFor="fileInput" className="bg-[#cd1919] text-white rounded p-2 cursor-pointer">
-						Carga masiva
-					</label>
-					<input
-						type="file"
-						id="fileInput"
-						style={{ display: 'none' }}
-						onChange={handleFileInputChange}
-					/>
+					<button onClick={handleOpenModal} className="bg-[#cd1919] text-white rounded p-2 cursor-pointer">
+                        Carga masiva
+					</button>
 					<Link href='/administrador/crear-usuario/deportista'>
 						<button
 							className="bg-[#cd1919] text-white rounded p-2"
@@ -105,7 +89,7 @@ const Home: React.FC = () => {
 
 				</div>
 			</div>
-			{/* <ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} /> */}
+			<ModalArchivo isOpen={modalOpen} onClose={handleCloseModal} />
 		</div>
 	);
 };

@@ -187,3 +187,42 @@ export const ActualizarLogo = async (nImagen: string) : Promise<void> => {
 		return;
 	}
 };
+
+export const CargaMasiva = async (archivo: File): Promise<any> => {
+	const datos = localStorage.getItem('userData');
+	let token;
+
+	if (datos != null) {
+		token = JSON.parse(datos).token;
+	}
+
+	const headers = {
+		sessiontoken: token
+	};
+
+	const formData = new FormData();
+	formData.append('excel', archivo);
+
+	try {
+		let endpoint = `${apiEndpoint}/users/upload-masive-sportsman`;
+
+		const urlActual = window.location.href;
+
+		if (urlActual.includes('/administrador/lista-usuarios/deportista')) {
+			endpoint = 'users/upload-masive-sportsman';
+		} else if (urlActual.includes('/administrador/lista-usuarios/entrenador')) {
+			endpoint = 'users/upload-masive-trainer';
+		}
+
+		const response = await axios.post(`${apiEndpoint}/${endpoint}`, formData, {
+			headers: headers,
+		});
+		window.location.reload();
+		return response.data;
+	} catch (error) {
+		console.error('Error al subir el archivo:', error);
+		alert('Ocurrió un error al subir el archivo, verifique que es el correcto e intente de nuevo');
+		throw error;
+	}
+};
+
