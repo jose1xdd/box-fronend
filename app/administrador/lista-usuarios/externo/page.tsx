@@ -2,7 +2,7 @@
 'use client';
 import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
-//import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
+//import { ModalArchivo } from '@/components/ModalArchivo/ModalArchivo';
 
 const Home: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
