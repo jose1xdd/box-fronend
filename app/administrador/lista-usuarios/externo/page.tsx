@@ -2,8 +2,7 @@
 'use client';
 import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
-import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
-import data from '@/pruebas/usuarios.json';
+//import ModalArchivo from '@/components/ModalArchivo/ModalArchivo';
 
 const Home: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +52,7 @@ const Home: React.FC = () => {
 					</button>
 				</div>
 			</div>
-			<ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} />
+			{/*<ModalArchivo isOpen={isModalOpen} onClose={handleCloseModal} />*/}
 		</div>
 	);
 };
