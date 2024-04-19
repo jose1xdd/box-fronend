@@ -35,7 +35,7 @@ export default function Footer(){
 						</svg>
 					</a>
 
-					<a href='https://www.facebook.com/' target="_blank">
+					<a href='https://www.facebook.com/BoxeoNS' target="_blank">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
@@ -47,7 +47,7 @@ export default function Footer(){
 						</svg>
 					</a>
 
-					<a href='https://mail.google.com/mail/u/0/#inbox' target="_blank">
+					<a href='mailto:ligaboxeonorte@gmail.com' target="_blank">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1.5em"
