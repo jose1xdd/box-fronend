@@ -1,6 +1,6 @@
 import Ranking from '../../../components/ranking/page';
 
-export default function RankingAdmin() {
+export default function RankingDeportista() {
 
 	return (
 		<Ranking />

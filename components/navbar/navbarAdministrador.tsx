@@ -168,11 +168,11 @@ export default function NavbarAdministrador() {
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
-								<li className=' my-1'>
+								{/*<li className=' my-1'>
 									<Link href='/administrador/lista-usuarios/externo' onClick={() => { cerrarListaUsuarios(); setFiltro('Externo'); }}>
                     EXTERNOS
 									</Link>
-								</li>
+			</li>*/}
 							</ul>
 						</div>
 						<div
