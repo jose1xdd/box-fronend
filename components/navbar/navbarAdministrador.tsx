@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -55,7 +56,7 @@ export default function NavbarAdministrador() {
 	}, [filtro]);
 
 	return (
-		<nav className="bg-[#1e1e1e] p-4">
+		<nav className="bg-[#cd1919] p-4">
 			<div className="container">
 				<div className="flex justify-between">
 					<div className="flex items-center">
@@ -73,21 +74,21 @@ export default function NavbarAdministrador() {
 					</div>
 					<ul className='flex space-x-5 my-4 text-white' id='titulos-pequenos'>
 						<li className='cursor-pointer' id='titulos-pequenos' onClick={abrirListaUsuarios}>
-							<div>USUARIOS</div>
+							<div className='font-semibold'>USUARIOS</div>
 						</li>
 						<li>
-							<Link href='/administrador/calendario'>CALENDARIO</Link>
+							<Link className='font-semibold' href='/administrador/calendario'>CALENDARIO</Link>
 						</li>
 						<li>
-							<Link href='/administrador/comunicados'>COMUNICADOS</Link>
+							<Link className='font-semibold' href='/administrador/comunicados'>COMUNICADOS</Link>
 						</li>
 						<li>
-							<Link href='/administrador/ranking'>RANKING</Link>
+							<Link className='font-semibold' href='/administrador/ranking'>RANKING</Link>
 						</li>
 					</ul>
 					<ul className="flex space-x-4 my-4 cursor-pointer">
 						<li className='flex text-white' id='titulos-pequenos' onClick={abrirBarraDesplegable}>
-							<div>{nombreUsuario}</div>
+							<div className='font-semibold'>{nombreUsuario}</div>
 						</li>
 						<svg
 							className="my-1"

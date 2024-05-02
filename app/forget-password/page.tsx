@@ -174,7 +174,7 @@ export default function RecoveryPassword() {
 
 				<div className="flex gap-4 justify-center items-center">
 					  <Form.SubmitButton
-						buttonText="ENVIAR CORREO"
+						buttonText="Enviar correo"
 						handleButton={handleSubmit}
 					  />
 					  <Link className='font-bold text-[18px] text-center mt-4 mx-10'
@@ -268,7 +268,7 @@ export default function RecoveryPassword() {
 }
 
 const Option = ({ setMode, value, children }: { setMode: React.Dispatch<React.SetStateAction<number>>, value: number, children?: ReactNode }) => {
-	return <div className='cursor-pointer w-full border border-white text-center text-3xl p-10 hover:bg-red-950' onClick={() => setMode(value)}>
+	return <div className='cursor-pointer w-full border border-white text-center text-3xl p-10 hover:bg-[#cd1919]/95' onClick={() => setMode(value)}>
 		{children}
 	</div>;
 };

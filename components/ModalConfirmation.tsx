@@ -1,3 +1,4 @@
+
 // Modal.tsx
 import React, { ReactNode, useState } from 'react';
 import { User } from './tablas/Table';
