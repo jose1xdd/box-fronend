@@ -59,10 +59,10 @@ export default function NavbarAdministrador() {
 							className="h-[125px] w-[125px] rounded-full bg-black"
 						/>}
 					</div>
-					<ul className='flex space-x-10 my-4 text-white text-center items-center align-middle justify-center' id='titulos-pequenos'>
+					<ul className='flex space-x-10 my-4 text-white text-center items-center align-middle justify-center font-semibold' id='titulos-pequenos'>
 						<li className='cursor-pointer' id='titulos-pequenos'>
 							<DropMenu label='Usuarios'>
-								<ul>
+								<ul className=''>
 									<li className='my-1'>
 										<Link href='/administrador/lista-usuarios/entrenador'>
                     						Entrenadores
