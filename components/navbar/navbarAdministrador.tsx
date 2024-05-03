@@ -61,7 +61,7 @@ export default function NavbarAdministrador() {
 					</div>
 					<ul className='flex space-x-10 my-4 text-white text-center items-center align-middle justify-center font-semibold' id='titulos-pequenos'>
 						<li className='cursor-pointer' id='titulos-pequenos'>
-							<DropMenu label='Usuarios'>
+							<DropMenu label={<a>Usuarios</a>}>
 								<ul className=''>
 									<li className='my-1'>
 										<Link href='/administrador/lista-usuarios/entrenador'>
@@ -95,7 +95,7 @@ export default function NavbarAdministrador() {
 					</ul>
 					<ul className="flex space-x-4 my-4 cursor-pointer justify-center align-middle items-center">
 						<li className='flex text-white' id='titulos-pequenos' onClick={abrirBarraDesplegable}>
-							<DropMenu label={<div className='flex align-middle items-center fill-white hover:fill-black space-x-5'><a>{nombreUsuario}</a><svg
+							<DropMenu label={<div className='flex align-middle items-center fill-white hover:fill-black space-x-5'>{nombreUsuario && <a>{nombreUsuario}</a>}<svg
 								className="my-1"
 								xmlns="http://www.w3.org/2000/svg"
 								height="1em"

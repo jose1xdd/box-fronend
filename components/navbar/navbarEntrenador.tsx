@@ -54,7 +54,7 @@ export default function NavbarEntrenador() {
 					</ul>
 					<ul className="flex space-x-4 my-4 cursor-pointer justify-center align-middle items-center">
 						<li className='flex text-white' id='titulos-pequenos'>
-							<DropMenu label={<div className='flex align-middle items-center fill-white hover:fill-black space-x-5'><a>{nombreUsuario}</a><svg
+							<DropMenu label={<div className='flex align-middle items-center fill-white hover:fill-black space-x-5'>{nombreUsuario && <a>{nombreUsuario}</a>}<svg
 								className="my-1"
 								xmlns="http://www.w3.org/2000/svg"
 								height="1em"
@@ -64,14 +64,8 @@ export default function NavbarEntrenador() {
 							</svg></div>}>
 								<ul>
 									<li className='my-1'>
-										<Link href='/administrador/mi-perfil'>
+										<Link href='/entrenador/mi-perfil'>
                     					Mi perfil
-										</Link>
-									</li>
-									<div className="border-t border-gray-500"></div>
-									<li className='my-1'>
-										<Link href='/administrador/administracion'>
-                    				Administración
 										</Link>
 									</li>
 									<div className="border-t border-gray-500"></div>

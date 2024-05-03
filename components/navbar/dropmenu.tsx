@@ -13,7 +13,7 @@ import styles from '@/components/navbar/navbar.module.css';
 
 interface DropMenuProps {
 	children: ReactNode;
-	label: ReactNode;
+	label: JSX.Element;
   }
 
 export default function DropMenu({ children, label }: DropMenuProps) {
