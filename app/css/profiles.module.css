@@ -1,0 +1,15 @@
+.label {
+    background-color: rgba(52, 56, 54, 0.428);
+    border-radius: 25px;
+    text-align: center;
+    min-width: 100%;
+
+}
+
+div:has(> .label){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

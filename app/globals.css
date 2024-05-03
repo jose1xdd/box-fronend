@@ -40,3 +40,15 @@ body {
 .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame {
   background-color: rgba(255, 24, 24, 0.507);
 }
+
+@media screen and (max-width: 767px) {
+  .responsive_text{
+      font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .responsive_text{
+      font-size: 18px;
+  }
+}
