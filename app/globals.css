@@ -52,3 +52,9 @@ body {
       font-size: 18px;
   }
 }
+/* 
+@media screen and (min-width: 1280px) {
+  .responsive_text{
+      font-size: 30px;
+  }
+} */

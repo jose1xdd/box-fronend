@@ -1,5 +1,6 @@
 .label {
-    background-color: rgba(52, 56, 54, 0.428);
+    background-color: #4B4B4B;
+    color: white;
     border-radius: 25px;
     text-align: center;
     min-width: 100%;
