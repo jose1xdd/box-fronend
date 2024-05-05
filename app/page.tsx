@@ -40,7 +40,7 @@ export default async function Home() {
 				</div>
 				<div className="p-4 max-w-5xl mx-auto my-5">
 					<div className="flex">
-						<div className="w-1/3 flex justify-center items-center">
+						<div className="w-1/3 flex justify-center items-center mr-5">
 							<Image
 								src={Vision}
 								alt="Logo Liga de Boxeo de Norte de Santander"
