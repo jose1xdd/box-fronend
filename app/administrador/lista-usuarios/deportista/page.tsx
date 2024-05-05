@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
 import Link from 'next/link';
 import axios from 'axios';
-import { ModalArchivo } from '../../../../components/ModalArchivo/ModalArchivo';
+import { ModalArchivo } from '@/components/ModalArchivo/ModalArchivo';
 
 const Home: React.FC = () => {
 
