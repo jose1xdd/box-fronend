@@ -97,7 +97,7 @@ export default function GestionarRolesAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-                                        ROL
+                                        ROL A ELIMINAR
 									</h3>
 									<select
 										name="rolEliminar"
