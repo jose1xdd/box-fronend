@@ -14,3 +14,18 @@ div:has(> .label){
 }
 
 
+div:has(> .label){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container input{
+    background: white;
+    border: black 1px solid;
+}
+
+.text div{
+    background-color: #e4e3e3;
+}
+

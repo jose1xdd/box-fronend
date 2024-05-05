@@ -86,6 +86,7 @@ export default function Home() {
 
 			// Guarda la cadena JSON en localStorage
 			localStorage.setItem('datosUsuario', datosUsuarioJSON);
+
 		} catch (error) {
 			console.log(error);
 			return;
@@ -118,6 +119,8 @@ export default function Home() {
 				params: parametros,
 				headers: headers
 			});
+
+			window.location.reload();
 
 			// Actualizar el estado con los datos recibidos
 		} catch (error) {
@@ -154,9 +157,9 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="container mx-auto mt-8">
+			<div className={'container mx-auto mt-8 ' + styles.container}>
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>MI PERFIL</h1>
-				<div className="p-4 max-w-5xl mx-auto md:flex">
+				<div className="p-4 mx-auto md:flex">
 					<div className="md:w-2/3 md:pr-4">
 						<form className={styles.form}>
 							<div className="flex responsive_text">
@@ -165,7 +168,7 @@ export default function Home() {
 										Nombre:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -188,7 +191,7 @@ export default function Home() {
 										Apellido:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -211,7 +214,7 @@ export default function Home() {
 										Cédula:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{datosPerfil.cedula}
@@ -225,7 +228,7 @@ export default function Home() {
 										Dirección:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -248,7 +251,7 @@ export default function Home() {
 										Teléfono:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -271,7 +274,7 @@ export default function Home() {
 										Correo:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{datosPerfil.correo}
 									</div>
