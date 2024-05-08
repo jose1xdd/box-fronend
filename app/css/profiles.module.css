@@ -20,7 +20,7 @@ div:has(> .label){
     align-items: center;
 }
 
-.container input{
+.container input, .container select{
     background: white;
     border: black 1px solid;
 }
