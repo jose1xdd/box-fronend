@@ -64,7 +64,6 @@ export default function RolesAdmin() {
 		if(datos != null){
 			token = JSON.parse(datos).token;
 		}
-		console.log('rol a eliminar: ', rolEliminar);
 		try {
 			const headers = {
 				sessiontoken: token,
@@ -133,7 +132,7 @@ export default function RolesAdmin() {
 							<tbody>
 								{rolesData && rolesData.map((rol, index) => (
 									<tr key={index}>
-										<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{rol.name}</td>
+										<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{rol.name}</td>
 									</tr>
 								))}
 							</tbody>
