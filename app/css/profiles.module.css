@@ -20,9 +20,14 @@ div:has(> .label){
     align-items: center;
 }
 
-.container input, .container select{
+.container input, .container select, .container textarea{
     background: white;
     border: black 1px solid;
+}
+
+.container option{
+    font-weight: bolder;
+    padding: 10%;
 }
 
 .text div{
