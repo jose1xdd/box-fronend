@@ -1,6 +1,5 @@
 'use client';
 import axios from 'axios';
-import styles from '@/app/css/profiles.module.css';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 interface User {
@@ -80,8 +79,6 @@ export default function CrearConvocatoria() {
 		}
 		const result = await getUsuarios(token);
 		setUsuarios(result);
-		setNuevoParticipante(result[0]['email']);
-
 	};
 
 	useEffect(() => {
@@ -183,7 +180,7 @@ export default function CrearConvocatoria() {
 	}
 
 	return (
-		<div className={'container mx-auto mt-8 ' + styles.container}>
+		<div className="container mx-auto mt-8">
 			<div className="p-4 ">
 				<form onSubmit={handlerSubmit}>
 					<div className='flex'>
@@ -191,7 +188,7 @@ export default function CrearConvocatoria() {
 							<h1 className='text-center text-[400%]' id='titulos-grandes'>Nueva Convocatoria</h1>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+									<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Entrenador encargado
 									</div>
 								</div>
@@ -206,7 +203,7 @@ export default function CrearConvocatoria() {
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+									<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Fecha del evento
 									</div>
 								</div>
@@ -227,7 +224,7 @@ export default function CrearConvocatoria() {
 							<div className="flex items-center justify-center">
 								<div className="flex">
 									<div className="w-1/3 mx-4">
-										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+										<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Hora inicio
 										</div>
 									</div>
@@ -241,7 +238,7 @@ export default function CrearConvocatoria() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+										<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' id='texto-general'>
 										Hora fin
 										</div>
 									</div>
@@ -285,16 +282,11 @@ export default function CrearConvocatoria() {
 							</div>
 							<div className="flex">
 								<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-									{usuarios.map((usuario, i) => {
-										if(i == 0){
-											return <option key={usuario.email} selected={true} value={usuario.email} placeholder='Entrenador encargado'>
-												{usuario.email}
-											</option>;
-										}
-										return <option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
+									{usuarios.map((usuario) => (
+										<option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
 											{usuario.email}
-										</option>;
-									})}
+										</option>
+									))}
 								</select>
 							</div>
 							<div className="flex items-center justify-center">

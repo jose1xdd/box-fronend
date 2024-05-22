@@ -28,14 +28,14 @@ export default function Calendario() {
 	}, []);
 
 	return (
-		<div className='w-full'>
+		<div>
 			<div className="container mx-auto mt-8">
 				<div className="p-4 ">
 					<CalendarioEventos></CalendarioEventos>
 				</div>
 			</div>
 			{crear && (
-				<div className="flex justify-end mr-28">
+				<div className="container flex justify-end items-end mt-4 ">
 					<button type='button' onClick={() => handlerCrear('Convocatoria')}className="bg-[#cd1919] text-white rounded p-2 mx-5">
 										Crear convocatoria
 					</button>

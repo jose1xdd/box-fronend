@@ -5,7 +5,6 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from '@/app/css/profiles.module.css';
 
 export default function InfoDeportista() {
 
@@ -133,17 +132,17 @@ export default function InfoDeportista() {
 	///////////////////Retorno del render////////////////////
 	return (
 		<>
-			<div className={styles.container + 'container mx-auto mt-8'}>
+			<div className="container mx-auto mt-8">
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN DEPORTISTA</h1>
-				<div className='flex items-center justify-center my-4'>
+				<div className='flex items-center justify-center'>
 					{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
 				</div>
 				<form>
-					<div className="mx-auto px-12 md:px-32 md:flex">
-						<div className="md:w-2/4">
+					<div className="p-4 max-w-5xl mx-auto flex">
+						<div className="w-2/4 pr-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Nombre:
 									</div>
 								</div>
@@ -155,7 +154,7 @@ export default function InfoDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Apellido:
 									</div>
 								</div>
@@ -167,7 +166,7 @@ export default function InfoDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Documento:
 									</div>
 								</div>
@@ -179,7 +178,7 @@ export default function InfoDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Dirección
 									</div>
 								</div>
@@ -190,10 +189,10 @@ export default function InfoDeportista() {
 								</div>
 							</div>
 						</div>
-						<div className="md:w-2/4">
+						<div className="w-2/4 pr-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Teléfono
 									</div>
 								</div>
@@ -205,7 +204,7 @@ export default function InfoDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Correo
 									</div>
 								</div>
@@ -217,7 +216,7 @@ export default function InfoDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                     Club:
 									</div>
 								</div>
@@ -229,7 +228,7 @@ export default function InfoDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                     Categoria:
 									</div>
 								</div>

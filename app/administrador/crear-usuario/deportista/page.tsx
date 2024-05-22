@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import OpcionesCategorias from '@/components/OpcionesCategorias';
 import router from 'next/router';
-import styles from '@/app/css/profiles.module.css';
 
 interface FormData {
   nombre: string;
@@ -133,7 +132,7 @@ export default function CrearDeportista() {
 
 	return (
 		<>
-			<div className={styles.container + ' container mx-auto mt-8'}>
+			<div className="container mx-auto mt-8">
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR DEPORTISTA</h1>
 				<div className='flex items-center justify-center'>
 					<svg
@@ -141,17 +140,17 @@ export default function CrearDeportista() {
 						xmlns="http://www.w3.org/2000/svg"
 						height="6em"
 						viewBox="0 0 512 512"
-						fill="#000000"
+						fill="#ffffff"
 					>
-						<path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+						<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
 					</svg>
 				</div>
 				<form>
-					<div className="p-4 max-w-5xl mx-auto md:flex justify-items-center">
-						<div className="md:w-2/4 space-x-4 space-y-4">
-							<div className="flex ml-6 my-4">
-								<div className="w-1/3">
-									<div className={styles.label} id='texto-general'>
+					<div className="p-4 max-w-5xl mx-auto flex">
+						<div className="w-2/4 pr-4">
+							<div className="flex">
+								<div className="w-1/3 mx-2">
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Nombre:
 									</div>
 								</div>
@@ -161,14 +160,14 @@ export default function CrearDeportista() {
 										name="nombre"
 										value={datosNuevoDeportista.nombre}
 										onChange={(e) => handleChange('nombre', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el nombre'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Apellido:
 									</div>
 								</div>
@@ -178,14 +177,14 @@ export default function CrearDeportista() {
 										name="apellido"
 										value={datosNuevoDeportista.apellido}
 										onChange={(e) => handleChange('apellido', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el apellido'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Documento:
 									</div>
 								</div>
@@ -195,14 +194,14 @@ export default function CrearDeportista() {
 										name="documento"
 										value={datosNuevoDeportista.documento}
 										onChange={(e) => handleChange('documento', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el número de documento'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Dirección
 									</div>
 								</div>
@@ -212,14 +211,14 @@ export default function CrearDeportista() {
 										name="direccion"
 										value={datosNuevoDeportista.direccion}
 										onChange={(e) => handleChange('direccion', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese la dirección'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Peso
 									</div>
 								</div>
@@ -229,16 +228,16 @@ export default function CrearDeportista() {
 										name="peso"
 										value={datosNuevoDeportista.peso}
 										onChange={(e) => handleChange('peso', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingresa el peso'
 									/>
 								</div>
 							</div>
 						</div>
-						<div className="md:w-2/4 space-x-4 space-y-4">
-							<div className="flex ml-4 my-4">
+						<div className="w-2/4 pr-4">
+							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Teléfono
 									</div>
 								</div>
@@ -248,14 +247,14 @@ export default function CrearDeportista() {
 										name="telefono"
 										value={datosNuevoDeportista.telefono}
 										onChange={(e) => handleChange('telefono', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el teléfono'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Correo
 									</div>
 								</div>
@@ -265,14 +264,14 @@ export default function CrearDeportista() {
 										name="correo"
 										value={datosNuevoDeportista.correo}
 										onChange={(e) => handleChange('correo', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										placeholder='Ingrese el correo'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                     Club:
 									</div>
 								</div>
@@ -281,7 +280,7 @@ export default function CrearDeportista() {
 										name="club"
 										value={datosNuevoDeportista.club}
 										onChange={(e) => handleChange('club', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 									>
 										<option value="">Seleccione un club</option>
 										<OpcionesClubes/>
@@ -290,7 +289,7 @@ export default function CrearDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                     Categoria:
 									</div>
 								</div>
@@ -299,7 +298,7 @@ export default function CrearDeportista() {
 										name="categoria"
 										value={datosNuevoDeportista.categoria}
 										onChange={(e) => handleChange('categoria', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
 									>
 										<option value="">Seleccione una categoria</option>
 										<OpcionesCategorias/>
@@ -309,7 +308,7 @@ export default function CrearDeportista() {
 
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Fecha de nacimiento
 									</div>
 								</div>
@@ -319,7 +318,7 @@ export default function CrearDeportista() {
 										name="fecha"
 										value={fechaCompleta(datosNuevoDeportista.fecha)}
 										onChange={(e) => handleChangeFecha('fecha', e.target.value)}
-										className='rounded-full w-full pl-4 text-black'
+										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										min="1900-01-01"
 										required
 									/>

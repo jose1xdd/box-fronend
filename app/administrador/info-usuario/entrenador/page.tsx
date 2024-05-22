@@ -5,7 +5,6 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from '@/app/css/profiles.module.css';
 
 export default function InfoEntrenador() {
 
@@ -73,11 +72,11 @@ export default function InfoEntrenador() {
 					{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-40 h-40'></img>}
 				</div>
 				<form>
-					<div className="p-4 mx-auto flex">
-						<div className="w-2/4">
+					<div className="p-4 max-w-5xl mx-auto flex">
+						<div className="w-2/4 pr-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Nombre:
 									</div>
 								</div>
@@ -89,7 +88,7 @@ export default function InfoEntrenador() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Apellido:
 									</div>
 								</div>
@@ -101,7 +100,7 @@ export default function InfoEntrenador() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Cédula:
 									</div>
 								</div>
@@ -112,10 +111,10 @@ export default function InfoEntrenador() {
 								</div>
 							</div>
 						</div>
-						<div className="w-2/4">
+						<div className="w-2/4 pr-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Dirección
 									</div>
 								</div>
@@ -127,7 +126,7 @@ export default function InfoEntrenador() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Teléfono
 									</div>
 								</div>
@@ -139,7 +138,7 @@ export default function InfoEntrenador() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
                                         Correo
 									</div>
 								</div>

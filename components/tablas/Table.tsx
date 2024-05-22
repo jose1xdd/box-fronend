@@ -97,10 +97,10 @@ const Table: React.FC<TableProps> = ({ rol, linkVer, linkEditar }) => {
 		return usersToRender.slice(start, end).map((item) => (
 			<>
 				<tr key={item._id}>
-					<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center" id='texto-general'>{item.name + ' ' + item.lastName}</td>
-					<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center" id='texto-general'>{item.role}</td>
-					<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center" id='texto-general'>{item.cedula}</td>
-					<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center">
+					<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.name + ' ' + item.lastName}</td>
+					<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.role}</td>
+					<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>{item.cedula}</td>
+					<td className="border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-black text-center">
 						<Link href={`${linkVer}?id=${item._id}`}>
 							<button className="bg-[#cd1919] text-white rounded p-2 mr-2">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
@@ -134,21 +134,21 @@ const Table: React.FC<TableProps> = ({ rol, linkVer, linkEditar }) => {
 
 	return (
 		<div className="w-80% mx-auto">
-			<h1 className="text-5xl mb-4">USUARIOS</h1>
+			<h1 className="text-5xl text-white mb-4">USUARIOS</h1>
 			<input
 				type="text"
 				placeholder="Filtrar por nombre"
 				onChange={handleSearch}
-				className="p-2 rounded-[18px] bg-white border-2 border-black focus:outline-none mb-4 text-black"
+				className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
 				id='texto-general'
 			/>
 			<table className="w-full">
 				<thead>
 					<tr>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">ROL</th>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">CÉDULA</th>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">ACCIONES</th>
+						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
+						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ROL</th>
+						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">CÉDULA</th>
+						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ACCIONES</th>
 					</tr>
 				</thead>
 				<tbody>{renderUsers()}</tbody>

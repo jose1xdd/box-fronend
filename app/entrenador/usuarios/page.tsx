@@ -1,22 +1,11 @@
 // pages.tsx
 'use client';
 import React, { useState } from 'react';
-import Table from '@/components/tablas/Table';
+import TableDeportistas from '@/components/tablas/TableDeportistasEntrenador';
 import Link from 'next/link';
 import axios from 'axios';
-import { ModalArchivo } from '@/components/ModalArchivo/ModalArchivo';
 
 const Home: React.FC = () => {
-
-	const [modalOpen, setModalOpen] = useState(false);
-
-	const handleOpenModal = () => {
-		setModalOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setModalOpen(false);
-	};
 
 	const handleDownload = async () => {
 		const datos = localStorage.getItem('userData');
@@ -67,29 +56,7 @@ const Home: React.FC = () => {
 
 	return (
 		<div className="w-full max-w-screen-xl mx-auto mt-[6%] p-6">
-			<Table rol='Deportista' linkVer='/administrador/info-usuario/deportista' linkEditar='/administrador/editar-usuario/deportista'/>
-			<div className="flex justify-between items-center mt-4">
-				<button
-					onClick={handleDownload}
-					className="bg-[#cd1919] text-white rounded p-2"
-				>
-					Descargar usuarios
-				</button>
-				<div className="flex gap-2">
-					<button onClick={handleOpenModal} className="bg-[#cd1919] text-white rounded p-2 cursor-pointer">
-                        Carga masiva
-					</button>
-					<Link href='/administrador/crear-usuario/deportista'>
-						<button
-							className="bg-[#cd1919] text-white rounded p-2"
-						>
-						+
-						</button>
-					</Link>
-
-				</div>
-			</div>
-			<ModalArchivo isOpen={modalOpen} onClose={handleCloseModal} />
+			<TableDeportistas rol='Deportista'/>
 		</div>
 	);
 };
