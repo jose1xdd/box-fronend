@@ -55,7 +55,7 @@ const Home: React.FC = () => {
 	};
 
 	return (
-		<div className="w-full max-w-screen-xl mx-auto mt-[6%] p-6">
+		<div className="w-full max-w-screen-xl mx-auto my-[2%] p-6">
 			<TableDeportistas rol='Deportista'/>
 		</div>
 	);

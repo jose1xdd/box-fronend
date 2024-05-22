@@ -74,7 +74,7 @@ export default function CalendarioEventos() {
 	return (
 		<div>
 			<div>
-				<h1 className="text-5xl text-black mb-4 mt-[5%]">Calendario de eventos</h1>
+				<h1 className="text-5xl text-black mb-4 mt-[2%]">Calendario de eventos</h1>
 				<div className='bg-red-50 p-5 rounded-3xl my-4 border border-black'>
 					<FullCalendar
 						plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
