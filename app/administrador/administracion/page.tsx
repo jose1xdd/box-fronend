@@ -35,22 +35,22 @@ export default function AdministracionAdmin() {
 		<>
 			<div className="container mx-auto mt-8">
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>MENÚ DE ADMINISTRADOR</h1>
-				<div className="p-4 max-w-5xl mx-auto flex">
+				<div className="p-4 max-w-5xl mx-auto flex space-x-16">
 					<div className="w-1/3 pr-4 m-0">
-						{logo != '' && <div className='m-0 my-5'>
+						{logo != '' && <div className='m-0 my-5 bg-[#C6C6C6] p-4 rounded-3xl'>
 							<div className='flex items-center justify-center'> <img
-								className='h-[200px] w-[200px]'
+								className='h-[200px] w-[200px] bg-black'
 								src={logo}
 								alt="Logo Liga de Boxeo de Norte de Santander"
 							/>
 							</div>
-							<div className='flex items-center justify-center mt-3 mb-5'>
+							<div className='flex items-center justify-center mt-3'>
 								<button onClick={(e) => {e.preventDefault; handleChangeImage();}} className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
 									Cambiar logo
 								</button>
 							</div>
 						</div>}
-						<div className='mx-0 my-5'>
+						<div className='m-0 my-5 bg-[#C6C6C6] p-4 rounded-3xl'>
 							<div className='flex items-center justify-center'>
 								<Image
 									src={administrarCategorias}
@@ -69,7 +69,7 @@ export default function AdministracionAdmin() {
 						</div>
 					</div>
 					<div className="w-1/3 pr-4 m-0">
-						<div className='m-0 my-5'>
+						<div className='m-0 my-5 bg-[#C6C6C6] p-4 rounded-3xl'>
 							<div className='flex items-center justify-center'>
 								<Image
 									src={evaluacionFisica}
@@ -86,7 +86,7 @@ export default function AdministracionAdmin() {
 								</Link>
 							</div>
 						</div>
-						<div className='mx-0 my-5'>
+						<div className='m-0 my-5 bg-[#C6C6C6] p-4 rounded-3xl'>
 							<div className='flex items-center justify-center'>
 								<Image
 									src={gestionarRoles}
@@ -105,7 +105,7 @@ export default function AdministracionAdmin() {
 						</div>
 					</div>
 					<div className="w-1/3 pr-4 m-0">
-						<div className='m-0 my-5'>
+						<div className='m-0 my-5 bg-[#C6C6C6] p-4 rounded-3xl'>
 							<div className='flex items-center justify-center'>
 								<Image
 									src={gestionarClubes}
@@ -122,7 +122,7 @@ export default function AdministracionAdmin() {
 								</Link>
 							</div>
 						</div>
-						<div className='mx-0 my-5'>
+						<div className='m-0 my-5 bg-[#C6C6C6] p-4 rounded-3xl'>
 							<div className='flex items-center justify-center'>
 								<Image
 									src={gestionarIndex}

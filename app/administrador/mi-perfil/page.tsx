@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import { json } from 'stream/consumers';
 import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import { obtenerFotoPerfil } from '@/app/lib/basic_request';
+import styles from '@/app/css/profiles.module.css';
 interface FormData {
 	nombre: string;
 	apellido: string;
@@ -85,6 +86,7 @@ export default function Home() {
 
 			// Guarda la cadena JSON en localStorage
 			localStorage.setItem('datosUsuario', datosUsuarioJSON);
+
 		} catch (error) {
 			console.log(error);
 			return;
@@ -117,6 +119,8 @@ export default function Home() {
 				params: parametros,
 				headers: headers
 			});
+
+			window.location.reload();
 
 			// Actualizar el estado con los datos recibidos
 		} catch (error) {
@@ -153,23 +157,23 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="container mx-auto mt-8">
+			<div className={'container mx-auto mt-8 ' + styles.container}>
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>MI PERFIL</h1>
-				<div className="p-4 max-w-5xl mx-auto flex">
-					<div className="w-2/3 pr-4">
-						<form>
-							<div className="flex">
+				<div className="p-4 mx-auto md:flex">
+					<div className="md:w-2/3 md:pr-4">
+						<form className={styles.form}>
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
 										Nombre:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
 												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+												className={'bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black'} id='texto-general'
 												value={datosPerfil.nombre}
 												onChange={(e) => handleChange('nombre', e.target.value)}
 											/>
@@ -181,13 +185,13 @@ export default function Home() {
 									}
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
 										Apellido:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -204,13 +208,13 @@ export default function Home() {
 									}
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										Cedula:
+									<div className={styles.label} id='texto-general'>
+										Cédula:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{datosPerfil.cedula}
@@ -218,13 +222,13 @@ export default function Home() {
 
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
 										Dirección:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -241,13 +245,13 @@ export default function Home() {
 									}
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
 										Teléfono:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									{esEditable ?
 										(
 											<input
@@ -264,13 +268,13 @@ export default function Home() {
 									}
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
 										Correo:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+								<div className={'w-2/3 mx-2 ' + styles.text}>
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{datosPerfil.correo}
 									</div>
@@ -287,7 +291,7 @@ export default function Home() {
 							</div>
 						</form>
 					</div>
-					<div className="w-1/3 flex flex-col justify-center items-center">
+					<div className="md:w-1/3 flex flex-col md:my-0 my-10 justify-center items-center">
 						{datosPerfil.imagen != '' && <img src={datosPerfil.imagen} className='w-64 h-64'/>}
 						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
 							Cargar nueva foto de perfil

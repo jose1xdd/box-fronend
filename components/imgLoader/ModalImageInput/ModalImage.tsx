@@ -63,7 +63,7 @@ export function ModalImage({ setView, id, type }: { setView: React.Dispatch<Reac
 		<div className='flex'>
 			<div className="fixed inset-0 flex justify-center items-center">
 				<div className="bg-black bg-opacity-40 w-full h-full flex items-center justify-center" onClick={()=> setView(false)}>
-					<div className="bg-[#1e1e1e] p-8 rounded-[30PX] w-[800px] h-[550px] text-white flex flex-col justify-center items-center gap-4" onClick={(e) => {e.stopPropagation();}}>
+					<div className="bg-[#ffffff] border-2 border-[#CD1919] p-8 rounded-[30PX] w-[800px] h-[550px] text-black flex flex-col justify-center items-center gap-4" onClick={(e) => {e.stopPropagation();}}>
 						<InputImageArea setFile={setFile}/>
 						<input type='file' className='hidden' onChange={handleFile} ref={myInput} accept='.png, .jpg, .jpge'></input>
 						<div className='flex space-x-6 align-middle text-center items-center'>
@@ -73,7 +73,7 @@ export function ModalImage({ setView, id, type }: { setView: React.Dispatch<Reac
 						<h3>Solo se admiten imagenes en formato .jpg y .png</h3>
 						{file.valor != '' &&
 							<button
-								className={`mt-4 ${isHovered ? 'bg-white text-[#cd1919]' : 'bg-[#cd1919] text-white'} px-4 py-2 rounded transition-all duration-300 ease-in-out`}
+								className={`mt-4 ${isHovered ? 'bg-black text-white' : 'bg-[#cd1919] text-white'} px-4 py-2 rounded transition-all duration-300 ease-in-out`}
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
 								onClick={handleButton}

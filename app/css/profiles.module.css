@@ -1,0 +1,45 @@
+.label {
+    background-color: #4B4B4B;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+    min-width: 100%;
+
+}
+
+.labelTwo {
+    background-color: #4B4B4B;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+    min-width: 70px;
+
+}
+
+div:has(> .label){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+div:has(> .label){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container input, .container select, .container textarea{
+    background: white;
+    border: black 1px solid;
+}
+
+.container option{
+    font-weight: bolder;
+    padding: 10%;
+}
+
+.text div{
+    background-color: #e4e3e3;
+}
+

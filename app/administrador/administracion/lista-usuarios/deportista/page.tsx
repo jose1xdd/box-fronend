@@ -66,7 +66,7 @@ const Home: React.FC = () => {
 	};
 
 	return (
-		<div className="w-full max-w-screen-xl mx-auto my-[2%] p-6 pb-0">
+		<div className="w-full max-w-screen-xl mx-auto mt-[6%] p-6">
 			<Table rol='Deportista' linkVer='/administrador/info-usuario/deportista' linkEditar='/administrador/editar-usuario/deportista'/>
 			<div className="flex justify-between items-center mt-4">
 				<button

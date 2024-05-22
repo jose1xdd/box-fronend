@@ -17,13 +17,13 @@ export default async function Home() {
 		<>
 			<NavbarHome />
 			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[500%]' id='titulos-grandes' style={{ textShadow: '3px 3px 0 #cd1919' }}>LIGA DE BOXEO NORTE</h1>
+				<h1 className='text-black text-center text-[500%]' id='titulos-grandes' style={{ textShadow: '3px 3px 0 #cd1919' }}>LIGA DE BOXEO DE NORTE DE SANTANDER</h1>
 
 				<div className="p-4 max-w-5xl mx-auto my-5">
 					<div className="flex">
 						<div className="w-2/3 pr-4">
-							<h2 className='text-[380%]' id='titulos-grandes'>MISIÓN</h2>
-							<div className='bg-neutral-200 rounded-lg w-full p-5 flex items-center justify-center text-black' id='texto-general'>
+							<h2 className='text-[380%] text-black' id='titulos-grandes'>MISIÓN</h2>
+							<div className='bg-white rounded-lg w-full p-5 flex items-center justify-center text-black border border-black' id='texto-general'>
 								{information?.mision}
 							</div>
 						</div>
@@ -40,7 +40,7 @@ export default async function Home() {
 				</div>
 				<div className="p-4 max-w-5xl mx-auto my-5">
 					<div className="flex">
-						<div className="w-1/3 flex justify-center items-center">
+						<div className="w-1/3 flex justify-center items-center mr-5">
 							<Image
 								src={Vision}
 								alt="Logo Liga de Boxeo de Norte de Santander"
@@ -50,8 +50,8 @@ export default async function Home() {
 							/>
 						</div>
 						<div className="w-2/3 pr-4">
-							<h2 className='text-[380%]' id='titulos-grandes'>VISIÓN</h2>
-							<div className='bg-neutral-200 rounded-lg w-full p-5 flex items-center justify-center text-black' id='texto-general'>
+							<h2 className='text-[380%] text-black' id='titulos-grandes'>VISIÓN</h2>
+							<div className='bg-white rounded-lg w-full p-5 flex items-center justify-center text-black text-black border border-black' id='texto-general'>
 								{information?.vision}
 							</div>
 						</div>

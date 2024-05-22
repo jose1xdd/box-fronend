@@ -3,6 +3,7 @@
 import fechaCompleta from '@/app/types/funcionesDate';
 import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
+import styles from '@/app/css/profiles.module.css';
 
 interface FormData {
   nombre: string;
@@ -77,7 +78,7 @@ export default function CrearEntrenador() {
 
 	return (
 		<>
-			<div className="container mx-auto mt-8">
+			<div className={styles.container + ' container mx-auto mt-8'}>
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR ENTRENADOR</h1>
 				<div className='flex items-center justify-center'>
 					<svg
@@ -85,17 +86,17 @@ export default function CrearEntrenador() {
 						xmlns="http://www.w3.org/2000/svg"
 						height="6em"
 						viewBox="0 0 512 512"
-						fill="#ffffff"
+						fill="#000000"
 					>
-						<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+						<path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
 					</svg>
 				</div>
-				<form>
-					<div className="p-4 max-w-5xl mx-auto flex">
-						<div className="w-2/4 pr-4">
-							<div className="flex">
+				<form className=''>
+					<div className="md:p-4 mx-auto md:space-x-10 mt-4 md:flex">
+						<div className="md:w-2/4 md:pr-4">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Nombre:
 									</div>
 								</div>
@@ -110,9 +111,9 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Apellido:
 									</div>
 								</div>
@@ -127,9 +128,9 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Cédula:
 									</div>
 								</div>
@@ -144,9 +145,9 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Fecha de nacimiento
 									</div>
 								</div>
@@ -163,10 +164,10 @@ export default function CrearEntrenador() {
 								</div>
 							</div>
 						</div>
-						<div className="w-2/4 pr-4">
-							<div className="flex">
+						<div className="md:w-2/4 md:pr-4">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Dirección
 									</div>
 								</div>
@@ -181,9 +182,9 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Teléfono
 									</div>
 								</div>
@@ -198,9 +199,9 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
-							<div className="flex">
+							<div className="flex responsive_text">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Correo
 									</div>
 								</div>

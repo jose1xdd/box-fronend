@@ -7,6 +7,7 @@ import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import styles from '@/app/css/profiles.module.css';
 
 interface FormData {
 	name: string;
@@ -130,18 +131,18 @@ export default function EditarDeportista() {
 
 	return (
 		<>
-			<div className="container mx-auto mt-8">
+			<div className={styles.container + 'container mx-auto mt-8'}>
 				<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR DEPORTISTA</h1>
-				<div className='flex items-center justify-center'>
+				<div className='flex items-center justify-center my-4'>
 					{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
 
 				</div>
 				<form>
-					<div className="p-4 max-w-5xl mx-auto flex">
-						<div className="w-2/4 pr-4">
+					<div className="p-4 mx-auto md:flex">
+						<div className="md:w-2/4 space-y-4 my-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Nombre:
 									</div>
 								</div>
@@ -151,13 +152,13 @@ export default function EditarDeportista() {
 										name="nombre"
 										value={datosDeportista.name}
 										onChange={(e) => handleChange('name', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className='rounded-full border-black border-2 w-full pl-4 text-black'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Apellido:
 									</div>
 								</div>
@@ -167,13 +168,13 @@ export default function EditarDeportista() {
 										name="apellido"
 										value={datosDeportista.lastName}
 										onChange={(e) => handleChange('lastName', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className='rounded-full border-black border-2 w-full pl-4 text-black'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Peso
 									</div>
 								</div>
@@ -183,16 +184,16 @@ export default function EditarDeportista() {
 										name="peso"
 										value={datosDeportista.weight}
 										onChange={(e) => handleChange('weight', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className='rounded-full border-black border-2 w-full pl-4 text-black'
 										placeholder='Ingresa el peso'
 									/>
 								</div>
 							</div>
 						</div>
-						<div className="w-2/4 pr-4">
+						<div className="md:w-2/4 space-y-4 my-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                         Teléfono
 									</div>
 								</div>
@@ -202,13 +203,13 @@ export default function EditarDeportista() {
 										name="telefono"
 										value={datosDeportista.phone}
 										onChange={(e) => handleChange('phone', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className='rounded-full border-black border-2 w-full pl-4 text-black'
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                     Club:
 									</div>
 								</div>
@@ -217,7 +218,7 @@ export default function EditarDeportista() {
 										name="club"
 										value={datosDeportista.club}
 										onChange={(e) => handleChange('club', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className='rounded-full border-black border-2 w-full pl-4 text-black'
 									>
 										<OpcionesClubes/>
 									</select>
@@ -225,7 +226,7 @@ export default function EditarDeportista() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label} id='texto-general'>
                                     Categoria:
 									</div>
 								</div>
@@ -234,7 +235,7 @@ export default function EditarDeportista() {
 										name="categoria"
 										value={datosDeportista.weightCategory}
 										onChange={(e) => handleChange('weightCategory', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
+										className='rounded-full border-black border-2 w-full pl-4 text-black'
 									>
 										<OpcionesCategorias/>
 									</select>

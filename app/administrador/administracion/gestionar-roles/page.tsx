@@ -59,7 +59,7 @@ export default function GestionarRolesAdmin() {
 		<>
 			<div className="container mx-auto mt-8">
 				<h1 className="text-center text-[400%]" id="titulos-grandes">
-                    EVALUACIÓN FÍSICA
+                    ROLES
 				</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-2/3">
@@ -77,7 +77,7 @@ export default function GestionarRolesAdmin() {
 										name="rol"
 										value={rol}
 										onChange={handleInputChange}
-										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className="bg-white border-2 border-black rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
 										placeholder="Ingrese el rol"
 									/>
@@ -89,7 +89,7 @@ export default function GestionarRolesAdmin() {
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
-                                    Crear rol de evaluación
+                                    Crear rol
 								</button>
 							</div>
 						</form>
@@ -97,13 +97,13 @@ export default function GestionarRolesAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-                                        ROL
+                                        ROL A ELIMINAR
 									</h3>
 									<select
 										name="rolEliminar"
 										value={rolEliminar}
 										onChange={handleEliminarChange}
-										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className="bg-white border-2 border-black rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
 									>
 										<option value="" disabled>
@@ -123,7 +123,7 @@ export default function GestionarRolesAdmin() {
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
-                                    Eliminar rol de evaluación
+                                    Eliminar rol
 								</button>
 							</div>
 						</form>
@@ -134,7 +134,7 @@ export default function GestionarRolesAdmin() {
 				<div className="fixed inset-0 flex items-center justify-center z-50">
 					<div className="bg-[#141414] p-10 rounded-lg">
 						<h3 className="text-white text-center mb-4 text-[175%]" id="titulos-grandes">
-                            ¿ESTÁ SEGURO DE QUERER ELIMINAR ESTE ROL?
+                            ¿Está seguro de querer eliminar este rol?
 						</h3>
 						<div className="flex justify-center">
 							<button
@@ -142,14 +142,14 @@ export default function GestionarRolesAdmin() {
 								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 								id="titulos-pequenos"
 							>
-                                ELIMINAR
+                                Eliminar
 							</button>
 							<button
 								onClick={handleCancelEliminar}
 								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 								id="titulos-pequenos"
 							>
-                                CANCELAR
+                                Cancelar
 							</button>
 						</div>
 					</div>

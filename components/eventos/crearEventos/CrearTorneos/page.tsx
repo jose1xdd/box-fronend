@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import styles from '@/app/css/profiles.module.css';
 
 interface User {
   _id: string;
@@ -257,7 +258,7 @@ export default function CrearTorneo() {
 	};
 
 	return (
-		<div className="container mx-auto mt-8">
+		<div className={'container mx-auto mt-8 ' + styles.container}>
 			<div className="p-4 ">
 				<form onSubmit={handlerSubmit}>
 					<div className="flex">
@@ -267,7 +268,7 @@ export default function CrearTorneo() {
 							</h1>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
+									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 										Entrenador encargado
 									</div>
 								</div>
@@ -291,7 +292,7 @@ export default function CrearTorneo() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
+									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 										Fecha del evento
 									</div>
 								</div>
@@ -316,7 +317,7 @@ export default function CrearTorneo() {
 							<div className="flex items-center justify-center">
 								<div className="flex">
 									<div className="w-1/3 mx-4">
-										<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
+										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 											Hora inicio
 										</div>
 									</div>
@@ -333,7 +334,7 @@ export default function CrearTorneo() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
+										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 											Hora fin
 										</div>
 									</div>
@@ -382,7 +383,7 @@ export default function CrearTorneo() {
 						<div className="w-1/2 pr-4">
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
+									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 										Categoría
 									</div>
 								</div>

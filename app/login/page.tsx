@@ -94,8 +94,8 @@ export default function LoginPage() {
 						/>
 					</div>
 
-					<div className='flex gap-4 items-center'>
-						<Form.SubmitButton buttonText='INGRESAR' handleButton={handleButton} />
+					<div className='flex gap-4 items-center text-black font-light'>
+						<Form.SubmitButton buttonText='Ingresar' handleButton={handleButton} />
 						<Form.Footer
 							description=''
 							link='/forget-password'
