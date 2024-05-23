@@ -42,6 +42,7 @@ export default function CalendarioEventos() {
 			const response = await axios.get(`${apiEndpoint}/event`, {
 				headers: headers,
 			});
+			console.log(response.data.eventos);
 			return response.data.eventos;
 		} catch (error) {
 			console.log(error);

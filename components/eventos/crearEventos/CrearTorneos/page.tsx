@@ -238,7 +238,6 @@ export default function CrearTorneo() {
 			date: fechaEvento,
 			startsAt: horaInicio,
 			endsAt: horaFin,
-			weigthCategory: selectedCategoria,
 			combats: combates
 		};
 		let rol;
@@ -249,7 +248,8 @@ export default function CrearTorneo() {
 		if (rol === 'Entrenador') route = 'entrenador';
 		else route = 'administrador';
 		try {
-			await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
+			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
+			console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
 			console.log(error);
@@ -463,7 +463,7 @@ export default function CrearTorneo() {
 						</div>
 					</div>
 					<div className="flex justify-center items-center mt-4">
-						<button onClick={() => handlerSubmit()} type="submit" className="bg-[#cd1919] text-white rounded p-2 mx-5">
+						<button onClick={() => handlerSubmit()} type="button" className="bg-[#cd1919] text-white rounded p-2 mx-5">
 							Agregar Torneo
 						</button>
 						<button type="button" onClick={handlerCancelar} className="bg-[#cd1919] text-white rounded p-2">
