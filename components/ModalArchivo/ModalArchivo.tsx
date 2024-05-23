@@ -70,9 +70,9 @@ export const ModalArchivo: React.FC<{ isOpen: boolean; onClose: () => void }> = 
 				className={'bg-black bg-opacity-40 w-full h-full flex items-center justify-center'}
 				onClick={onClose}
 			>
-				<div className="bg-[#1e1e1e] p-8 rounded-[30PX] w-[800px] h-[550px] text-white flex flex-col justify-center items-center gap-4" onClick={(e) => { e.stopPropagation(); }}>
+				<div className="bg-white border border-2 border-red-800 p-8 rounded-[30PX] w-[800px] h-[550px] text-black flex flex-col justify-center items-center gap-4" onClick={(e) => { e.stopPropagation(); }}>
 					<div
-						className={`flex border h-full w-full flex-col justify-center align-middle items-center space-y-4 border-dashed rounded-md ${isDragging ? 'border-red-500' : ''}`}
+						className={`flex border h-full w-full flex-col justify-center align-middle items-center space-y-4 border-dashed border-black rounded-md ${isDragging ? 'border-red-500' : ''}`}
 						onDrop={handleDrop}
 						onDragOver={(event) => event.preventDefault()}
 						onDragEnter={handleDragEnter}

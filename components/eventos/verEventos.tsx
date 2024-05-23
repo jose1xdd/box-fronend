@@ -7,6 +7,7 @@ import {
 	useSelectedLayoutSegment
 } from 'next/navigation';
 import { EventEmitterAsyncResource } from 'events';
+import styles from '@/app/css/profiles.module.css';
 
 interface user {
     _id: string,
@@ -171,7 +172,7 @@ export default function VerEvento() {
 	};
 
 	return (
-		<div className="container mx-auto mt-8">
+		<div className={'container mx-auto mt-8 ' + styles.container}>
 			<div className="p-4 ">
 
 				<div className='flex w-full'>
@@ -179,70 +180,70 @@ export default function VerEvento() {
 						<h1 className='text-center text-[400%]' id='titulos-grandes'>Información del evento</h1>
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
 										Nombre del evento
 								</div>
 							</div>
-							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 								{eventInfo?.name}
 							</div>
 						</div>
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className=' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
 										Tipo de evento
 								</div>
 							</div>
-							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 								{eventInfo.type}
 							</div>
 						</div>
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className='w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
 										Entrenador a cargo
 								</div>
 							</div>
-							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-								{(entrenador.name + ' ' + entrenador.lastName + ' - ' + entrenador.cedula)}
+							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								{(entrenador && entrenador.name && entrenador.lastName && entrenador.cedula) ? (entrenador.name + ' ' + entrenador.lastName + ' - ' + entrenador.cedula) : 'Entrenador no asignado'}
 							</div>
 						</div>
 
 						<div className="flex">
 							<div className="w-1/3 mx-2">
-								<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
 										Fecha del evento
 								</div>
 							</div>
-							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 								{fechaEvento}
 							</div>
 						</div>
 						<div className='flex'>
 							<div className="flex w-full">
 								<div className="w-1/3 mx-2">
-									<div className='  w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end' id='texto-general'>
+									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
 										Descripcion del evento
 									</div>
 								</div>
-								<textarea readOnly defaultValue={eventInfo?.description as string} className='bg-neutral-200  h-[100px] rounded-lg w-2/3 ms-[35px] my-2 p-4 flex items-center justify-center text-black' id='texto-general'>
+								<textarea readOnly defaultValue={eventInfo?.description as string} className='   h-[100px] rounded-lg w-2/3 ms-[35px] my-2 p-4 flex items-center justify-center text-black' id='texto-general'>
 
 								</textarea>
 							</div>
 							<div>
 								<div className="flex w-full justify-items-end justify-end">
-									<div className=' h-10 ms-5 me-3 my-2 flex w-[70px] items-center justify-center text-white ' id='texto-general'>
+									<div className={'h-10 ms-5 me-3 my-2 flex items-center justify-center text-white ' + styles.labelTwo} id='texto-general'>
 										Hora inicio
 									</div>
-									<div className='bg-neutral-200 rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className='  rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{horaI}
 									</div>
 								</div>
 								<div className="flex w-full justify-items-end justify-end">
-									<div className='h-10 ms-5 me-3 my-2 flex  w-[70px] items-center justify-center text-white ' id='texto-general'>
+									<div className={'h-10 ms-5 me-3 my-2 flex w-[70px] items-center justify-center text-white ' + styles.labelTwo} id='texto-general'>
 										Hora fin
 									</div>
-									<div className='bg-neutral-200 rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className='  rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										{horaF}
 									</div>
 								</div>
@@ -260,7 +261,7 @@ export default function VerEvento() {
 										required
 										value={correos}
 										readOnly
-										className='bg-neutral-200 rounded-lg h-full w-full mx-5 my-2 p-4 text-black' id='texto-general'
+										className='  rounded-lg h-full w-full mx-5 my-2 p-4 text-black' id='texto-general'
 										placeholder='Participantes del evento'
 									/>
 								</div>

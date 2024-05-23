@@ -7,8 +7,6 @@ import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { log } from 'winston';
 import { RealizarCambioContrasenia, SolicitarCambioContrasenia } from '../lib/basic_request';
-import image from '@/public/images/login_woman.png';
-import Image from 'next/image';
 
 export default function RecoveryPassword() {
 	const [information, setInformation] = useState({
@@ -127,9 +125,8 @@ export default function RecoveryPassword() {
 	  return email.includes('@');
 	}
 
-	return (<div className='relative'>
-		<Image src={image} alt='background' className='relative w-screen h-screen opacity-20'></Image>
-	  <div className={'w-full h-screen flex justify-center align-middle items-center absolute top-0 left-0'} id='woman-bg'>
+	return (
+	  <div className='w-full h-screen flex justify-center align-middle items-center'>
 
 			{mode == 0 && <Form
 		  className='w-full space-y-7'
@@ -177,7 +174,7 @@ export default function RecoveryPassword() {
 
 				<div className="flex gap-4 justify-center items-center">
 					  <Form.SubmitButton
-						buttonText="Enviar correo"
+						buttonText="ENVIAR CORREO"
 						handleButton={handleSubmit}
 					  />
 					  <Link className='font-bold text-[18px] text-center mt-4 mx-10'
@@ -267,12 +264,11 @@ export default function RecoveryPassword() {
 			  </Modal>
 
 	  </div>
-	  </div>
 	);
 }
 
 const Option = ({ setMode, value, children }: { setMode: React.Dispatch<React.SetStateAction<number>>, value: number, children?: ReactNode }) => {
-	return <div className='cursor-pointer w-full border border-black rounded-3xl text-center text-3xl p-10 hover:bg-[#cd1919]/95' onClick={() => setMode(value)}>
+	return <div className='cursor-pointer w-full border border-white text-center text-3xl p-10 hover:bg-red-950' onClick={() => setMode(value)}>
 		{children}
 	</div>;
 };

@@ -7,15 +7,6 @@
 
 }
 
-.labelTwo {
-    background-color: #4B4B4B;
-    color: white;
-    border-radius: 25px;
-    text-align: center;
-    min-width: 70px;
-
-}
-
 div:has(> .label){
     display: flex;
     justify-content: center;
