@@ -250,7 +250,7 @@ export default function CrearTorneo() {
 		try {
 			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
 			console.log(response);
-			//router.push('/' + route + '/calendario');
+			router.push('/' + route + '/calendario');
 		} catch (error) {
 			console.log(error);
 		}
