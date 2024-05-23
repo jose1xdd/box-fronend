@@ -204,7 +204,7 @@ export default function VerEvento() {
 								</div>
 							</div>
 							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-								{(entrenador.name + ' ' + entrenador.lastName + ' - ' + entrenador.cedula)}
+								{(entrenador && entrenador.name && entrenador.lastName && entrenador.cedula) ? (entrenador.name + ' ' + entrenador.lastName + ' - ' + entrenador.cedula) : 'Entrenador no asignado'}
 							</div>
 						</div>
 

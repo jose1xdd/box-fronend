@@ -73,7 +73,7 @@ export default function GestionarIndex() {
                             Guardar cambios
 						</button>
 					</div>
-					<div className="flex justify-center items-center my-5">
+					{/*<div className="flex justify-center items-center my-5">
 						<Link href="/administrador/administracion/gestionar-index/editar-secciones">
 							<button
 								type="button"
@@ -83,7 +83,7 @@ export default function GestionarIndex() {
                                 Editar secciones
 							</button>
 						</Link>
-					</div>
+					</div>*/}
 					<div className="flex justify-center">
 						<Link href="../administracion" className="bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
 							Volver
