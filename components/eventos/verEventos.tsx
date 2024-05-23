@@ -64,6 +64,7 @@ export default function VerEvento() {
 	const [horaI, sethoraI] = useState<String>();
 	const [horaF, sethoraF] = useState<String>();
 	const[correos, setCorreos] = useState('');
+	const[Combatientes, setCombatientes] = useState('');
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const EventId = useSearchParams().get('EventId');
@@ -145,6 +146,14 @@ export default function VerEvento() {
 		setCorreos(nuevosCorreos);
 	};
 
+	const cargarCombatientes = () => {
+		let nuevosCombatientes = '';
+		for(const combat of eventInfo.combats){
+			nuevosCombatientes += (combat.boxer1.name + ' ' + combat.boxer1.lastName + ' VS ' + combat.boxer2.name + ' ' + combat.boxer2.lastName + '\n');
+		}
+		setCombatientes(nuevosCombatientes);
+	};
+
 	useEffect(()=>{
 		cargarEvento();
 	}, []);
@@ -155,6 +164,9 @@ export default function VerEvento() {
 			cargarEntrenador();
 			if(eventInfo.type == 'Reunion'){
 				cargarParticipantes();
+			}
+			else{
+				cargarCombatientes();
 			}
 		}
 	}, [eventInfo]);
@@ -261,6 +273,22 @@ export default function VerEvento() {
 										value={correos}
 										readOnly
 										className='bg-neutral-200 rounded-lg h-full w-full mx-5 my-2 p-4 text-black' id='texto-general'
+										placeholder='Participantes del evento'
+									/>
+								</div>
+							</div>
+						)}
+						{(eventInfo.type == 'Combate') && (
+							<div className=" w-full  pr-4">
+								<div className='flex justify-center'>
+									<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
+								</div>
+								<div className="flex items-center justify-center h-[250px]">
+									<textarea
+										required
+										value={Combatientes}
+										readOnly
+										className='bg-neutral-200 rounded-lg h-full text-center w-full mx-5 my-2 p-4 text-black' id='texto-general'
 										placeholder='Participantes del evento'
 									/>
 								</div>
