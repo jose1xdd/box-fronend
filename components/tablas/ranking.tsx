@@ -77,10 +77,10 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 		const end = start + usersPerPage;
 		return filteredData.slice(start, end).map((item, index) => (
 			<tr key={item.id}>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.nombre + ' ' + item.apellido}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.Ranking.win}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.Ranking.lose}</td>
-				<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{item.Ranking.draw}</td>
+				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.nombre + ' ' + item.apellido}</td>
+				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.Ranking.win}</td>
+				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.Ranking.lose}</td>
+				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.Ranking.draw}</td>
 			</tr>
 		));
 	};
@@ -88,20 +88,20 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 	// Renderizar el componente Table
 	return (
 		<div className=" w-[80%] mx-auto mt-5 p-5">
-			<h1 className="text-5xl text-white mb-4">RANKING</h1>
+			<h1 className="text-5xl mb-4">RANKING</h1>
 			<input
 				type="text"
 				placeholder="Filtrar por nombre"
 				onChange={handleSearch}
-				className="px-5 py-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
+				className="px-5 py-2 rounded-[18px] bg-white focus:outline-none mb-4 text-black"
 			/>
 			<table className="w-full">
 				<thead>
 					<tr>
-						<th className=" border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
-						<th className=" border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">VICTORIAS</th>
-						<th className=" border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">DERROTAS</th>
-						<th className=" border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">EMPATES</th>
+						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
+						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">VICTORIAS</th>
+						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">DERROTAS</th>
+						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">EMPATES</th>
 					</tr>
 				</thead>
 				<tbody>{renderUsers()}</tbody>
