@@ -1,95 +1,170 @@
 'use client';
 
-import React, { useState } from 'react';
-import usuariosData from '@/pruebas/usuarios.json';
-import Tabla from '@/components/tablas/roles';
+import axios from 'axios';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
-export default function GestionarRolesAdmin() {
-	const [rol, setRol] = useState('');
+interface roles {
+	_id: string,
+	name: string
+}
+export default function RolesAdmin() {
+	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	//Rol a agregar
+	const [nombreRol, setNombreRol] = useState('');
+	//Rol para eliminar
 	const [rolEliminar, setRolEliminar] = useState('');
+	//Mensaje de confirmacion
 	const [showConfirmation, setShowConfirmation] = useState(false);
+	//Lista de roles
+	const [rolesData, setRolesData] = useState<roles[]>([]);
+	// Esta repetido
+	const [repeat, setRepeat] = useState(false);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setRol(e.target.value);
+		setNombreRol(e.target.value);
 	};
 
 	const handleEliminarChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setRolEliminar(e.target.value);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (!rol.trim()) {
-			alert('Por favor ingrese un rol para poder continuar');
-			return;
+	const crearRol = async (token: string, name:string) => {
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const body = {
+				name: name,
+			};
+			const response = await axios.post(`${apiEndpoint}/role/`, body, { headers: headers });
+			return response.data.role;
+		} catch (error) {
+			setRepeat(true);
 		}
-
-		// Enviar rol al endpoint correspondiente
-		console.log('Rol enviado:', rol);
-		setRol('');
 	};
 
-	const handleEliminarSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (!rolEliminar) {
-			alert('Por favor seleccione una opción para poder continuar');
-			return;
+	const handleSubmit = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
 		}
+		const nuevoRol = await crearRol(token, nombreRol);
+		cargarRoles();
+	};
 
+	const handleEliminarSubmit = () => {
 		setShowConfirmation(true);
 	};
 
-	const handleConfirmEliminar = () => {
-		console.log('Rol a eliminar:', rolEliminar);
+	const handleConfirmEliminar = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+			const params = {
+				id: rolEliminar
+			};
 
-		// Enviar RolEliminar al endpoint correspondiente
-		setShowConfirmation(false);
+			const response = await axios.delete(`${apiEndpoint}/role/${rolEliminar}`, {
+				headers: headers,
+				params: params
+			});
+			cargarRoles();
+			setShowConfirmation(false);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleCancelEliminar = () => {
 		setShowConfirmation(false);
 	};
 
-	const rolesUnicos = Array.from(new Set(usuariosData.map((usuario) => usuario.rol)));
+	const getRoles = async (token : string) => {
+		try {
+			const headers = {
+				sessiontoken: token,
+			};
+
+			const response = await axios.get(`${apiEndpoint}/role`, {
+				headers: headers,
+			});
+			return response.data.role;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const cargarRoles = async () => {
+		const datos = localStorage.getItem('userData');
+		let token;
+		if(datos != null){
+			token = JSON.parse(datos).token;
+		}
+		setRolesData(await getRoles(token));
+	};
+
+	useEffect(()=>{
+		cargarRoles();
+	}, [rolesData, repeat]);
 
 	return (
 		<>
 			<div className="container mx-auto mt-8">
 				<h1 className="text-center text-[400%]" id="titulos-grandes">
-                    EVALUACIÓN FÍSICA
+					ROLES
 				</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-2/3">
-						<Tabla />
+						<table className="w-full">
+							<thead>
+								<tr>
+									<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>rol</th>
+								</tr>
+							</thead>
+							<tbody>
+								{rolesData && rolesData.map((rol, index) => (
+									<tr key={index}>
+										<td className="border-[#1e1e1e] border-[8px] p-3 bg-white text-center text-black">{rol.name}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
 					</div>
 					<div className="w-2/3 flex flex-col items-center pl-4">
 						<form onSubmit={handleSubmit}>
 							<div className="flex items-center">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-                                        ROL
+										NOMBRE DEL ROL
 									</h3>
 									<input
 										type="text"
-										name="rol"
-										value={rol}
+										name="nombre"
+										required
+										value={nombreRol}
 										onChange={handleInputChange}
-										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
-										placeholder="Ingrese el rol"
+										placeholder="Ingrese el nombre del rol"
 									/>
 								</div>
 							</div>
 							<div className="mt-3 flex justify-center">
 								<button
-									type="submit"
+									type="button"
+									onClick={handleSubmit}
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
-                                    Crear rol de evaluación
+									Crear rol
 								</button>
 							</div>
 						</form>
@@ -97,21 +172,22 @@ export default function GestionarRolesAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-                                        ROL
+										NOMBRE DEL ROL A ELIMINAR
 									</h3>
 									<select
-										name="rolEliminar"
+										required
+										name="nombreRolEliminar"
 										value={rolEliminar}
 										onChange={handleEliminarChange}
-										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
 									>
 										<option value="" disabled>
-                                            Seleccione el rol a eliminar
+											Seleccione el rol a eliminar
 										</option>
-										{rolesUnicos.map((rol, index) => (
-											<option key={index} value={rol}>
-												{rol}
+										{rolesData && rolesData.map((rol, index) => (
+											<option key={index} value={rol._id}>
+												{rol.name}
 											</option>
 										))}
 									</select>
@@ -119,11 +195,12 @@ export default function GestionarRolesAdmin() {
 							</div>
 							<div className="mt-3 flex justify-center">
 								<button
-									type="submit"
+									type="button"
+									onClick={handleEliminarSubmit}
 									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
 									id="titulos-pequenos"
 								>
-                                    Eliminar rol de evaluación
+									Eliminar rol
 								</button>
 							</div>
 						</form>
@@ -133,8 +210,8 @@ export default function GestionarRolesAdmin() {
 			{showConfirmation && (
 				<div className="fixed inset-0 flex items-center justify-center z-50">
 					<div className="bg-[#141414] p-10 rounded-lg">
-						<h3 className="text-white text-center mb-4 text-[175%]" id="titulos-grandes">
-                            ¿ESTÁ SEGURO DE QUERER ELIMINAR ESTE ROL?
+						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-medianos'>
+							¿Está seguro de querer eliminar este rol?
 						</h3>
 						<div className="flex justify-center">
 							<button
@@ -142,24 +219,44 @@ export default function GestionarRolesAdmin() {
 								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 								id="titulos-pequenos"
 							>
-                                ELIMINAR
+								Eliminar
 							</button>
 							<button
 								onClick={handleCancelEliminar}
 								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 								id="titulos-pequenos"
 							>
-                                CANCELAR
+								Cancelar
 							</button>
 						</div>
 					</div>
 				</div>
 			)}
+			{repeat && (
+				<div className="fixed inset-0 flex items-center justify-center z-50">
+					<div className="bg-[#141414] p-10 rounded-lg">
+						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-medianos'>
+							Este rol se encuentra repetido, intenta con otro
+						</h3>
+						<div className="flex justify-center">
+							<button
+								onClick={()=>setRepeat(false)}
+								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+								id="titulos-pequenos"
+							>
+								Aceptar
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
+
 			<div className="flex justify-center mt-8">
 				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
 					Volver
 				</Link>
 			</div>
+
 		</>
 	);
 }
