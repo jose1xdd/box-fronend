@@ -64,7 +64,6 @@ export default function VerEvento() {
 	const [horaI, sethoraI] = useState<String>();
 	const [horaF, sethoraF] = useState<String>();
 	const[correos, setCorreos] = useState('');
-	const[Combatientes, setCombatientes] = useState('');
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const EventId = useSearchParams().get('EventId');
@@ -83,6 +82,7 @@ export default function VerEvento() {
 				headers: headers,
 				params: parametros
 			});
+			console.log(response.data.evento);
 			return response.data.evento;
 		} catch (error) {
 			console.log(error);
@@ -146,14 +146,6 @@ export default function VerEvento() {
 		setCorreos(nuevosCorreos);
 	};
 
-	const cargarCombatientes = () => {
-		let nuevosCombatientes = '';
-		for(const combat of eventInfo.combats){
-			nuevosCombatientes += (combat.boxer1.name + ' ' + combat.boxer1.lastName + ' VS ' + combat.boxer2.name + ' ' + combat.boxer2.lastName + '\n');
-		}
-		setCombatientes(nuevosCombatientes);
-	};
-
 	useEffect(()=>{
 		cargarEvento();
 	}, []);
@@ -165,9 +157,7 @@ export default function VerEvento() {
 			if(eventInfo.type == 'Reunion'){
 				cargarParticipantes();
 			}
-			else{
-				cargarCombatientes();
-			}
+
 		}
 	}, [eventInfo]);
 
@@ -180,6 +170,16 @@ export default function VerEvento() {
 		if(rol == 'Admin') rol = 'administrador';
 		rol = (rol as string).toLowerCase();
 		router.push('/' + rol + '/calendario');
+	};
+	const handleClickFinalizar = () => {
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if(datos != null){
+			rol = JSON.parse(datos).role;
+		}
+		if(rol == 'Admin') rol = 'administrador';
+		rol = (rol as string).toLowerCase();
+		router.push('/' + rol + '/eventos/finalizarEvento');
 	};
 
 	return (
@@ -283,15 +283,26 @@ export default function VerEvento() {
 								<div className='flex justify-center'>
 									<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
 								</div>
-								<div className="flex items-center justify-center h-[250px]">
-									<textarea
-										required
-										value={Combatientes}
-										readOnly
-										className='bg-neutral-200 rounded-lg h-full text-center w-full mx-5 my-2 p-4 text-black' id='texto-general'
-										placeholder='Participantes del evento'
-									/>
-								</div>
+								{eventInfo.combats.map((combat, index) => (
+									<div key={index} className="flex items-center justify-center mb-4">
+										<label className='border border-white rounded-lg text-center w-56'>
+											{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+										</label>
+										<h1 className='p-4'>VS</h1>
+										<label className='border border-white rounded-lg text-center w-56'>
+											{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+										</label>
+									</div>
+								))}
+
+								{(eventInfo.combats[0].status == 'En espera de resultados') && (
+									<div className='flex items-center justify-center'>
+										<button type='button' onClick={() => handleClickFinalizar()} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px]">
+					        				Finalizar torneo
+										</button>
+									</div>
+								)}
+
 							</div>
 						)}
 					</div>
