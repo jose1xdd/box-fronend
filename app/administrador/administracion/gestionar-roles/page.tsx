@@ -143,7 +143,7 @@ export default function RolesAdmin() {
 							<div className="flex items-center">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL ROL
+										Nombre del rol
 									</h3>
 									<input
 										type="text"
@@ -172,7 +172,7 @@ export default function RolesAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL ROL A ELIMINAR
+										Nombre del rol a eliminar
 									</h3>
 									<select
 										required

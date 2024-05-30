@@ -226,7 +226,7 @@ export default function CrearConvocatoria() {
 
 							<div className="flex items-center justify-center">
 								<div className="flex">
-									<div className="w-1/3 mx-4">
+									<div className="w-2/3 mx-4">
 										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
 										Hora inicio
 										</div>
@@ -240,7 +240,7 @@ export default function CrearConvocatoria() {
 									/>
 								</div>
 								<div className="flex">
-									<div className="w-1/3 mx-2">
+									<div className="w-2/3 mx-2">
 										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
 										Hora fin
 										</div>
