@@ -239,7 +239,6 @@ export default function CrearTorneo() {
 			date: fechaEvento,
 			startsAt: horaInicio,
 			endsAt: horaFin,
-			weigthCategory: selectedCategoria,
 			combats: combates
 		};
 		let rol;
@@ -250,7 +249,8 @@ export default function CrearTorneo() {
 		if (rol === 'Entrenador') route = 'entrenador';
 		else route = 'administrador';
 		try {
-			await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
+			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
+			console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
 			console.log(error);
@@ -316,7 +316,7 @@ export default function CrearTorneo() {
 
 							<div className="flex items-center justify-center">
 								<div className="flex">
-									<div className="w-1/3 mx-4">
+									<div className="w-2/3 mx-4">
 										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 											Hora inicio
 										</div>
@@ -333,7 +333,7 @@ export default function CrearTorneo() {
 									/>
 								</div>
 								<div className="flex">
-									<div className="w-1/3 mx-2">
+									<div className="w-2/3 mx-2">
 										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
 											Hora fin
 										</div>
@@ -464,7 +464,7 @@ export default function CrearTorneo() {
 						</div>
 					</div>
 					<div className="flex justify-center items-center mt-4">
-						<button onClick={() => handlerSubmit()} type="submit" className="bg-[#cd1919] text-white rounded p-2 mx-5">
+						<button onClick={() => handlerSubmit()} type="button" className="bg-[#cd1919] text-white rounded p-2 mx-5">
 							Agregar Torneo
 						</button>
 						<button type="button" onClick={handlerCancelar} className="bg-[#cd1919] text-white rounded p-2">
