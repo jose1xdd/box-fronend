@@ -7,36 +7,32 @@ import { ObtenerLogo } from '@/app/lib/basic_request';
 export default function NavbarAdministrador() {
 
 	const [logo, setLogo] = useState('');
-
 	const [nombreUsuario, setNombreUsuario] = useState('');
-
-	const actualizarNombreUsuario = () => {
-		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
-		if (datosUsuarioJSON) {
-			const datosUsuario = JSON.parse(datosUsuarioJSON);
-			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
-		}
-	};
-
-	useEffect(() => {
-		// Obtener datos del localStorage
-		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
-		if (datosUsuarioJSON) {
-			const datosUsuario = JSON.parse(datosUsuarioJSON);
-			// Actualizar el estado con el nombre y apellido del usuario
-			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
-		}
-		const f = async () => {
-			setLogo(await ObtenerLogo());
-		};
-		f();
-	}, [localStorage.getItem('datosUsuario')]);
-
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
 	const [usuariosDesplegados, setUsuariosDesplegados] = useState(false);
-
-	// Agregar estado para el filtro
 	const [filtro, setFiltro] = useState('');
+
+	useEffect(() => {
+		// Verificar que estamos en el cliente
+		if (typeof window !== 'undefined') {
+			const datosUsuarioJSON = localStorage.getItem('datosUsuario');
+			if (datosUsuarioJSON) {
+				const datosUsuario = JSON.parse(datosUsuarioJSON);
+				setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+			}
+			const fetchLogo = async () => {
+				setLogo(await ObtenerLogo());
+			};
+			fetchLogo();
+		}
+	}, []);
+
+	useEffect(() => {
+		// UseEffect para manejar el cambio en el filtro y actualizar el localStorage
+		if (filtro && typeof window !== 'undefined') {
+			localStorage.setItem('filtro', filtro);
+		}
+	}, [filtro]);
 
 	const abrirBarraDesplegable = () => {
 		setBarraDesplegada(true);
@@ -54,13 +50,6 @@ export default function NavbarAdministrador() {
 		setUsuariosDesplegados(false);
 	};
 
-	// UseEffect para manejar el cambio en el filtro y actualizar el localStorage
-	useEffect(() => {
-		if (filtro) {
-			localStorage.setItem('filtro', filtro);
-		}
-	}, [filtro]);
-
 	return (
 		<nav className="bg-[#1e1e1e] p-4">
 			<div className="container">
@@ -69,7 +58,7 @@ export default function NavbarAdministrador() {
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
 								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
-									{logo != '' && <Image
+									{logo && <Image
 										width={125}
 										height={125}
 										src={logo}
@@ -122,24 +111,24 @@ export default function NavbarAdministrador() {
 								className="absolute top-0 right-0 mx-1 cursor-pointer"
 								onClick={cerrarBarraDesplegable}
 							>
-                X
+                                X
 							</button>
 							<ul>
 								<li className='my-1'>
 									<Link href='/administrador/mi-perfil' onClick={cerrarBarraDesplegable}>
-                    Mi perfil
+                                        Mi perfil
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='my-1'>
 									<Link href='/administrador/administracion' onClick={cerrarBarraDesplegable}>
-                    Administración
+                                        Administración
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='text-[#cd1919] italic my-1'>
 									<Link href='/' onClick={cerrarBarraDesplegable}>
-                    Cerrar sesión
+                                        Cerrar sesión
 									</Link>
 								</li>
 							</ul>
@@ -162,26 +151,26 @@ export default function NavbarAdministrador() {
 								className="absolute top-0 right-0 mx-1 cursor-pointer"
 								onClick={cerrarListaUsuarios}
 							>
-                X
+                                X
 							</button>
 							<ul>
 								<li className='my-1'>
 									<Link href='/administrador/lista-usuarios/entrenador' onClick={() => { cerrarListaUsuarios(); setFiltro('Entrenador'); }}>
-                    ENTRENADORES
+                                        ENTRENADORES
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								<li className='my-1'>
 									<Link href='/administrador/lista-usuarios/deportista' onClick={() => { cerrarListaUsuarios(); setFiltro('Deportista'); }}>
-                    DEPORTISTAS
+                                        DEPORTISTAS
 									</Link>
 								</li>
 								<div className="border-t border-gray-500"></div>
 								{/*<li className=' my-1'>
-									<Link href='/administrador/lista-usuarios/externo' onClick={() => { cerrarListaUsuarios(); setFiltro('Externo'); }}>
-                    EXTERNOS
-									</Link>
-			</li>*/}
+                                    <Link href='/administrador/lista-usuarios/externo' onClick={() => { cerrarListaUsuarios(); setFiltro('Externo'); }}>
+                                        EXTERNOS
+                                    </Link>
+                                </li>*/}
 							</ul>
 						</div>
 						<div
