@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import Image from 'next/image';
 import { json } from 'stream/consumers';
 import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import { obtenerFotoPerfil } from '@/app/lib/basic_request';
@@ -43,7 +44,6 @@ export default function Home() {
 		carga(arreglo);
 		cargado = true;
 	}, [!cargado]);
-	console.log(datosPerfil);
 	//Método que hace el get de la base de datos
 	async function carga(datos: { token: any; userId: any }): Promise<void> {
 		let tmpUser;
@@ -108,10 +108,6 @@ export default function Home() {
 				phone: info.telefono,
 				address: info.direccion
 			};
-
-			console.log(parametros);
-			console.log(headers);
-			console.log(cuerpo);
 
 			const response = await axios.patch(`${apiEndpoint}/users`, cuerpo, {
 				params: parametros,
@@ -288,7 +284,7 @@ export default function Home() {
 						</form>
 					</div>
 					<div className="w-1/3 flex flex-col justify-center items-center">
-						{datosPerfil.imagen != '' && <img src={datosPerfil.imagen} className='w-64 h-64'/>}
+						{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={512} height={512} src={datosPerfil.imagen}/>}
 						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
 							Cargar nueva foto de perfil
 		  				</button>
