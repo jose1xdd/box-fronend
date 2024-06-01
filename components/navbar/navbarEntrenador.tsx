@@ -32,7 +32,7 @@ export default function NavbarEntrenador() {
 			setLogo(await ObtenerLogo());
 		};
 		f();
-	}, []);
+	}, [localStorage.getItem('datosUsuario')]);
 
 	return (
 		<nav className="bg-[#1e1e1e] p-4">
@@ -42,7 +42,9 @@ export default function NavbarEntrenador() {
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
 								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
-									{logo != '' && <img
+									{logo != '' && <Image
+										width={125}
+										height={125}
 										src={logo}
 										alt="Logo Liga de Boxeo de Norte de Santander"
 										className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"

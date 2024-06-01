@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '@/public/images/logo.png';
 import { ObtenerLogo } from '@/app/lib/basic_request';
 
 export default function NavbarAdministrador() {
@@ -10,6 +9,14 @@ export default function NavbarAdministrador() {
 	const [logo, setLogo] = useState('');
 
 	const [nombreUsuario, setNombreUsuario] = useState('');
+
+	const actualizarNombreUsuario = () => {
+		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
+		if (datosUsuarioJSON) {
+			const datosUsuario = JSON.parse(datosUsuarioJSON);
+			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+		}
+	};
 
 	useEffect(() => {
 		// Obtener datos del localStorage
@@ -23,7 +30,7 @@ export default function NavbarAdministrador() {
 			setLogo(await ObtenerLogo());
 		};
 		f();
-	}, []);
+	}, [localStorage.getItem('datosUsuario')]);
 
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
 	const [usuariosDesplegados, setUsuariosDesplegados] = useState(false);
@@ -62,7 +69,9 @@ export default function NavbarAdministrador() {
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
 								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
-									{logo != '' && <img
+									{logo != '' && <Image
+										width={125}
+										height={125}
 										src={logo}
 										alt="Logo Liga de Boxeo de Norte de Santander"
 										className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"
