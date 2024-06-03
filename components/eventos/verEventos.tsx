@@ -179,7 +179,7 @@ export default function VerEvento() {
 		}
 		if(rol == 'Admin') rol = 'administrador';
 		rol = (rol as string).toLowerCase();
-		router.push('/' + rol + '/eventos/finalizarEvento');
+		router.push('/' + rol + '/eventos/finalizarEvento?EventId=' + EventId);
 	};
 
 	return (
@@ -278,7 +278,7 @@ export default function VerEvento() {
 								</div>
 							</div>
 						)}
-						{(eventInfo.type == 'Combate') && (
+						{(eventInfo.type == 'Combate' && eventInfo.combats[0].status == 'En espera de resultados') && (
 							<div className=" w-full  pr-4">
 								<div className='flex justify-center'>
 									<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
@@ -295,13 +295,30 @@ export default function VerEvento() {
 									</div>
 								))}
 
-								{(eventInfo.combats[0].status == 'En espera de resultados') && (
-									<div className='flex items-center justify-center'>
-										<button type='button' onClick={() => handleClickFinalizar()} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px]">
+								<div className='flex items-center justify-center'>
+									<button type='button' onClick={() => handleClickFinalizar()} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px]">
 					        				Finalizar torneo
-										</button>
+									</button>
+								</div>
+
+							</div>
+						)}
+						{(eventInfo.type == 'Combate' && eventInfo.combats[0].status == 'Finalizado') && (
+							<div className=" w-full  pr-4">
+								<div className='flex justify-center'>
+									<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
+								</div>
+								{eventInfo.combats.map((combat, index) => (
+									<div key={index} className="flex items-center justify-center mb-4">
+										<label className={`border ${combat.winner === combat.boxer1._id ? 'border-yellow-400 text-yellow-200' : 'border-white'} rounded-lg text-center w-56`}>
+											{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+										</label>
+										<h1 className='p-4'>VS</h1>
+										<label className={`border ${combat.winner === combat.boxer2._id ? 'border-yellow-400 text-yellow-200' : 'border-white '} rounded-lg text-center w-56`}>
+											{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+										</label>
 									</div>
-								)}
+								))}
 
 							</div>
 						)}

@@ -1,5 +1,4 @@
 'use client';
-
 import FinalizarEvento from '@/components/eventos/finalizarEventos';
 export default function FinalizarEventoAdmin() {
 	return (
