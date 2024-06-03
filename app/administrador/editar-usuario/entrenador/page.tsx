@@ -9,6 +9,7 @@ import {
 	useEffect,
 	useState
 } from 'react';
+import { LoaderContenido } from '@/components/loaderContenido';
 
 interface FormData {
 	name: string;
@@ -126,102 +127,109 @@ export default function EditarEntrenador() {
 		cargado = true;
 	}, [!cargado]);
 
+	const ready = () =>{
+		return datosEntrenador.address != '' && datosEntrenador.image != '' && datosEntrenador.lastName != '' && datosEntrenador.name != '' && datosEntrenador.phone != '';
+	};
+
 	return (
 		<>
-			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR ENTRENADOR</h1>
-				<div className='flex items-center justify-center'>
-					{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-72 h-72'></img>}
+			{!ready() && (<LoaderContenido/>)}
+			{ready() && (
+				<div className="container mx-auto mt-8">
+					<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR ENTRENADOR</h1>
+					<div className='flex items-center justify-center'>
+						{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-72 h-72'></img>}
+					</div>
+					<form>
+						<div className="p-4 max-w-5xl mx-auto flex">
+							<div className="w-2/4 pr-4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									Nombre:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="nombre"
+											value={datosEntrenador.name}
+											onChange={(e) => handleChange('name', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									Apellido:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="apellido"
+											value={datosEntrenador.lastName}
+											onChange={(e) => handleChange('lastName', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="w-2/4 pr-4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									Dirección
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="direccion"
+											value={datosEntrenador.address}
+											onChange={(e) => handleChange('address', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									Teléfono
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="telefono"
+											value={datosEntrenador.phone}
+											onChange={(e) => handleChange('phone', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="mt-5 flex justify-center items-center">
+							<button
+								onClick={handleGuardarCambios}
+								type="button"
+								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+							>
+						Guardar cambios
+							</button>
+							<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos' onClick={(event) => {
+								event.preventDefault();
+								handleChangeImage();
+							}}>
+						Cargar nueva foto de perfil
+					  </button>
+						</div>
+					</form>
+					{viewModal && <ModalImage setView={setViewModal} id={id}></ModalImage>}
 				</div>
-				<form>
-					<div className="p-4 max-w-5xl mx-auto flex">
-						<div className="w-2/4 pr-4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Nombre:
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="nombre"
-										value={datosEntrenador.name}
-										onChange={(e) => handleChange('name', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Apellido:
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="apellido"
-										value={datosEntrenador.lastName}
-										onChange={(e) => handleChange('lastName', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="w-2/4 pr-4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Dirección
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="direccion"
-										value={datosEntrenador.address}
-										onChange={(e) => handleChange('address', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Teléfono
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="telefono"
-										value={datosEntrenador.phone}
-										onChange={(e) => handleChange('phone', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="mt-5 flex justify-center items-center">
-						<button
-							onClick={handleGuardarCambios}
-							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-                            Guardar cambios
-						</button>
-						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos' onClick={(event) => {
-							event.preventDefault();
-							handleChangeImage();
-						}}>
-							Cargar nueva foto de perfil
-		  				</button>
-					</div>
-				</form>
-				{viewModal && <ModalImage setView={setViewModal} id={id}></ModalImage>}
-			</div>
+			)}
 		</>
 	);
 };

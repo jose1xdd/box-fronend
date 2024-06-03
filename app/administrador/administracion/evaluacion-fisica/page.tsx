@@ -1,6 +1,7 @@
 
 'use client';
 
+import { LoaderContenido } from '@/components/loaderContenido';
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -117,146 +118,152 @@ export default function EvaluacionFisicaAdmin() {
 
 	return (
 		<>
-			<div className="container mx-auto mt-8">
-				<h1 className="text-center text-[400%]" id="titulos-grandes">
+			{criteriosData.length == 0 && (
+				<LoaderContenido></LoaderContenido>
+			)}
+			{criteriosData.length != 0 && (
+				<div>
+					<div className="container mx-auto mt-8">
+						<h1 className="text-center text-[400%]" id="titulos-grandes">
 					EVALUACIÓN FÍSICA
-				</h1>
-				<div className="p-4 max-w-5xl mx-auto flex">
-					<div className="w-2/3">
-						<table className="w-full">
-							<thead>
-								<tr>
-									<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>Criterio</th>
-								</tr>
-							</thead>
-							<tbody>
-								{criteriosData.map((criterio, index) => (
-									<tr key={index}>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{criterio.name}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-					<div className="w-2/3 flex flex-col items-center pl-4">
-						<form onSubmit={handleSubmit}>
-							<div className="flex items-center">
-								<div className="w-full">
-									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL CRITERIO
-									</h3>
-									<input
-										type="text"
-										name="nombre"
-										required
-										value={nombreCriterio}
-										onChange={handleInputChange}
-										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
-										id="texto-general"
-										placeholder="Ingrese el nombre del criterio"
-									/>
-								</div>
-							</div>
-							<div className="mt-3 flex justify-center">
-								<button
-									type="button"
-									onClick={handleSubmit}
-									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-									id="titulos-pequenos"
-								>
-									Crear criterio de evaluación
-								</button>
-							</div>
-						</form>
-						<form onSubmit={handleEliminarSubmit}>
-							<div className="flex items-center mt-5">
-								<div className="w-full">
-									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL CRITERIO
-									</h3>
-									<select
-										required
-										name="nombreCriterioEliminar"
-										value={criterioEliminar}
-										onChange={handleEliminarChange}
-										className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
-										id="texto-general"
-									>
-										<option value="" disabled>
-											Seleccione el criterio a eliminar
-										</option>
+						</h1>
+						<div className="p-4 max-w-5xl mx-auto flex">
+							<div className="w-2/3">
+								<table className="w-full">
+									<thead>
+										<tr>
+											<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>Criterio</th>
+										</tr>
+									</thead>
+									<tbody>
 										{criteriosData.map((criterio, index) => (
-											<option key={index} value={criterio._id}>
-												{criterio.name}
-											</option>
+											<tr key={index}>
+												<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">{criterio.name}</td>
+											</tr>
 										))}
-									</select>
+									</tbody>
+								</table>
+							</div>
+							<div className="w-2/3 flex flex-col items-center pl-4">
+								<form onSubmit={handleSubmit}>
+									<div className="flex items-center">
+										<div className="w-full">
+											<h3 className="text-center text-[200%]" id="titulos-grandes">
+										NOMBRE DEL CRITERIO
+											</h3>
+											<input
+												type="text"
+												name="nombre"
+												required
+												value={nombreCriterio}
+												onChange={handleInputChange}
+												className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+												id="texto-general"
+												placeholder="Ingrese el nombre del criterio"
+											/>
+										</div>
+									</div>
+									<div className="mt-3 flex justify-center">
+										<button
+											type="button"
+											onClick={handleSubmit}
+											className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
+											id="titulos-pequenos"
+										>
+									Crear criterio de evaluación
+										</button>
+									</div>
+								</form>
+								<form onSubmit={handleEliminarSubmit}>
+									<div className="flex items-center mt-5">
+										<div className="w-full">
+											<h3 className="text-center text-[200%]" id="titulos-grandes">
+										NOMBRE DEL CRITERIO
+											</h3>
+											<select
+												required
+												name="nombreCriterioEliminar"
+												value={criterioEliminar}
+												onChange={handleEliminarChange}
+												className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+												id="texto-general"
+											>
+												<option value="" disabled>
+											Seleccione el criterio a eliminar
+												</option>
+												{criteriosData.map((criterio, index) => (
+													<option key={index} value={criterio._id}>
+														{criterio.name}
+													</option>
+												))}
+											</select>
+										</div>
+									</div>
+									<div className="mt-3 flex justify-center">
+										<button
+											type="button"
+											onClick={()=>handleEliminarSubmit()}
+											className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
+											id="titulos-pequenos"
+										>
+									Eliminar criterio de evaluación
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					{showConfirmation && (
+						<div className="fixed inset-0 flex items-center justify-center z-50">
+							<div className="bg-[#141414] p-10 rounded-lg">
+								<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
+							¿ESTÁ SEGURO DE QUERER ELIMINAR ESTE CRITERIO?
+								</h3>
+								<div className="flex justify-center">
+									<button
+										onClick={handleConfirmEliminar}
+										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+										id="titulos-pequenos"
+									>
+								ELIMINAR
+									</button>
+									<button
+										onClick={handleCancelEliminar}
+										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+										id="titulos-pequenos"
+									>
+								CANCELAR
+									</button>
 								</div>
 							</div>
-							<div className="mt-3 flex justify-center">
-								<button
-									type="button"
-									onClick={()=>handleEliminarSubmit()}
-									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-									id="titulos-pequenos"
-								>
-									Eliminar criterio de evaluación
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			{showConfirmation && (
-				<div className="fixed inset-0 flex items-center justify-center z-50">
-					<div className="bg-[#141414] p-10 rounded-lg">
-						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-							¿ESTÁ SEGURO DE QUERER ELIMINAR ESTE CRITERIO?
-						</h3>
-						<div className="flex justify-center">
-							<button
-								onClick={handleConfirmEliminar}
-								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-								id="titulos-pequenos"
-							>
-								ELIMINAR
-							</button>
-							<button
-								onClick={handleCancelEliminar}
-								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-								id="titulos-pequenos"
-							>
-								CANCELAR
-							</button>
 						</div>
-					</div>
-				</div>
-			)}
-			{repeat && (
-				<div className="fixed inset-0 flex items-center justify-center z-50">
-					<div className="bg-[#141414] p-10 rounded-lg">
-						<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
+					)}
+					{repeat && (
+						<div className="fixed inset-0 flex items-center justify-center z-50">
+							<div className="bg-[#141414] p-10 rounded-lg">
+								<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
 							Ese criterio se encuentra repetido, intenta con otro
-						</h3>
-						<div className="flex justify-center">
-							<button
-								onClick={()=>setRepeat(false)}
-								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-								id="titulos-pequenos"
-							>
+								</h3>
+								<div className="flex justify-center">
+									<button
+										onClick={()=>setRepeat(false)}
+										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
+										id="titulos-pequenos"
+									>
 								Aceptar
-							</button>
+									</button>
+								</div>
+							</div>
 						</div>
+					)}
+
+					<div className="flex justify-center mt-8">
+						<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+					Volver
+						</Link>
 					</div>
 				</div>
 			)}
-
-			<div className="flex justify-center mt-8">
-				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
-					Volver
-				</Link>
-			</div>
-
 		</>
 	);
 }

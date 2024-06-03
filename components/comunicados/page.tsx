@@ -4,6 +4,7 @@ import axios from 'axios';
 import router from 'next/router';
 import { useState, useEffect } from 'react';
 import { Value } from 'sass';
+import { LoaderContenido } from '@/components/loaderContenido';
 
 interface User {
     _id: string;
@@ -116,94 +117,97 @@ export default function Comunicados() {
 
 	return (
 		<>
-			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[400%]' id='textos-grandes'>COMUNICADOS</h1>
-				<form>
-					<div className="p-4 max-w-5xl mx-auto flex">
-						<div className="w-2/3 pr-4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+			{usuarios.length == 0 && (<LoaderContenido/>)}
+			{usuarios.length != 0 && (
+				<div className="container mx-auto mt-8">
+					<h1 className='text-center text-[400%]' id='textos-grandes'>COMUNICADOS</h1>
+					<form>
+						<div className="p-4 max-w-5xl mx-auto flex">
+							<div className="w-2/3 pr-4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Buscar usuario:
+										</div>
+									</div>
+									<div className='w-2/3 mx-2'>
+										<select onChange={(event)=>{setSelectedUsuario(event.target.value);}}required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black text-center' id='texto-general' placeholder='Seleccionar usuario'>
+											<option value="">Selecciona un usuario</option>
+											{usuarios.map((usuario) => (
+												<option key={usuario.email} value={usuario.email} placeholder=''>
+													{usuario.name + usuario.lastName}
+												</option>
+											))}
+										</select>
 									</div>
 								</div>
-								<div className='w-2/3 mx-2'>
-									<select onChange={(event)=>{setSelectedUsuario(event.target.value);}}required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black text-center' id='texto-general' placeholder='Seleccionar usuario'>
-										<option value="">Selecciona un usuario</option>
-										{usuarios.map((usuario) => (
-											<option key={usuario.email} value={usuario.email} placeholder=''>
-												{usuario.name + usuario.lastName}
-											</option>
-										))}
-									</select>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Asunto del correo:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										<input
+											type="text"
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+											placeholder='Ingresa el asunto'
+											value={asunto}
+											onChange={handleChangeAsunto}
+										/>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-									<input
-										type="text"
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-										placeholder='Ingresa el asunto'
-										value={asunto}
-										onChange={handleChangeAsunto}
-									/>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Cuerpo del correo:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										<textarea
+											className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black' id='texto-general'
+											placeholder='Ingresa el cuerpo del correo'
+											value={cuerpo}
+											onChange={handleChangeCuerpo}
+										/>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
+							</div>
+							<div className="w-1/3 flex flex-col items-center ml-4 my-2">
+								<div className="flex">
+									<button type='button' onClick={()=> handlerSetParticipantes(true)} className="bg-[#cd1919] text-white rounded p-2 mr-2">
+					                Eliminar usuario
+									</button>
+									<button type='button' onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2 ml-2">
+					                Agregar Usuario
+									</button>
+								</div>
+								<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-4 flex items-center justify-center text-black' id='texto-general'>
+								Destinatarios
+								</div>
+								<div className="flex w-full">
 									<textarea
-										className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black' id='texto-general'
-										placeholder='Ingresa el cuerpo del correo'
-										value={cuerpo}
-										onChange={handleChangeCuerpo}
+										required
+										value={correos}
+										readOnly
+										className='bg-neutral-200 rounded-lg w-full h-40 pl-4 text-black' id='texto-general'
+										placeholder='Participantes del evento'
 									/>
+								</div>
+								<div className="mt-2 flex justify-end">
+									<button
+										type="button"
+										className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+										onClick={handleSubmit}
+									>
+									Enviar correo electrónico
+									</button>
 								</div>
 							</div>
 						</div>
-						<div className="w-1/3 flex flex-col items-center ml-4 my-2">
-							<div className="flex">
-								<button type='button' onClick={()=> handlerSetParticipantes(true)} className="bg-[#cd1919] text-white rounded p-2 mr-2">
-					                Eliminar usuario
-								</button>
-								<button type='button' onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2 ml-2">
-					                Agregar Usuario
-								</button>
-							</div>
-							<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-4 flex items-center justify-center text-black' id='texto-general'>
-								Destinatarios
-							</div>
-							<div className="flex w-full">
-								<textarea
-									required
-									value={correos}
-									readOnly
-									className='bg-neutral-200 rounded-lg w-full h-40 pl-4 text-black' id='texto-general'
-									placeholder='Participantes del evento'
-								/>
-							</div>
-							<div className="mt-2 flex justify-end">
-								<button
-									type="button"
-									className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-									onClick={handleSubmit}
-								>
-									Enviar correo electrónico
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
+					</form>
+				</div>
+			)}
 		</>
 	);
 }

@@ -5,6 +5,7 @@ import React, {
 	useEffect,
 	useState
 } from 'react';
+import { LoaderContenido } from '@/components/loaderContenido';
 import Tabla from '@/components/tablas/categorias';
 import axios from 'axios';
 import sharp from 'sharp';
@@ -123,7 +124,8 @@ export default function AdministrarCategorias() {
 	}, [min, max]);
 	return (
 		<>
-			<div className='w-[80%] mx-auto mt-[6%]'>
+			{categorias.length == 0 && (<LoaderContenido></LoaderContenido>)}
+			{categorias.length != 0 && (<div><div className='w-[80%] mx-auto mt-[6%]'>
 				<h1 className='text-[300%]' id='textos-grandes'>
 					CATEGORÍAS
 				</h1>
@@ -260,7 +262,7 @@ export default function AdministrarCategorias() {
 				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
 					Volver
 				</Link>
-			</div>
+			</div></div>)}
 		</>
 	);
 }
