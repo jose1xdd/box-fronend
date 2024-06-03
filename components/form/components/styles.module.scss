@@ -50,3 +50,41 @@
     border: 1px solid black;
   }
 }
+
+.submitButtonEnabled{
+  margin-top: 1rem;
+  width: 60%;
+  background: #cd1919;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: .4rem 0;
+  border: 1px solid transparent;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover{
+    background-color: white;
+    color: #cd1919;
+    border: 1px solid black;
+  }
+}
+
+.submitButtonDisabled{
+  margin-top: 1rem;
+  width: 60%;
+  background: #8b1212;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: .4rem 0;
+  border: 1px solid transparent;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

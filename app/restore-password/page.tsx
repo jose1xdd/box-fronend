@@ -126,6 +126,7 @@ export default function RestorePassword() {
 				)}
 				<div className="flex justify-center mt-4">
 			  <Form.SubmitButton
+			  disable={false}
 						buttonText="Cambiar contraseña"
 						handleButton={handleSubmit}
 			  />
