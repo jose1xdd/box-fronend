@@ -1,4 +1,5 @@
 'use client';
+import { LoaderContenido } from '@/components/loaderContenido';
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import Image from 'next/image';
@@ -147,151 +148,162 @@ export default function Home() {
 		setModalVisible(true);
 	};
 
+	const datosCargados = () => {
+		return datosPerfil.apellido != '' && datosPerfil.cedula != '' && datosPerfil.correo != '' && datosPerfil.direccion != '' && datosPerfil.imagen != '' && datosPerfil.nombre != '' && datosPerfil.telefono != '';
+	};
+
 	return (
 		<>
-			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>MI PERFIL</h1>
-				<div className="p-4 max-w-5xl mx-auto flex">
-					<div className="w-2/3 pr-4">
-						<form>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+			{/**!datosCargados()*/}
+			{!datosCargados() && (
+				<LoaderContenido></LoaderContenido>
+			)}
+			{/**datosCargados() == true*/}
+			{datosCargados() == true && (
+				<div className="container mx-auto mt-8">
+					<h1 className='text-center text-[400%]' id='titulos-grandes'>MI PERFIL</h1>
+					<div className="p-4 max-w-5xl mx-auto flex">
+						<div className="w-2/3 pr-4">
+							<form>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Nombre:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ?
+											(
+												<input
+													type="text"
+													className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+													value={datosPerfil.nombre}
+													onChange={(e) => handleChange('nombre', e.target.value)}
+												/>
+											) : (
+												<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+													{datosPerfil.nombre}
+												</div>
+											)
+										}
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
-												value={datosPerfil.nombre}
-												onChange={(e) => handleChange('nombre', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosPerfil.nombre}
-											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Apellido:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ?
+											(
+												<input
+													type="text"
+													className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+													value={datosPerfil.apellido}
+													onChange={(e) => handleChange('apellido', e.target.value)}
+												/>
+											) : (
+												<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+													{datosPerfil.apellido}
+												</div>
+											)
+										}
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
-												value={datosPerfil.apellido}
-												onChange={(e) => handleChange('apellido', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosPerfil.apellido}
-											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Cedula:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosPerfil.cedula}
+										</div>
+
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosPerfil.cedula}
-									</div>
-
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Dirección:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ?
+											(
+												<input
+													type="text"
+													className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+													value={datosPerfil.direccion}
+													onChange={(e) => handleChange('direccion', e.target.value)}
+												/>
+											) : (
+												<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+													{datosPerfil.direccion}
+												</div>
+											)
+										}
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
-												value={datosPerfil.direccion}
-												onChange={(e) => handleChange('direccion', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosPerfil.direccion}
-											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Teléfono:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ?
+											(
+												<input
+													type="text"
+													className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+													value={datosPerfil.telefono}
+													onChange={(e) => handleChange('telefono', e.target.value)}
+												/>
+											) : (
+												<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+													{datosPerfil.telefono}
+												</div>
+											)
+										}
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-									{esEditable ?
-										(
-											<input
-												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
-												value={datosPerfil.telefono}
-												onChange={(e) => handleChange('telefono', e.target.value)}
-											/>
-										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-												{datosPerfil.telefono}
-											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 										Correo:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosPerfil.correo}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosPerfil.correo}
-									</div>
+								<div className="mt-5 flex justify-center">
+									<button
+										type="button"
+										onClick={handleToggleEdit}
+										className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+									>
+										{esEditable ? 'Guardar cambios' : 'Editar información'}
+									</button>
 								</div>
-							</div>
-							<div className="mt-5 flex justify-center">
-								<button
-									type="button"
-									onClick={handleToggleEdit}
-									className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-								>
-									{esEditable ? 'Guardar cambios' : 'Editar información'}
-								</button>
-							</div>
-						</form>
-					</div>
-					<div className="w-1/3 flex flex-col justify-center items-center">
-						{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={512} height={512} src={datosPerfil.imagen}/>}
-						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
+							</form>
+						</div>
+						<div className="w-1/3 flex flex-col justify-center items-center">
+							{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={512} height={512} src={datosPerfil.imagen}/>}
+							<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
 							Cargar nueva foto de perfil
 		  				</button>
+						</div>
+						{modalVisible && <ModalImage setView={setModalVisible}></ModalImage>}
 					</div>
-					{modalVisible && <ModalImage setView={setModalVisible}></ModalImage>}
 				</div>
-			</div>
+			)}
 		</>
 	);
 }
