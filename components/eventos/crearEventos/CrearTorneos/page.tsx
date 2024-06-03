@@ -141,9 +141,9 @@ export default function CrearTorneo() {
 	}, []);
 
 	useEffect(()=>{
-		console.log(selectedEntrenador);
-		console.log(fechaEvento);
-		console.log(combates);
+		//console.log(selectedEntrenador);
+		//console.log(fechaEvento);
+		//console.log(combates);
 	}, [combates]);
 
 	useEffect(() => {
@@ -249,7 +249,7 @@ export default function CrearTorneo() {
 		else route = 'administrador';
 		try {
 			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
-			console.log(response);
+			//console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
 			console.log(error);
