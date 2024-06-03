@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { LoaderContenido } from '@/components/loaderContenido';
+import { read } from 'fs';
 
 export default function FinalizarEvento() {
   interface user {
@@ -128,42 +130,51 @@ export default function FinalizarEvento() {
   	cargarEvento();
   }, []);
 
+  const ready = () => {
+  	return eventInfo._id != '' && eventInfo.name != '' && eventInfo.combats.length != 0;
+  };
+
   return (
-  	<div className=' flex flex-col min-h-[600px] justify-center'>
-  		<div className="p-2 m-3 mb-11">
-  			<h1 className="text-white text-center">{eventInfo.name}</h1>
-  		</div>
-  		<div>
-  			{eventInfo.combats.map((combat, index) => (
-  				<div key={index} className="flex items-center justify-center mb-4">
-  					<button
-  						onClick={() => handleSelection(combat._id, combat.boxer1._id)}
-  						className={`border border-white rounded-lg text-center w-[300px] p-2 ${
-  							selectedWinners[combat._id] === combat.boxer1._id ? 'border-yellow-400 text-yellow-200' : 'border-white'
-  						} hover:border-yellow-400`}
-  					>
-  						{combat.boxer1 ? combat.boxer1.name : 'Unknown'} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
-  					</button>
-  					<h1 className="p-4">VS</h1>
-  					<button
-  						onClick={() => handleSelection(combat._id, combat.boxer2._id)}
-  						className={`border border-white rounded-lg text-center w-[300px] p-2 ${
-  							selectedWinners[combat._id] === combat.boxer2._id ? 'border-yellow-400 text-yellow-200' : 'border-white'
-  						} hover:border-yellow-400`}
-  					>
-  						{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {combat.boxer2 ? combat.boxer2.lastName : 'Unknown'}
+  	<>
+  		{!ready() && (<LoaderContenido/>)}
+  		{ready() && (
+  			<div className=' flex flex-col min-h-[600px] justify-center'>
+  				<div className="p-2 m-3 mb-11">
+  					<h1 className="text-white text-center">{eventInfo.name}</h1>
+  				</div>
+  				<div>
+  					{eventInfo.combats.map((combat, index) => (
+  						<div key={index} className="flex items-center justify-center mb-4">
+  							<button
+  								onClick={() => handleSelection(combat._id, combat.boxer1._id)}
+  								className={`border border-white rounded-lg text-center w-[300px] p-2 ${
+  									selectedWinners[combat._id] === combat.boxer1._id ? 'border-yellow-400 text-yellow-200' : 'border-white'
+  								} hover:border-yellow-400`}
+  							>
+  								{combat.boxer1 ? combat.boxer1.name : 'Unknown'} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+  							</button>
+  							<h1 className="p-4">VS</h1>
+  							<button
+  								onClick={() => handleSelection(combat._id, combat.boxer2._id)}
+  								className={`border border-white rounded-lg text-center w-[300px] p-2 ${
+  									selectedWinners[combat._id] === combat.boxer2._id ? 'border-yellow-400 text-yellow-200' : 'border-white'
+  								} hover:border-yellow-400`}
+  							>
+  								{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {combat.boxer2 ? combat.boxer2.lastName : 'Unknown'}
+  							</button>
+  						</div>
+  					))}
+  				</div>
+  				<div className="flex justify-center">
+  					<button type="button" onClick={handlerSubmit} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px] m-11">
+		Cargar resultados
   					</button>
   				</div>
-  			))}
-  		</div>
-  		<div className="flex justify-center">
-  			<button type="button" onClick={handlerSubmit} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px] m-11">
-          Cargar resultados
-  			</button>
-  		</div>
-  		<div className='flex justify-end'>
-  			<label className='border border-yellow-400 text-yellow-200 p-2 mx-3 rounded-lg'>Ganador seleccionado</label>
-  		</div>
-  	</div>
+  				<div className='flex justify-end'>
+  					<label className='border border-yellow-400 text-yellow-200 p-2 mx-3 rounded-lg'>Ganador seleccionado</label>
+  				</div>
+  			</div>
+  		)}
+  	</>
   );
 }

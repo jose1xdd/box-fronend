@@ -7,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRouter } from 'next/navigation';
+import { LoaderContenido } from '@/components/loaderContenido';
 
 interface formatedEvents {
     id: string,
@@ -73,32 +74,37 @@ export default function CalendarioEventos() {
 	}, []);
 
 	return (
-		<div>
-			<div>
-				<h1 className="text-5xl text-white mb-4 mt-[5%]">CALENDARIO DE EVENTOS</h1>
-				<FullCalendar
-					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-					locales={[esLocale]}
-					initialView={'dayGridMonth'}
-					headerToolbar={{
-						start: 'today prev,next',
-						center: 'title',
-						end: 'dayGridMonth,timeGridWeek,timeGridDay',
-					}}
-					events={events}
-					eventClick={(info) => {
-						const e = info.event;
-						const datos = localStorage.getItem('userData');
-						let role;
-						if(datos != null){
-							role = JSON.parse(datos).role;
-						}
-						if(role == 'Admin') role = 'administrador';
-						router.push('/' + (role as string).toLowerCase() + '/eventos/VerEvento?EventId=' + info.event.id as string);
-					}}
-					height={'90vh'}
-				/>
-			</div>
-		</div>
+		<>
+			{events.length == 0 && (<LoaderContenido/>)}
+			{events.length != 0 && (
+				<div>
+					<div>
+						<h1 className="text-5xl text-white mb-4 mt-[5%]">CALENDARIO DE EVENTOS</h1>
+						<FullCalendar
+							plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+							locales={[esLocale]}
+							initialView={'dayGridMonth'}
+							headerToolbar={{
+								start: 'today prev,next',
+								center: 'title',
+								end: 'dayGridMonth,timeGridWeek,timeGridDay',
+							}}
+							events={events}
+							eventClick={(info) => {
+								const e = info.event;
+								const datos = localStorage.getItem('userData');
+								let role;
+								if(datos != null){
+									role = JSON.parse(datos).role;
+								}
+								if(role == 'Admin') role = 'administrador';
+								router.push('/' + (role as string).toLowerCase() + '/eventos/VerEvento?EventId=' + info.event.id as string);
+							}}
+							height={'90vh'}
+						/>
+					</div>
+				</div>
+			)}
+		</>
 	);
 }

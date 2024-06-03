@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import Link from 'next/link';
 import { ModalUltraBasic } from '../ModalConfirmation';
 import { BorrarUsuario } from '@/app/lib/administrador';
+import { LoaderContenido } from '@/components/loaderContenido';
 
 export interface User {
   _id: string;
@@ -133,38 +134,43 @@ const Table: React.FC<TableProps> = ({ rol, linkVer, linkEditar }) => {
 	};
 
 	return (
-		<div className="w-80% mx-auto">
-			<h1 className="text-5xl text-white mb-4">USUARIOS</h1>
-			<input
-				type="text"
-				placeholder="Filtrar por nombre"
-				onChange={handleSearch}
-				className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
-				id='texto-general'
-			/>
-			<table className="w-full">
-				<thead>
-					<tr>
-						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
-						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ROL</th>
-						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">CÉDULA</th>
-						<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ACCIONES</th>
-					</tr>
-				</thead>
-				<tbody>{renderUsers()}</tbody>
-			</table>
-			<ReactPaginate
-				pageCount={Math.ceil(filteredData.length / usersPerPage)}
-				onPageChange={handlePageChange}
-				containerClassName="pagination flex gap-2 justify-center"
-				activeClassName="active"
-				pageLinkClassName="page-link"
-				previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Anterior</button>}
-				nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Siguiente</button>}
-				pageRangeDisplayed={0}
-				marginPagesDisplayed={0}
-			/>
-		</div>
+		<>
+			{users.length == 0 && (<LoaderContenido/>)}
+			{users.length != 0 && (
+				<div className="w-80% mx-auto">
+					<h1 className="text-5xl text-white mb-4">USUARIOS</h1>
+					<input
+						type="text"
+						placeholder="Filtrar por nombre"
+						onChange={handleSearch}
+						className="p-2 rounded-[18px] bg-gray-200 focus:outline-none mb-4 text-black"
+						id='texto-general'
+					/>
+					<table className="w-full">
+						<thead>
+							<tr>
+								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
+								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ROL</th>
+								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">CÉDULA</th>
+								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ACCIONES</th>
+							</tr>
+						</thead>
+						<tbody>{renderUsers()}</tbody>
+					</table>
+					<ReactPaginate
+						pageCount={Math.ceil(filteredData.length / usersPerPage)}
+						onPageChange={handlePageChange}
+						containerClassName="pagination flex gap-2 justify-center"
+						activeClassName="active"
+						pageLinkClassName="page-link"
+						previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Anterior</button>}
+						nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Siguiente</button>}
+						pageRangeDisplayed={0}
+						marginPagesDisplayed={0}
+					/>
+				</div>
+			)}
+		</>
 	);
 };
 

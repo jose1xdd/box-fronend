@@ -2,6 +2,7 @@
 
 import RankingTable from '@/components/tablas/ranking';
 import axios from 'axios';
+import { LoaderContenido } from '@/components/loaderContenido';
 import {
 	useCallback,
 	useEffect,
@@ -63,6 +64,11 @@ export default function Ranking() {
 	}, [carga]);
 
 	return (
-		<RankingTable data={info} />
+		<>
+			{info.length == 0 && (<LoaderContenido/>)}
+			{info.length != 0 && (
+				<RankingTable data={info} />
+			)}
+		</>
 	);
 }
