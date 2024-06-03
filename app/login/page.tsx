@@ -100,7 +100,7 @@ export default function LoginPage() {
 					</div>
 
 					<div className='flex gap-4 items-center'>
-						<Form.SubmitButton disable= {information.password.length == 0 || information.email.length == 0 ? true : false} buttonText='INGRESAR' handleButton={handleButton} />
+						<Form.SubmitButton disable= {information.password.length == 0 || !information.email.includes('@gmail.com') ? true : false} buttonText='INGRESAR' handleButton={handleButton} />
 						<Form.Footer
 							description=''
 							link='/forget-password'
