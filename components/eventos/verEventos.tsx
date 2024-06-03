@@ -1,12 +1,7 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import {
-	useRouter,
-	useSearchParams,
-	useSelectedLayoutSegment
-} from 'next/navigation';
-import { EventEmitterAsyncResource } from 'events';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface user {
     _id: string,
@@ -82,7 +77,7 @@ export default function VerEvento() {
 				headers: headers,
 				params: parametros
 			});
-			console.log(response.data.evento);
+			//console.log(response.data.evento);
 			return response.data.evento;
 		} catch (error) {
 			console.log(error);
