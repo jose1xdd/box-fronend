@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LoaderContenido } from '@/components/loaderContenido';
+import { parse } from 'path';
 
 interface user {
     _id: string,
@@ -63,6 +64,7 @@ export default function VerEvento() {
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const EventId = useSearchParams().get('EventId');
+	const dia = new Date();
 
 	const getEvent = async (token:string, eventId: string) => {
 		try {
@@ -176,6 +178,11 @@ export default function VerEvento() {
 		if(rol == 'Admin') rol = 'administrador';
 		rol = (rol as string).toLowerCase();
 		router.push('/' + rol + '/eventos/finalizarEvento?EventId=' + EventId);
+	};
+
+	const fechaPermitida = () => {
+		let comparador = eventInfo.startsAt.split('-');
+		return ((dia.getFullYear() >= parseInt(comparador[0])) && (dia.getMonth() + 1 >= parseInt(comparador[1])) && (dia.getDate() >= parseInt(comparador[2])));
 	};
 
 	return (
@@ -295,7 +302,7 @@ export default function VerEvento() {
 										))}
 
 										<div className='flex items-center justify-center'>
-											<button type='button' onClick={() => handleClickFinalizar()} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px]">
+											<button type='button' onClick={() => handleClickFinalizar()} disabled={!fechaPermitida()} className={`${fechaPermitida() ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} text-white rounded p-2 text-center w-[200px]`}>
 					        				Finalizar torneo
 											</button>
 										</div>

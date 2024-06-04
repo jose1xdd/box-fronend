@@ -48,12 +48,14 @@ export default function FinalizarEvento() {
 
   const [selectedWinners, setSelectedWinners] = useState<{ [key: string]: string }>({});
   const [combatesSeleccionados, setCombatesSeleccionados] = useState<Combat[]>([]);
+  const [disable, setDisable] = useState(true);
 
   const handleSelection = (combatId: string, boxerId: string) => {
   	setSelectedWinners((prev) => ({
   		...prev,
   		[combatId]: boxerId,
   	}));
+  	setDisable(eventInfo.combats.length > (Object.keys(selectedWinners).length + 1));
   };
 
   useEffect(() => {
@@ -166,7 +168,7 @@ export default function FinalizarEvento() {
   					))}
   				</div>
   				<div className="flex justify-center">
-  					<button type="button" onClick={handlerSubmit} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px] m-11">
+  					<button type="button" onClick={handlerSubmit} disabled={disable} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px] m-11">
 		Cargar resultados
   					</button>
   				</div>
