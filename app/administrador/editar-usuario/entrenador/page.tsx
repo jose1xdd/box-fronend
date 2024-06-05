@@ -12,6 +12,7 @@ import {
 import { LoaderContenido } from '@/components/loaderContenido';
 
 interface FormData {
+	_id : string;
 	name: string;
 	lastName: string;
 	phone: string;
@@ -22,6 +23,7 @@ interface FormData {
 export default function EditarEntrenador() {
 
 	const [viewModal, setViewModal] = useState(false);
+	const [botonListo, setBotonListo] = useState(true);
 
 	//TRAER ID DE USUARIO DE LA URL
 	const valor = useSearchParams();
@@ -29,6 +31,7 @@ export default function EditarEntrenador() {
 	if(id == null) id = '';
 
 	const [datosEntrenador, setDatosEntrenador] = useState<FormData>({
+		_id: '',
 		name: '',
 		lastName: '',
 		phone: '',
@@ -42,6 +45,10 @@ export default function EditarEntrenador() {
 			[field]: value
 		}));
 	};
+
+	useEffect(()=>{
+		setBotonListo(botonValido());
+	}, [datosEntrenador]);
 
 	const handleChangeImage = () => {
 		setViewModal(true);
@@ -127,8 +134,41 @@ export default function EditarEntrenador() {
 		cargado = true;
 	}, [!cargado]);
 
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;;
+		return soloLetras.test(datosEntrenador.name);
+	};
+	const nombreVacio = () => {
+		return datosEntrenador.name == '';
+	};
+
+	const apellidoValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;;
+		return soloLetras.test(datosEntrenador.lastName);
+	};
+	const apellidoVacio = () => {
+		return datosEntrenador.lastName == '';
+	};
+	const direccionVacia = () => {
+		return datosEntrenador.address == '';
+	};
+	const numeroValido = () => {
+		const soloLetras = /^[0-9]*$/;
+		return soloLetras.test(datosEntrenador.phone);
+	};
+	const numeroVacio = () => {
+		return datosEntrenador.phone == '';
+	};
+	const numeroCompleto = () => {
+		return datosEntrenador.phone.length == 10;
+	};
+
+	const botonValido = (formData = datosEntrenador) => {
+		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && !direccionVacia() && numeroValido() && !numeroVacio() && numeroCompleto();
+	};
+
 	const ready = () =>{
-		return datosEntrenador.address != '' && datosEntrenador.image != '' && datosEntrenador.lastName != '' && datosEntrenador.name != '' && datosEntrenador.phone != '';
+		return datosEntrenador._id != '';
 	};
 
 	return (
@@ -159,6 +199,15 @@ export default function EditarEntrenador() {
 										/>
 									</div>
 								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{nombreVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{!nombreValido() && (
+										<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
+									)}
+								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
 										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -174,6 +223,15 @@ export default function EditarEntrenador() {
 											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
+								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{apellidoVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{!apellidoValido() && (
+										<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
+									)}
 								</div>
 							</div>
 							<div className="w-2/4 pr-4">
@@ -193,6 +251,12 @@ export default function EditarEntrenador() {
 										/>
 									</div>
 								</div>
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{direccionVacia() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
 										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -209,13 +273,26 @@ export default function EditarEntrenador() {
 										/>
 									</div>
 								</div>
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{numeroVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{!numeroValido() && (
+										<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
+									)}
+									{(!numeroCompleto() && (!numeroVacio() && numeroValido())) && (
+										<label className='text-red-600 mx-10'>El número debe ser de 10 dígitos</label>
+									)}
+								</div>
 							</div>
 						</div>
 						<div className="mt-5 flex justify-center items-center">
 							<button
 								onClick={handleGuardarCambios}
 								type="button"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+								disabled = {!botonListo}
+								className={`${botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`} id='titulos-pequenos'
 							>
 						Guardar cambios
 							</button>

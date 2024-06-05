@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 
 interface FormData {
+	_id: string;
 	name: string;
 	lastName: string;
 	phone: string;
@@ -25,8 +26,10 @@ export default function EditarDeportista() {
 	const valor = useSearchParams();
 	const id = valor.get('id');
 	const [viewModal, setViewModal] = useState(false);
+	const [botonListo, setBotonListo] = useState(false);
 
 	const [datosDeportista, setDatosDeportista] = useState<FormData>({
+		_id: '',
 		name: '',
 		lastName: '',
 		phone: '',
@@ -129,8 +132,47 @@ export default function EditarDeportista() {
 		cargado = true;
 	}, [!cargado]);
 
+	useEffect (() => {
+		setBotonListo(botonValido());
+	}, [datosDeportista]);
+
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(datosDeportista.name);
+	};
+	const nombreVacio = () => {
+		return datosDeportista.name == '';
+	};
+
+	const apellidoValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(datosDeportista.lastName);
+	};
+	const apellidoVacio = () => {
+		return datosDeportista.lastName == '';
+	};
+
+	const numeroValido = () => {
+		const soloLetras = /^[0-9]*$/;
+		return soloLetras.test(datosDeportista.phone);
+	};
+	const numeroVacio = () => {
+		return datosDeportista.phone == '';
+	};
+	const numeroCompleto = () => {
+		return datosDeportista.phone.length == 10;
+	};
+
+	const pesoValido = () => {
+		return datosDeportista.weight > 0;
+	};
+
+	const botonValido = (formData = datosDeportista) => {
+		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && numeroValido() && !numeroVacio() && numeroCompleto() && pesoValido();
+	};
+
 	const ready = () => {
-		return datosDeportista.club != '' && datosDeportista.image != '' && datosDeportista.lastName != '' && datosDeportista.name != '' && datosDeportista.phone != '' && datosDeportista.weight != 0 && datosDeportista.weightCategory != '';
+		return datosDeportista._id != '' ;
 	};
 
 	return (
@@ -162,6 +204,15 @@ export default function EditarDeportista() {
 										/>
 									</div>
 								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{nombreVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!nombreValido() && !nombreVacio()) && (
+										<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
+									)}
+								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
 										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -177,6 +228,15 @@ export default function EditarDeportista() {
 											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
+								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{apellidoVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{!apellidoValido() && (
+										<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
+									)}
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
@@ -195,6 +255,12 @@ export default function EditarDeportista() {
 										/>
 									</div>
 								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{!pesoValido() && (
+										<label className='text-red-600 mx-10'>El peso debe ser un valor positivo</label>
+									)}
+								</div>
 							</div>
 							<div className="w-2/4 pr-4">
 								<div className="flex">
@@ -212,6 +278,18 @@ export default function EditarDeportista() {
 											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
+								</div>
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{numeroVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{!numeroValido() && (
+										<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
+									)}
+									{(!numeroCompleto() && (!numeroVacio() && numeroValido())) && (
+										<label className='text-red-600 mx-10'>El número debe ser de 10 dígitos</label>
+									)}
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
@@ -253,7 +331,8 @@ export default function EditarDeportista() {
 							<button
 								onClick={handleGuardarCambios}
 								type="button"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+								disabled = {!botonListo}
+								className={` ${botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`} id='titulos-pequenos'
 							>
                             Guardar cambios
 							</button>
