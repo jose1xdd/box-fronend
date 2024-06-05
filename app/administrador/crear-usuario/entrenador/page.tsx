@@ -2,7 +2,7 @@
 
 import fechaCompleta from '@/app/types/funcionesDate';
 import axios from 'axios';
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface FormData {
   nombre: string;
@@ -26,12 +26,18 @@ export default function CrearEntrenador() {
 		correo: '',
 	});
 
+	const [botonListo, setBotonListo] = useState(false);
+
 	const handleChange = (field: keyof FormData, value: string) => {
 		setDatosNuevoEntrenador((prevFormData) => ({
 			...prevFormData,
 			[field]: value
 		}));
 	};
+
+	useEffect(() => {
+		setBotonListo(botonValido);
+	}, [datosNuevoEntrenador]);
 
 	const handleChangeFecha = (field: keyof FormData, value: string) => {
 		var fecha = new Date(value);
@@ -75,6 +81,65 @@ export default function CrearEntrenador() {
 
 	};
 
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(datosNuevoEntrenador.nombre);
+	};
+	const nombreVacio = () => {
+		return datosNuevoEntrenador.nombre == '';
+	};
+
+	const apellidoValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(datosNuevoEntrenador.apellido);
+	};
+	const apellidoVacio = () => {
+		return datosNuevoEntrenador.apellido == '';
+	};
+
+	const documentoTamanioValido = () => {
+		return datosNuevoEntrenador.cedula.length >= 7 && datosNuevoEntrenador.cedula.length <= 10;
+	};
+	const documentoVacio = () => {
+		return datosNuevoEntrenador.cedula == '';
+	};
+	const documentoValido = () => {
+		const soloNumeros = /^[0-9]+$/;
+		return soloNumeros.test(datosNuevoEntrenador.cedula);
+	};
+
+	const fechaValida = () => {
+		const fechaActual = new Date();
+		const fechaLimite = new Date(fechaActual.getFullYear() - 18, fechaActual.getMonth(), fechaActual.getDate());
+		return datosNuevoEntrenador.nacimiento <= fechaLimite;
+	};
+
+	const direccionVacia = () =>{
+		return datosNuevoEntrenador.direccion == '';
+	};
+
+	const telefonoValido = () => {
+		const soloNumeros = /^[0-9]+$/;
+		return soloNumeros.test(datosNuevoEntrenador.telefono);
+	};
+	const telefonoVacio = () => {
+		return datosNuevoEntrenador.telefono == '';
+	};
+	const telefonoCompleto = () =>{
+		return datosNuevoEntrenador.telefono.length == 10;
+	};
+
+	const correoCorrecto = () => {
+		return datosNuevoEntrenador.correo.includes('@gmail.com');
+	};
+	const correoVacio = () => {
+		return datosNuevoEntrenador.correo == '';
+	};
+
+	const botonValido = () => {
+		return !nombreVacio() && nombreValido() && !apellidoVacio() && apellidoValido() && documentoTamanioValido() && !documentoVacio() && documentoValido() && !direccionVacia() && telefonoCompleto() && !telefonoVacio() && telefonoValido() && correoCorrecto() && !correoVacio() && fechaValida();
+	};
+
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -110,6 +175,15 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{nombreVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!nombreValido() && !nombreVacio()) && (
+									<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -126,6 +200,15 @@ export default function CrearEntrenador() {
 										placeholder='Ingrese el apellido'
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{apellidoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!apellidoValido() && !apellidoVacio()) && (
+									<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
+								)}
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
@@ -144,6 +227,18 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{documentoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!documentoValido() && !documentoVacio()) && (
+									<label className=' text-red-600 mx-10'>El documento sólo debe contener números</label>
+								)}
+								{(documentoValido() && !documentoVacio() && !documentoTamanioValido()) && (
+									<label className=' text-red-600 mx-10'>El documento debe tener entre 7 y 10 dígitos</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -154,13 +249,18 @@ export default function CrearEntrenador() {
 									<input
 										type="date"
 										name="fecha"
-										value={fechaCompleta(datosNuevoEntrenador.nacimiento)}
 										onChange={(e) => handleChangeFecha('nacimiento', e.target.value)}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										min="1900-01-01"
 										required
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className="w-1/3 mx-2"></div>
+								{!fechaValida() && (
+									<label className='text-red-600 mx-10'>El usuario debe ser mayor de edad</label>
+								)}
 							</div>
 						</div>
 						<div className="w-2/4 pr-4">
@@ -181,6 +281,12 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{direccionVacia() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -197,6 +303,18 @@ export default function CrearEntrenador() {
 										placeholder='Ingrese el teléfono'
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className="w-1/3 mx-2"></div>
+								{telefonoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!telefonoValido() && !telefonoVacio()) && (
+									<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
+								)}
+								{(!telefonoCompleto() && (!telefonoVacio() && telefonoValido())) && (
+									<label className='text-red-600 mx-10'>El número debe ser de 10 dígitos</label>
+								)}
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
@@ -215,13 +333,23 @@ export default function CrearEntrenador() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className="w-1/3 mx-2"></div>
+								{correoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!correoCorrecto() && !correoVacio()) && (
+									<label className='text-red-600 mx-10'>El correo sólo puede ser gmail</label>
+								)}
+							</div>
 						</div>
 					</div>
 					<div className="mt-5 flex justify-center">
 						<button
 							type="button"
 							onClick={handleGuardarCambios}
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+							disabled = {!botonListo}
+							className={` ${ botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 						>
                             Crear entrenador
 						</button>

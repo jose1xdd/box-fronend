@@ -35,12 +35,18 @@ export default function CrearDeportista() {
 		fecha: new Date(),
 	});
 
+	const [botonListo, setBotonListo] = useState(false);
+
 	const handleChange = (field: keyof FormData, value: string) => {
 		setDatosNuevoDeportista((prevFormData) => ({
 			...prevFormData,
 			[field]: value
 		}));
 	};
+
+	useEffect(() => {
+		setBotonListo(botonValido);
+	}, [datosNuevoDeportista]);
 
 	const handleChangeFecha = (field: keyof FormData, value: string) => {
 		var fecha = new Date(value);
@@ -130,6 +136,69 @@ export default function CrearDeportista() {
 		}
 	}
 
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(datosNuevoDeportista.nombre);
+	};
+	const nombreVacio = () => {
+		return datosNuevoDeportista.nombre == '';
+	};
+
+	const apellidoValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(datosNuevoDeportista.apellido);
+	};
+	const apellidoVacio = () => {
+		return datosNuevoDeportista.apellido == '';
+	};
+
+	const documentoTamanioValido = () => {
+		return datosNuevoDeportista.documento.length >= 7 && datosNuevoDeportista.documento.length <= 10;
+	};
+	const documentoVacio = () => {
+		return datosNuevoDeportista.documento == '';
+	};
+	const documentoValido = () => {
+		const soloNumeros = /^[0-9]+$/;
+		return soloNumeros.test(datosNuevoDeportista.documento);
+	};
+
+	const direccionVacia = () =>{
+		return datosNuevoDeportista.direccion == '';
+	};
+
+	const pesoValido = () => {
+		return datosNuevoDeportista.peso > 0;
+	};
+
+	const telefonoValido = () => {
+		const soloNumeros = /^[0-9]+$/;
+		return soloNumeros.test(datosNuevoDeportista.telefono);
+	};
+	const telefonoVacio = () => {
+		return datosNuevoDeportista.telefono == '';
+	};
+	const telefonoCompleto = () =>{
+		return datosNuevoDeportista.telefono.length == 10;
+	};
+
+	const correoCorrecto = () => {
+		return datosNuevoDeportista.correo.includes('@gmail.com');
+	};
+	const correoVacio = () => {
+		return datosNuevoDeportista.correo == '';
+	};
+
+	const fechaValida = () => {
+		const fechaActual = new Date();
+		const fechaLimite = new Date(fechaActual.getFullYear() - 18, fechaActual.getMonth(), fechaActual.getDate());
+		return datosNuevoDeportista.fecha <= fechaLimite;
+	};
+
+	const botonValido = () => {
+		return !nombreVacio() && nombreValido() && !apellidoVacio() && apellidoValido() && documentoTamanioValido() && !documentoVacio() && documentoValido() && !direccionVacia() && pesoValido() && telefonoCompleto() && !telefonoVacio() && telefonoValido() && correoCorrecto() && !correoVacio() && datosNuevoDeportista.club != '' && datosNuevoDeportista.categoria != '' && fechaValida();
+	};
+
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -165,6 +234,15 @@ export default function CrearDeportista() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{nombreVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!nombreValido() && !nombreVacio()) && (
+									<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -181,6 +259,15 @@ export default function CrearDeportista() {
 										placeholder='Ingrese el apellido'
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{apellidoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!apellidoValido() && !apellidoVacio()) && (
+									<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
+								)}
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
@@ -199,6 +286,18 @@ export default function CrearDeportista() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{documentoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!documentoValido() && !documentoVacio()) && (
+									<label className=' text-red-600 mx-10'>El documento sólo debe contener números</label>
+								)}
+								{(documentoValido() && !documentoVacio() && !documentoTamanioValido()) && (
+									<label className=' text-red-600 mx-10'>El documento debe tener entre 7 y 10 dígitos</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -216,6 +315,12 @@ export default function CrearDeportista() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{direccionVacia() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -232,6 +337,12 @@ export default function CrearDeportista() {
 										placeholder='Ingresa el peso'
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className='w-1/3 mx-2'></div>
+								{!pesoValido() && (
+									<label className='text-red-600 mx-10'>El peso debe ser un valor positivo</label>
+								)}
 							</div>
 						</div>
 						<div className="w-2/4 pr-4">
@@ -252,6 +363,18 @@ export default function CrearDeportista() {
 									/>
 								</div>
 							</div>
+							<div className='flex'>
+								<div className="w-1/3 mx-2"></div>
+								{telefonoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!telefonoValido() && !telefonoVacio()) && (
+									<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
+								)}
+								{(!telefonoCompleto() && (!telefonoVacio() && telefonoValido())) && (
+									<label className='text-red-600 mx-10'>El número debe ser de 10 dígitos</label>
+								)}
+							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
 									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
@@ -268,6 +391,15 @@ export default function CrearDeportista() {
 										placeholder='Ingrese el correo'
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className="w-1/3 mx-2"></div>
+								{correoVacio() && (
+									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+								)}
+								{(!correoCorrecto() && !correoVacio()) && (
+									<label className='text-red-600 mx-10'>El correo sólo puede ser gmail</label>
+								)}
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
@@ -316,13 +448,18 @@ export default function CrearDeportista() {
 									<input
 										type="date"
 										name="fecha"
-										value={fechaCompleta(datosNuevoDeportista.fecha)}
 										onChange={(e) => handleChangeFecha('fecha', e.target.value)}
 										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										min="1900-01-01"
 										required
 									/>
 								</div>
+							</div>
+							<div className='flex'>
+								<div className="w-1/3 mx-2"></div>
+								{!fechaValida() && (
+									<label className='text-red-600 mx-10'>El usuario debe ser mayor de edad</label>
+								)}
 							</div>
 
 						</div>
@@ -331,7 +468,8 @@ export default function CrearDeportista() {
 						<button
 							type="button"
 							onClick={handleGuardarCambios}
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+							disabled = {!botonListo}
+							className={`${ botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 						>
                             Guardar cambios
 						</button>
