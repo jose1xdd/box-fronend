@@ -133,7 +133,7 @@ export default function FinalizarEvento() {
   }, []);
 
   const ready = () => {
-  	return eventInfo._id != '' && eventInfo.name != '' && eventInfo.combats.length != 0;
+  	return eventInfo._id != '';
   };
 
   return (
