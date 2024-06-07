@@ -14,6 +14,7 @@ interface FormData {
     name: string;
     description: string;
 }
+import styles from '@/public/css/styles.module.scss';
 
 export default function EditarClub() {
 	const [repetido, setRepetido] = useState(false);
@@ -24,6 +25,7 @@ export default function EditarClub() {
 		name: '',
 		description: ''
 	});
+	const [cargado, setCargado] = useState(false);
 
 	const getClub = async (token:string, clubId: string) => {
 		try {
@@ -49,13 +51,14 @@ export default function EditarClub() {
 			token = JSON.parse(datos).token;
 		}
 		setNuevosDatosClub(await getClub(token, clubId as string));
+		setCargado(true);
 	};
 	useEffect(()=>{
 		cargarClub();
 	}, []);
 	const router = useRouter();
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setNuevosDatosClub((prevData) => ({
 			...prevData,
@@ -97,12 +100,20 @@ export default function EditarClub() {
 		return nuevosDatosClub.name != '' && nuevosDatosClub.description != '';
 	};
 
+	const nombreVacio = () => {
+		return nuevosDatosClub.name === '';
+	};
+
+	const descripcionVacio = () => {
+		return nuevosDatosClub.description === '';
+	};
+
 	return (
 		<>
-			{!datosCargados() && (
+			{!cargado && (
 				<LoaderContenido></LoaderContenido>
 			)}
-			{datosCargados() && (
+			{cargado && (
 				<div className="container mx-auto mt-8">
 					<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR CLUB</h1>
 					<div className='flex items-center justify-center'>
@@ -131,7 +142,7 @@ export default function EditarClub() {
 										name="name"
 										value={nuevosDatosClub.name}
 										onChange={handleInputChange}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={(nombreVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
 										placeholder='Ingrese el nombre'
 									/>
 								</div>
@@ -143,28 +154,30 @@ export default function EditarClub() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
+									<textarea
 										name="description"
 										required
 										value={nuevosDatosClub.description}
 										onChange={handleInputChange}
-										className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black'
+										className={(descripcionVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full mx-5 my-2 p-2 text-black'}
+										rows={6} // Esto define el número de filas visibles del textarea
 										placeholder='Ingrese la descripción'
 									/>
+
 								</div>
 							</div>
 						</div>
 						<div className="mt-5 flex justify-center">
 							<button
 								type="submit"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+								disabled ={nombreVacio() || descripcionVacio()}
+								className={(nombreVacio() || descripcionVacio() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
 							>
                             Guardar cambios
 							</button>
 							<button
 								type="button"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
 							>
                             Cargar nuevo logo del club
 							</button>
@@ -180,7 +193,6 @@ export default function EditarClub() {
 									<button
 										onClick={()=>setRepetido(false)}
 										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-										id="titulos-pequenos"
 									>
 								Aceptar
 									</button>
@@ -194,18 +206,17 @@ export default function EditarClub() {
 								<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
 								Club actualizado con exito
 								</h3>
-								<div className="flex justify-center">
-									<button
-										onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
-										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-										id="titulos-pequenos"
-									>
-								Volver
-									</button>
-								</div>
 							</div>
 						</div>
 					)}
+					<div className="flex justify-center">
+						<button
+							onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
+							className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg w-[10%] mt-4"
+						>
+								Volver
+						</button>
+					</div>
 				</div>
 			)}
 		</>
