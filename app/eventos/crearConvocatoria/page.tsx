@@ -8,6 +8,7 @@ import {
 	useEffect,
 	useState
 } from 'react';
+import styles from '@/public/css/styles.module.scss';
 interface User {
     _id: string;
     name: string;
@@ -318,7 +319,7 @@ export default function CrearConvocatoria() {
 								<button type='button' onClick={()=> handlerSetParticipantes(true)} className="bg-[#cd1919] text-white rounded p-2 mx-5">
 					                Eliminar usuario
 								</button>
-								<button type='button' onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2">
+								<button type='button' onClick={() => handlerSetParticipantes(false)} className={`${styles.button} p-2`}>
 					                Agregar Usuarios
 								</button>
 							</div>

@@ -168,7 +168,7 @@ export default function FinalizarEvento() {
   					))}
   				</div>
   				<div className="flex justify-center">
-  					<button type="button" onClick={handlerSubmit} disabled={disable} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px] m-11">
+  					<button type="button" onClick={handlerSubmit} disabled={disable} className={`${disable ? 'bg-[#8b1212]' : 'bg-[#cd1919]'} text-white rounded p-2 text-center w-[200px] m-11`}>
 		Cargar resultados
   					</button>
   				</div>

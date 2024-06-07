@@ -5,6 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import { obtenerFotoPerfil } from '@/app/lib/basic_request';
+import styles from '@/public/css/styles.module.scss';
 
 interface FormData {
 	nombre: string;
@@ -337,7 +338,7 @@ export default function Home() {
 									<button
 										type="button"
 										onClick={handleToggleEdit}
-										className={`${botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} w-60 h-10 text-white py-2 px-4 rounded-lg`} id='titulos-pequenos'
+										className={`${botonListo ? styles.button : styles.buttonDisabled + ' cursor-not-allowed'} w-60 h-10 text-white py-2 px-4 rounded-lg`}
 										disabled = {botonListo ? false : true}
 									>
 										{esEditable ? 'Guardar cambios' : 'Editar información'}
@@ -347,7 +348,7 @@ export default function Home() {
 						</div>
 						<div className="w-1/3 flex flex-col justify-center items-center">
 							{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={512} height={512} src={datosPerfil.imagen}/>}
-							<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
+							<button className={`${styles.button} w-60 h-10  py-2 px-4 mt-10`} onClick={handleChangeImage}>
 								Cargar nueva foto de perfil
 		  					</button>
 						</div>

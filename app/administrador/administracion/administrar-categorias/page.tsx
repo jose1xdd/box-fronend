@@ -10,6 +10,7 @@ import Tabla from '@/components/tablas/categorias';
 import axios from 'axios';
 import sharp from 'sharp';
 import Link from 'next/link';
+import styles from '@/public/css/styles.module.scss';
 
 type InputName = 'min' | 'max';
 interface categoria {
@@ -122,6 +123,35 @@ export default function AdministrarCategorias() {
 	useEffect(()=>{
 		setCheckPeso(min >= max);
 	}, [min, max]);
+
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(categoria);
+	};
+	const nombreRepetido = () => {
+		let i = 0;
+		while(i < categorias.length){
+			if(categoria.toLocaleLowerCase() === categorias[i].name.toLocaleLowerCase()){
+				return true;
+			}
+			i++;
+		}
+		return false;
+	};
+	const pesoInvalido = () => {
+		let i = 0;
+		while(i < categorias.length){
+			if(((min >= categorias[i].minWeight && min <= categorias[i].maxWeight) || (max >= categorias[i].minWeight && max <= categorias[i].maxWeight)) || ((categorias[i].minWeight >= min && categorias[i].minWeight <= max) || (categorias[i].maxWeight >= min && categorias[i].maxWeight <= max))){
+				return true;
+			}
+			i++;
+		}
+		return false;
+	};
+
+	const botonValido = () => {
+		return !checkPeso && categoria !== '' && nombreValido() && !nombreRepetido() && !pesoInvalido();
+	};
 	return (
 		<>
 			{categorias.length == 0 && (<LoaderContenido></LoaderContenido>)}
@@ -142,7 +172,7 @@ export default function AdministrarCategorias() {
 							value={categoria}
 							required
 							onChange={handleCategoriaChange}
-							className="bg-neutral-200 rounded-full w-full h-10 pl-5 text-black"
+							className={(categoria === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 pl-5 text-black'}
 							id="texto-general"
 							placeholder="Ingrese el nombre de la categoría de peso que desea agregar"
 						/>
@@ -205,10 +235,14 @@ export default function AdministrarCategorias() {
 							</button>
 						</div>
 					</div>
-					<div className='flex items-center justify-center'>
+					<div className='flex-col items-center justify-center'>
+						<div className='flex items-center justify-center'>
+							<label className='block mb-2 tex-center text-[150%] text-transparent' id='titulos-grandes'>-</label>
+						</div>
 						<button
 							type="submit"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+							className={(botonValido() ? styles.button : styles.buttonDisabled + ' cursor-not-allowed') + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
+							disabled = {!botonValido()}
 						>
 					Agregar categoría de peso
 						</button>
@@ -216,50 +250,25 @@ export default function AdministrarCategorias() {
 				</form>
 				{checkPeso && (
 					<div className='mt-5'>
-						<h3 className="text-[#cd1919] text-center mb-4 text-[175%]" id='titulos-grandes'>
+						<p className="text-[#cd1919] text-center mb-4 text-[110%]">
 								El peso máximo no puede ser menor al peso minimo
-						</h3>
-					</div>
-				)}
-				{checkData && (
-					<div className="fixed inset-0 flex items-center justify-center z-50">
-						<div className="bg-[#141414] p-10 rounded-lg">
-							<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-								La información solicitada no cumple con todos los requsitos
-							</h3>
-							<div className="flex justify-center">
-								<button
-									onClick={()=>setCheckData(false)}
-									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-									id="titulos-pequenos"
-								>
-								Aceptar
-								</button>
-							</div>
-						</div>
-					</div>
-				)}
-				{repetido && (
-					<div className="fixed inset-0 flex items-center justify-center z-50">
-						<div className="bg-[#141414] p-10 rounded-lg">
-							<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-								Ya existe una categoria de peso con ese nombre o limite de pesos, intenta con otros
-							</h3>
-							<div className="flex justify-center">
-								<button
-									onClick={()=>setRepetido(false)}
-									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-									id="titulos-pequenos"
-								>
-								Aceptar
-								</button>
-							</div>
-						</div>
+						</p>
 					</div>
 				)}
 			</div>
+			<div className='w-[80%] mx-auto mt-2'>
+				{(categoria !== '' && !nombreValido()) && (
+					<div className='text-red-600'>El nombre sólo debe contener letras</div>
+				)}
+				{(nombreRepetido() && categoria !== '' && nombreValido()) && (
+					<div className='text-red-600'>Ya existe un club con este nombre</div>
+				)}
+				{(pesoInvalido() && !nombreRepetido() && categoria !== '' && nombreValido() && !checkPeso) && (
+					<div className='text-red-600 text-center'>Ya existe una categoría con ese rango de pesos</div>
+				)}
+			</div>
 			<div className="flex justify-center mt-8">
-				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+				<Link href="../administracion" className={styles.button + ' w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}>
 					Volver
 				</Link>
 			</div></div>)}

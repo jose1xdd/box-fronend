@@ -5,6 +5,7 @@ import { LoaderContenido } from '@/components/loaderContenido';
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 interface crtierios {
 	_id: string,
@@ -157,7 +158,7 @@ export default function EvaluacionFisicaAdmin() {
 												required
 												value={nombreCriterio}
 												onChange={handleInputChange}
-												className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+												className={(nombreCriterio === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black'}
 												id="texto-general"
 												placeholder="Ingrese el nombre del criterio"
 											/>
@@ -167,8 +168,8 @@ export default function EvaluacionFisicaAdmin() {
 										<button
 											type="button"
 											onClick={handleSubmit}
-											className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-											id="titulos-pequenos"
+											disabled = {nombreCriterio === ''}
+											className={(nombreCriterio === '' ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-80 h-10 text-white py-2 px-4 rounded-lg'}
 										>
 									Crear criterio de evaluación
 										</button>
@@ -188,7 +189,7 @@ export default function EvaluacionFisicaAdmin() {
 												className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
 												id="texto-general"
 											>
-												<option value="" disabled>
+												<option value=".">
 											Seleccione el criterio a eliminar
 												</option>
 												{criteriosData.map((criterio, index) => (
@@ -202,9 +203,9 @@ export default function EvaluacionFisicaAdmin() {
 									<div className="mt-3 flex justify-center">
 										<button
 											type="button"
+											disabled = {criterioEliminar === '' || criterioEliminar === '.'}
 											onClick={()=>handleEliminarSubmit()}
-											className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-											id="titulos-pequenos"
+											className={(criterioEliminar === '' || criterioEliminar === '.' ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-80 h-10 text-white py-2 px-4 rounded-lg'}
 										>
 									Eliminar criterio de evaluación
 										</button>
@@ -222,15 +223,13 @@ export default function EvaluacionFisicaAdmin() {
 								<div className="flex justify-center">
 									<button
 										onClick={handleConfirmEliminar}
-										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-										id="titulos-pequenos"
+										className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 									>
 								ELIMINAR
 									</button>
 									<button
 										onClick={handleCancelEliminar}
-										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-										id="titulos-pequenos"
+										className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 									>
 								CANCELAR
 									</button>
@@ -258,7 +257,7 @@ export default function EvaluacionFisicaAdmin() {
 					)}
 
 					<div className="flex justify-center mt-8">
-						<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+						<Link href="../administracion" className={styles.button + ' w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}>
 					Volver
 						</Link>
 					</div>

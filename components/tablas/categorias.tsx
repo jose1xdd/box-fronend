@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 interface categoria {
 	_id: string,
@@ -105,8 +106,7 @@ export default function TableCategorias({ categorias, cargarCategorias }:props) 
 							<div className="flex justify-center">
 								<button
 									onClick={()=>elminarCategoria()}
-									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-									id="titulos-pequenos"
+									className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 								>
 								Aceptar
 								</button>
@@ -114,8 +114,7 @@ export default function TableCategorias({ categorias, cargarCategorias }:props) 
 							<div className="flex justify-center mt-5">
 								<button
 									onClick={()=>{setConfirmEliminar(false); setCategoriaEliminar('');}}
-									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-									id="titulos-pequenos"
+									className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 								>
 								Cancelar
 								</button>
