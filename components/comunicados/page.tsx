@@ -3,8 +3,8 @@
 import axios from 'axios';
 import router from 'next/router';
 import { useState, useEffect } from 'react';
-import { Value } from 'sass';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 interface User {
     _id: string;
@@ -18,7 +18,6 @@ interface User {
 export default function Comunicados() {
 	const[usuarios, setUsuarios] = useState<User[]>([]);
 	const [selectedUsuario, setSelectedUsuario] = useState('');
-	const [nuevoParticipante, setNuevoParticipante] = useState('');
 	const[correos, setCorreos] = useState('');
 	const[asunto, setAsunto] = useState('');
 	const[cuerpo, setCuerpo] = useState('');
@@ -115,6 +114,19 @@ export default function Comunicados() {
 		console.log(selectedUsuarios);
 	}, [selectedUsuarios]);
 
+	const seleccionInvalida = () => {
+		return selectedUsuario === '' || selectedUsuario === '-';
+	};
+	const asuntoVacio = () => {
+		return asunto === '';
+	};
+	const cuerpoVacio = () => {
+		return cuerpo === '';
+	};
+	const correosVacios = () =>{
+		return correos === '';
+	};
+
 	return (
 		<>
 			{usuarios.length == 0 && (<LoaderContenido/>)}
@@ -132,7 +144,7 @@ export default function Comunicados() {
 									</div>
 									<div className='w-2/3 mx-2'>
 										<select onChange={(event)=>{setSelectedUsuario(event.target.value);}}required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black text-center' id='texto-general' placeholder='Seleccionar usuario'>
-											<option value="">Selecciona un usuario</option>
+											<option value="-">Selecciona un usuario</option>
 											{usuarios.map((usuario) => (
 												<option key={usuario.email} value={usuario.email} placeholder=''>
 													{usuario.name + usuario.lastName}
@@ -150,7 +162,7 @@ export default function Comunicados() {
 									<div className="w-2/3 mx-2">
 										<input
 											type="text"
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+											className={(asuntoVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'} id='texto-general'
 											placeholder='Ingresa el asunto'
 											value={asunto}
 											onChange={handleChangeAsunto}
@@ -165,20 +177,21 @@ export default function Comunicados() {
 									</div>
 									<div className="w-2/3 mx-2">
 										<textarea
-											className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black' id='texto-general'
+											className={(cuerpoVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 p-2 text-black'} id='texto-general'
 											placeholder='Ingresa el cuerpo del correo'
 											value={cuerpo}
 											onChange={handleChangeCuerpo}
+											rows={6}
 										/>
 									</div>
 								</div>
 							</div>
 							<div className="w-1/3 flex flex-col items-center ml-4 my-2">
 								<div className="flex">
-									<button type='button' onClick={()=> handlerSetParticipantes(true)} className="bg-[#cd1919] text-white rounded p-2 mr-2">
+									<button type='button' onClick={()=> handlerSetParticipantes(true)} className={(seleccionInvalida() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' text-white rounded p-2 mr-2'}>
 					                Eliminar usuario
 									</button>
-									<button type='button' onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2 ml-2">
+									<button type='button' onClick={() => handlerSetParticipantes(false)} className={(seleccionInvalida() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' text-white rounded p-2 ml-2'}>
 					                Agregar Usuario
 									</button>
 								</div>
@@ -190,14 +203,15 @@ export default function Comunicados() {
 										required
 										value={correos}
 										readOnly
-										className='bg-neutral-200 rounded-lg w-full h-40 pl-4 text-black' id='texto-general'
+										className={(correosVacios() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-40 p-2 text-black'} id='texto-general'
 										placeholder='Participantes del evento'
+										rows={6}
 									/>
 								</div>
 								<div className="mt-2 flex justify-end">
 									<button
 										type="button"
-										className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+										className={((correosVacios() || asuntoVacio() || cuerpoVacio()) ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-60 h-10 text-white py-2 px-4 rounded-lg'}
 										onClick={handleSubmit}
 									>
 									Enviar correo electrónico

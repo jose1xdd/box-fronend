@@ -10,6 +10,7 @@ import {
 	useState
 } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 interface FormData {
 	_id : string;
@@ -292,11 +293,11 @@ export default function EditarEntrenador() {
 								onClick={handleGuardarCambios}
 								type="button"
 								disabled = {!botonListo}
-								className={`${botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`} id='titulos-pequenos'
+								className={`${!botonListo ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 							>
 						Guardar cambios
 							</button>
-							<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos' onClick={(event) => {
+							<button className={(styles.button) + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} onClick={(event) => {
 								event.preventDefault();
 								handleChangeImage();
 							}}>

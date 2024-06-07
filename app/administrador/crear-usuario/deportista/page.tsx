@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import OpcionesCategorias from '@/components/OpcionesCategorias';
 import router from 'next/router';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 interface FormData {
   nombre: string;
@@ -465,7 +466,7 @@ export default function CrearDeportista() {
 						</button>
 						<button
 							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+							className={(styles.button) + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
 						>
                             Cargar foto de perfil
 						</button>
