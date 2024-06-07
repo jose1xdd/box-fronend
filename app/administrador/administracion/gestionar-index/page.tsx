@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import styles from '@/public/css/styles.module.scss';
 
 interface FormData {
     mision: string;
@@ -34,7 +35,8 @@ export default function GestionarIndex() {
 						</h3>
 						<textarea
 							name="mision"
-							className="bg-neutral-200 rounded-lg w-full h-40 my-2 pl-4 text-black"
+							className="bg-neutral-200 rounded-lg w-full p-2 text-black"
+							rows={6}
 							value={datosIndex.mision}
 							onChange={(e) => handleChange('mision', e.target.value)}
 						/>
@@ -45,7 +47,8 @@ export default function GestionarIndex() {
 						</h3>
 						<textarea
 							name="vision"
-							className="bg-neutral-200 rounded-lg w-full h-40 my-2 pl-4 text-black"
+							className="bg-neutral-200 rounded-lg w-full p-2 text-black"
+							rows={6}
 							value={datosIndex.vision}
 							onChange={(e) => handleChange('vision', e.target.value)}
 						/>
@@ -59,16 +62,16 @@ export default function GestionarIndex() {
 					</h3>
 					<textarea
 						name="mision"
-						readOnly
-						className="bg-neutral-200 rounded-lg w-full h-40 my-2 pl-4 text-black"
+						disabled
+						className="bg-neutral-200 rounded-lg w-full h-40 p-2 text-black"
+						rows={6}
 					/>
 				</div>
 				<div className="w-2/4 mx-4">
 					<div className="flex justify-center items-center my-5">
 						<button
 							type="button"
-							className="bg-[#cd1919] w-60 h-10 text-white rounded-lg"
-							id="titulos-pequenos"
+							className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}
 						>
                             Guardar cambios
 						</button>
@@ -85,7 +88,7 @@ export default function GestionarIndex() {
 						</Link>
 					</div>*/}
 					<div className="flex justify-center">
-						<Link href="../administracion" className="bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+						<Link href="../administracion" className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}>
 							Volver
 						</Link>
 					</div>
