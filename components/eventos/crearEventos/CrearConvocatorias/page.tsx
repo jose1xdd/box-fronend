@@ -1,8 +1,13 @@
 'use client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {
+	use,
+	useEffect,
+	useState
+} from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 interface User {
     _id: string;
     name: string;
@@ -25,7 +30,8 @@ export default function CrearConvocatoria() {
 	const [horaInvalida, setHoraInvalida] = useState(false);
 	const [nuevoParticipante, setNuevoParticipante] = useState('');
 	const [selectedUsuarios, setSelectedUsuarios] = useState<String[]>([]);
-	const [eliminar, setEliminar] = useState(false);
+	const [eliminar, setEliminar] = useState(true);
+	const [botonListo, setBotonListo] = useState(true);
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const getEntrenadores = async (token:string) => {
@@ -87,6 +93,10 @@ export default function CrearConvocatoria() {
 		cargarUsuarios();
 	}, []);
 
+	useEffect(() => {
+		setBotonListo(botonValido);
+	}, [fechaEvento, nombreEvento, selectedEntrenador, horaFin, horaInicio, descripcionEvento, correos]);
+
 	function handlerCancelar() {
 		const datos = localStorage.getItem('userData');
 		let rol;
@@ -126,17 +136,21 @@ export default function CrearConvocatoria() {
 	function handlerSetParticipantes(eliminar: boolean) {
 		let users = [...selectedUsuarios];
 		const indice = users.indexOf(nuevoParticipante);
-		if(eliminar){
-			if (indice != -1) {
-				users.splice(indice, 1);
+		if(nuevoParticipante !== '' && nuevoParticipante !== ' '){
+			if(eliminar){
+				if (indice != -1) {
+					users.splice(indice, 1);
+				}
+			}else{
+				if (indice == -1) {
+					users.push(nuevoParticipante);
+				}
 			}
-		}else{
-			if (indice == -1) {
-				users.push(nuevoParticipante);
-			}
+			setSelectedUsuarios(users);
 		}
-		setSelectedUsuarios(users);
 	}
+
+	useEffect(() => {console.log(botonListo);}, [nombreEvento]);
 
 	useEffect(()=>{
 		let nuevosCorreos = '';
@@ -184,6 +198,18 @@ export default function CrearConvocatoria() {
 		return entrenadores.length != 0 && usuarios.length != 0;
 	};
 
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(nombreEvento);
+	};
+	const nombreVacio = () => {
+		return nombreEvento == '';
+	};
+
+	const botonValido = () =>{
+		return (selectedEntrenador !== '' && selectedEntrenador !== 'Selecciona un entrenador') && (fechaEvento !== '' && !fechainvalida) && (horaInicio !== '' && horaFin !== '' && !horaInvalida) && nombreEvento !== '' && descripcionEvento !== '' && (correos !== '');
+	};
+
 	return (
 		<>
 			{!ready() && (<LoaderContenido/>)}
@@ -200,7 +226,7 @@ export default function CrearConvocatoria() {
 										Entrenador encargado
 											</div>
 										</div>
-										<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
+										<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className={`${(selectedEntrenador == '' || selectedEntrenador === 'Selecciona un entrenador') ? 'border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`} id='texto-general' placeholder='Entrenador encargado'>
 											<option>Selecciona un entrenador</option>
 											{entrenadores.map((entrenador) => (
 												<option key={entrenador._id} value={entrenador._id} placeholder='Entrenador encargado'>
@@ -220,11 +246,11 @@ export default function CrearConvocatoria() {
 											required
 											type="date"
 											onChange={(event)=>{setFechaEvento(event.target.value); if(new Date(event.target.value) < new Date()) setFechainvalida(true); else setFechainvalida(false);}}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+											className={`${fechaEvento === '' ? 'border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`} id='texto-general'
 										/>
 									</div>
 									{fechainvalida && (
-										<div className='flex justify-center'>
+										<div className='flex ps-[28%]'>
 											<p className='text-red-500 mb-2'>La fecha no puede ser en un día anterior a la fecha de hoy</p>
 										</div>
 
@@ -241,7 +267,7 @@ export default function CrearConvocatoria() {
 												required
 												type="time"
 												onChange={(event)=>{setHoraInicio(event.target.value);}}
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className={`${horaInicio === '' ? 'border-[3px] border-red-700 ' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`} id='texto-general'
 												placeholder='Descripcion general del evento'
 											/>
 										</div>
@@ -255,7 +281,8 @@ export default function CrearConvocatoria() {
 												required
 												type="time"
 												onChange={(event)=>{setHoraFin(event.target.value);}}
-												className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+												className={`${horaFin === '' ? 'border-[3px] border-red-700 ' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+												id='texto-general'
 												placeholder='Descripcion general del evento'
 											/>
 										</div>
@@ -272,7 +299,7 @@ export default function CrearConvocatoria() {
 											placeholder='Nombre del evento'
 											onChange={(event)=>{setNombreEvento(event.target.value);}}
 											type="text"
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
+											className={(nombreEvento === '' ? 'border-[3px] border-red-700 ' : '') + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'} id='texto-general'
 										/>
 									</div>
 									<div className="flex items-center justify-center">
@@ -280,7 +307,7 @@ export default function CrearConvocatoria() {
 											required
 											type="text"
 											onChange={(event)=>{setDescripcionEvento(event.target.value);}}
-											className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
+											className={(descripcionEvento === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 pl-4 text-black'} id='texto-general'
 											placeholder='Descripcion general del evento'
 										/>
 									</div>
@@ -291,7 +318,7 @@ export default function CrearConvocatoria() {
 									</div>
 									<div className="flex">
 										<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-											<option>Selecciona un usuario</option>
+											<option value=' '>Selecciona un usuario</option>
 											{usuarios.map((usuario) => (
 												<option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
 													{usuario.email}
@@ -304,25 +331,25 @@ export default function CrearConvocatoria() {
 											required
 											value={correos}
 											readOnly
-											className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black' id='texto-general'
+											className={(correos === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black'} id='texto-general'
 											placeholder='Participantes del evento'
 										/>
 									</div>
 									<div className="flex justify-center items-center mt-4 ">
-										<button type='button' onClick={()=> handlerSetParticipantes(true)} className="bg-[#cd1919] text-white rounded p-2 mx-5">
+										<button type='button' onClick={()=> handlerSetParticipantes(true)} className={`${correos !== '' ? styles.button : styles.buttonDisabled + ' cursor-not-allowed'} p-2 mx-5`}>
 					                Eliminar usuario
 										</button>
-										<button type='button' onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2">
+										<button type='button' onClick={() => handlerSetParticipantes(false)} className={`${styles.button} p-2 mx-5`}>
 					                Agregar Usuario
 										</button>
 									</div>
 								</div>
 							</div>
 							<div className="flex justify-center items-center mt-4 ">
-								<button onClick={() => handlerSubmit()}className="bg-[#cd1919] text-white rounded p-2 mx-5">
+								<button onClick={() => handlerSubmit()}className={`${botonListo ? styles.button : styles.buttonDisabled + ' cursor-not-allowed'} p-2 mx-5`}>
 					        Agregar convocatoria
 								</button>
-								<button onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
+								<button onClick={() => handlerCancelar()} className={`${styles.button} p-2 mx-5`}>
 					        Cancelar
 								</button>
 							</div>

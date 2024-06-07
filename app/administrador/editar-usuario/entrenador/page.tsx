@@ -204,7 +204,7 @@ export default function EditarEntrenador() {
 									{nombreVacio() && (
 										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
 									)}
-									{!nombreValido() && (
+									{(!nombreValido() && !nombreVacio()) && (
 										<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
 									)}
 								</div>
@@ -229,7 +229,7 @@ export default function EditarEntrenador() {
 									{apellidoVacio() && (
 										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
 									)}
-									{!apellidoValido() && (
+									{(!apellidoValido() && !apellidoVacio()) && (
 										<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
 									)}
 								</div>
@@ -278,7 +278,7 @@ export default function EditarEntrenador() {
 									{numeroVacio() && (
 										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
 									)}
-									{!numeroValido() && (
+									{(!numeroValido() && !numeroVacio()) && (
 										<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
 									)}
 									{(!numeroCompleto() && (!numeroVacio() && numeroValido())) && (

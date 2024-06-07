@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ModalUltraBasic } from '../ModalConfirmation';
 import { BorrarUsuario } from '@/app/lib/administrador';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 export interface User {
   _id: string;
@@ -163,8 +164,8 @@ const Table: React.FC<TableProps> = ({ rol, linkVer, linkEditar }) => {
 						containerClassName="pagination flex gap-2 justify-center"
 						activeClassName="active"
 						pageLinkClassName="page-link"
-						previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Anterior</button>}
-						nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Siguiente</button>}
+						previousLabel={<button className={`${styles.button} p-2`}>Anterior</button>}
+						nextLabel={<button className={`${styles.button} p-2`}>Siguiente</button>}
 						pageRangeDisplayed={0}
 						marginPagesDisplayed={0}
 					/>

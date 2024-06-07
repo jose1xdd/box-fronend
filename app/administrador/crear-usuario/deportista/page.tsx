@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import OpcionesCategorias from '@/components/OpcionesCategorias';
 import router from 'next/router';
+import { LoaderContenido } from '@/components/loaderContenido';
 
 interface FormData {
   nombre: string;
@@ -34,6 +35,16 @@ export default function CrearDeportista() {
 		peso: 0,
 		fecha: new Date(),
 	});
+
+	const [loader, setLoader] = useState(true);
+	useEffect(() => {
+		const timer = setTimeout(() => {
+		  setLoader(false);
+		}, 500);
+
+		// Limpiar el timeout cuando el componente se desmonte
+		return () => clearTimeout(timer);
+	  }, []);
 
 	const [botonListo, setBotonListo] = useState(false);
 
@@ -229,16 +240,13 @@ export default function CrearDeportista() {
 										name="nombre"
 										value={datosNuevoDeportista.nombre}
 										onChange={(e) => handleChange('nombre', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={`${nombreVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el nombre'
 									/>
 								</div>
 							</div>
 							<div className='flex'>
 								<div className='w-1/3 mx-2'></div>
-								{nombreVacio() && (
-									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
-								)}
 								{(!nombreValido() && !nombreVacio()) && (
 									<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
 								)}
@@ -255,16 +263,13 @@ export default function CrearDeportista() {
 										name="apellido"
 										value={datosNuevoDeportista.apellido}
 										onChange={(e) => handleChange('apellido', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={`${apellidoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el apellido'
 									/>
 								</div>
 							</div>
 							<div className='flex'>
 								<div className='w-1/3 mx-2'></div>
-								{apellidoVacio() && (
-									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
-								)}
 								{(!apellidoValido() && !apellidoVacio()) && (
 									<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
 								)}
@@ -281,16 +286,13 @@ export default function CrearDeportista() {
 										name="documento"
 										value={datosNuevoDeportista.documento}
 										onChange={(e) => handleChange('documento', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={`${documentoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el número de documento'
 									/>
 								</div>
 							</div>
 							<div className='flex'>
 								<div className='w-1/3 mx-2'></div>
-								{documentoVacio() && (
-									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
-								)}
 								{(!documentoValido() && !documentoVacio()) && (
 									<label className=' text-red-600 mx-10'>El documento sólo debe contener números</label>
 								)}
@@ -310,16 +312,10 @@ export default function CrearDeportista() {
 										name="direccion"
 										value={datosNuevoDeportista.direccion}
 										onChange={(e) => handleChange('direccion', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={`${direccionVacia() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese la dirección'
 									/>
 								</div>
-							</div>
-							<div className='flex'>
-								<div className='w-1/3 mx-2'></div>
-								{direccionVacia() && (
-									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
-								)}
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
@@ -358,16 +354,13 @@ export default function CrearDeportista() {
 										name="telefono"
 										value={datosNuevoDeportista.telefono}
 										onChange={(e) => handleChange('telefono', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={`${telefonoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el teléfono'
 									/>
 								</div>
 							</div>
 							<div className='flex'>
 								<div className="w-1/3 mx-2"></div>
-								{telefonoVacio() && (
-									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
-								)}
 								{(!telefonoValido() && !telefonoVacio()) && (
 									<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
 								)}
@@ -387,16 +380,13 @@ export default function CrearDeportista() {
 										name="correo"
 										value={datosNuevoDeportista.correo}
 										onChange={(e) => handleChange('correo', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										className={`${correoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el correo'
 									/>
 								</div>
 							</div>
 							<div className='flex'>
 								<div className="w-1/3 mx-2"></div>
-								{correoVacio() && (
-									<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
-								)}
 								{(!correoCorrecto() && !correoVacio()) && (
 									<label className='text-red-600 mx-10'>El correo sólo puede ser gmail</label>
 								)}
@@ -469,7 +459,7 @@ export default function CrearDeportista() {
 							type="button"
 							onClick={handleGuardarCambios}
 							disabled = {!botonListo}
-							className={`${ botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
+							className={`${ botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212] cursor-not-allowed'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 						>
                             Guardar cambios
 						</button>

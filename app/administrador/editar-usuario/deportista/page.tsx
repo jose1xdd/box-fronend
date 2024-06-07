@@ -234,7 +234,7 @@ export default function EditarDeportista() {
 									{apellidoVacio() && (
 										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
 									)}
-									{!apellidoValido() && (
+									{(!apellidoValido() && !apellidoVacio()) && (
 										<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
 									)}
 								</div>
@@ -284,7 +284,7 @@ export default function EditarDeportista() {
 									{numeroVacio() && (
 										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
 									)}
-									{!numeroValido() && (
+									{(!numeroValido() && !numeroVacio()) && (
 										<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
 									)}
 									{(!numeroCompleto() && (!numeroVacio() && numeroValido())) && (
