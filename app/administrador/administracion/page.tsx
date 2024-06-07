@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import { ObtenerLogo } from '@/app/lib/basic_request';
+import styles from '@/public/css/styles.module.scss';
 
 export default function AdministracionAdmin() {
 
@@ -50,7 +51,7 @@ export default function AdministracionAdmin() {
 								/>
 								</div>
 								<div className='flex items-center justify-center mt-3 mb-5'>
-									<button onClick={(e) => {e.preventDefault; handleChangeImage();}} className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+									<button onClick={(e) => {e.preventDefault; handleChangeImage();}} className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'}>
 									Cambiar logo
 									</button>
 								</div>
@@ -66,7 +67,7 @@ export default function AdministracionAdmin() {
 								</div>
 								<div className='flex items-center justify-center mt-3'>
 									<Link href='/administrador/administracion/administrar-categorias'>
-										<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										<button className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} >
 										Administrar categorías
 										</button>
 									</Link>
@@ -85,7 +86,7 @@ export default function AdministracionAdmin() {
 								</div>
 								<div className='flex items-center justify-center mt-3'>
 									<Link href='/administrador/administracion/evaluacion-fisica'>
-										<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										<button className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'}>
 										Evaluación física
 										</button>
 									</Link>
@@ -102,7 +103,7 @@ export default function AdministracionAdmin() {
 								</div>
 								<div className='flex items-center justify-center mt-3'>
 									<Link href='/administrador/administracion/gestionar-roles'>
-										<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										<button className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'}>
 										Gestionar roles
 										</button>
 									</Link>
@@ -121,7 +122,7 @@ export default function AdministracionAdmin() {
 								</div>
 								<div className='flex items-center justify-center mt-3'>
 									<Link href='/administrador/administracion/gestionar-clubes'>
-										<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										<button className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'}>
 										Gestionar clubes
 										</button>
 									</Link>
@@ -138,7 +139,7 @@ export default function AdministracionAdmin() {
 								</div>
 								<div className='flex items-center justify-center mt-3'>
 									<Link href='/administrador/administracion/gestionar-index'>
-										<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'>
+										<button className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'}>
 										Gestionar index
 										</button>
 									</Link>

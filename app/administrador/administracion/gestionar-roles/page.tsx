@@ -3,6 +3,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 interface roles {
 	_id: string,
@@ -115,6 +116,13 @@ export default function RolesAdmin() {
 		cargarRoles();
 	}, [rolesData, repeat]);
 
+	const nombreVacio = () => {
+		return nombreRol === '';
+	};
+	const rolValido = () => {
+		return rolEliminar !== '' && rolEliminar !== '-';
+	};
+
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -151,7 +159,7 @@ export default function RolesAdmin() {
 										required
 										value={nombreRol}
 										onChange={handleInputChange}
-										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className={(nombreVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-white rounded-full w-80 h-10 my-2 pl-4 text-black'}
 										id="texto-general"
 										placeholder="Ingrese el nombre del rol"
 									/>
@@ -160,9 +168,9 @@ export default function RolesAdmin() {
 							<div className="mt-3 flex justify-center">
 								<button
 									type="button"
+									disabled = {nombreVacio()}
 									onClick={handleSubmit}
-									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-									id="titulos-pequenos"
+									className={(nombreVacio() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-80 h-10 text-white py-2 px-4 rounded-lg'}
 								>
 									Crear rol
 								</button>
@@ -182,7 +190,7 @@ export default function RolesAdmin() {
 										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
 									>
-										<option value="" disabled>
+										<option value="-">
 											Seleccione el rol a eliminar
 										</option>
 										{rolesData && rolesData.map((rol, index) => (
@@ -197,8 +205,8 @@ export default function RolesAdmin() {
 								<button
 									type="button"
 									onClick={handleEliminarSubmit}
-									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-									id="titulos-pequenos"
+									disabled = {!rolValido()}
+									className={(!rolValido() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-80 h-10 text-white py-2 px-4 rounded-lg'}
 								>
 									Eliminar rol
 								</button>
@@ -241,8 +249,7 @@ export default function RolesAdmin() {
 						<div className="flex justify-center">
 							<button
 								onClick={()=>setRepeat(false)}
-								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-								id="titulos-pequenos"
+								className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 							>
 								Aceptar
 							</button>
@@ -252,7 +259,7 @@ export default function RolesAdmin() {
 			)}
 
 			<div className="flex justify-center mt-8">
-				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+				<Link href="../administracion" className={styles.button + ' w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}>
 					Volver
 				</Link>
 			</div>
