@@ -9,6 +9,7 @@ import {
 	useState
 } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 interface FormData {
     name: string;
@@ -96,9 +97,9 @@ export default function InfoClub() {
 									</div>
 								</div>
 								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<textarea className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 flex items-center justify-center text-black p-2' id='texto-general' disabled rows={6}>
 										{datosClub.description}
-									</div>
+									</textarea>
 								</div>
 							</div>
 						</div>
@@ -106,7 +107,7 @@ export default function InfoClub() {
 							<Link href='/administrador/administracion/gestionar-clubes'>
 								<button
 									type="button"
-									className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+									className={styles.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
 								>
                                 Volver
 								</button>

@@ -5,6 +5,7 @@ import { LoaderContenido } from '@/components/loaderContenido';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 interface club {
 	_id: string,
@@ -134,13 +135,13 @@ export default function TableClubes() {
 					<div className='w-[80%] mx-auto mt-4 flex justify-between items-center'>
 						<div>
 							<Link href="../administracion">
-								<button className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+								<button className={styles.button + ' w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}>
         Volver
 								</button>
 							</Link>
 						</div>
 						<div>
-							<Link href='/administrador/administracion/gestionar-clubes/crear-club' className="bg-[#cd1919] text-white rounded p-2">
+							<Link href='/administrador/administracion/gestionar-clubes/crear-club' className={ styles.button + ' text-white rounded p-2'}>
 						Crear club
 							</Link>
 						</div>

@@ -7,6 +7,7 @@ import {
 	FormEvent,
 	useState
 } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 interface FormData {
   nombre: string;
@@ -31,7 +32,7 @@ export default function CrearClub() {
 		}));
 	};
 
-	const CrearClub = async (token: string, club:FormData) => {
+	const crearClub = async (token: string, club:FormData) => {
 		try {
 			const headers = {
 				sessiontoken: token,
@@ -54,7 +55,14 @@ export default function CrearClub() {
 		if(datos != null){
 			token = JSON.parse(datos).token;
 		}
-		CrearClub(token, datosNuevoClub);
+		crearClub(token, datosNuevoClub);
+	};
+
+	const nombreVacio = () => {
+		return datosNuevoClub.nombre === '';
+	};
+	const descripcionVacia = () => {
+		return datosNuevoClub.descripcion === '';
 	};
 
 	return (
@@ -87,7 +95,7 @@ export default function CrearClub() {
 									required
 									value={datosNuevoClub.nombre}
 									onChange={handleInputChange}
-									className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+									className={(nombreVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
 									placeholder='Ingrese el nombre'
 								/>
 							</div>
@@ -105,25 +113,34 @@ export default function CrearClub() {
 									required
 									value={datosNuevoClub.descripcion}
 									onChange={handleInputChange}
-									className='bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black'
+									className={(descripcionVacia() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-40 mx-5 my-2 pl-4 text-black'}
 									placeholder='Ingrese la descripción'
 								/>
 							</div>
 						</div>
 					</div>
 					<div className="mt-5 flex justify-center">
+						<div className="flex justify-center">
+							<button
+								onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
+								className={styles.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
+							>
+								Volver
+							</button>
+						</div>
 						<button
+							disabled = {nombreVacio() || descripcionVacia()}
 							type="submit"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+							className={((nombreVacio() || descripcionVacia()) ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
 						>
                             Crear club
 						</button>
-						<button
+						{/**<button
 							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
 						>
                             Cargar logo del club
-						</button>
+						</button>*/}
 					</div>
 				</form>
 				{repetido && (
@@ -147,18 +164,9 @@ export default function CrearClub() {
 				{creado && (
 					<div className="fixed inset-0 flex items-center justify-center z-50">
 						<div className="bg-[#141414] p-10 rounded-lg">
-							<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
+							<h3 className="text-white text-center mb-4 text-[125%]" >
 								Club creado con exito
 							</h3>
-							<div className="flex justify-center">
-								<button
-									onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
-									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-									id="titulos-pequenos"
-								>
-								Volver
-								</button>
-							</div>
 						</div>
 					</div>
 				)}
