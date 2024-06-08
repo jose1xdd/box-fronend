@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 interface User {
   _id: string;
@@ -50,8 +51,9 @@ export default function CrearTorneo() {
 	const [selectedUsuarios, setSelectedUsuarios] = useState<string[]>([]);
 	const [selectedCategoria, setSelectedCategoria] = useState<string>('');
 	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>([]);
-	const [eliminar, setEliminar] = useState(false);
 	const [combates, setCombates] = useState<Combat[]>([]);
+	const [fechaRepetida, setFechaRepetida] = useState(false);
+
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 
@@ -253,12 +255,48 @@ export default function CrearTorneo() {
 			//console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
+			setFechaRepetida(true);
 			console.log(error);
 		}
 	};
 
 	const ready = () => {
 		return usuarios.length != 0 && entrenadores.length != 0 && categorias.length != 0;
+	};
+
+	const entrenadorSeleccionadoValido = () => {
+		return selectedEntrenador !== '' && selectedEntrenador !== '-';
+	};
+	const fechaEventoVacio = () => {
+		return fechaEvento === '';
+	};
+	const horaInicioVacia = () =>{
+		return horaInicio === '';
+	};
+	const horaFinVacia = () => {
+		return horaFin === '';
+	};
+	const nombreEventoVacio = () => {
+		return nombreEvento === '';
+	};
+	const descripcionEventoVacio = () => {
+		return descripcionEvento === '';
+	};
+	const categoriaVacia = () => {
+		return selectedCategoria === '-' || selectedCategoria === '';
+	};
+	const nuevoParticipante1Vacio = () => {
+		return nuevoParticipante1 === '' || nuevoParticipante1 === '-';
+	};
+	const nuevoParticipante2Vacio = () => {
+		return nuevoParticipante2 === '' || nuevoParticipante2 === '-';
+	};
+	const combatesVacios = () => {
+		return combates.length === 0;
+	};
+
+	const botonValido = () => {
+		return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
 	};
 
 	return (
@@ -289,7 +327,7 @@ export default function CrearTorneo() {
 											placeholder="Entrenador encargado"
 											value={selectedEntrenador}
 										>
-											<option value="">Selecciona un entrenador</option>
+											<option value="-">Selecciona un entrenador</option>
 											{entrenadores.map((entrenador) => (
 												<option key={entrenador._id} value={entrenador._id}>
 													{entrenador.name} {entrenador.lastName}
@@ -311,7 +349,7 @@ export default function CrearTorneo() {
 												if (new Date(event.target.value) < new Date()) setFechainvalida(true);
 												else setFechainvalida(false);
 											}}
-											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											className={(fechaEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
 											id="texto-general"
 										/>
 									</div>
@@ -334,7 +372,7 @@ export default function CrearTorneo() {
 												onChange={(event) => {
 													setHoraInicio(event.target.value);
 												}}
-												className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+												className={(horaInicioVacia() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
 												id="texto-general"
 												placeholder="Hora inicio"
 											/>
@@ -351,7 +389,7 @@ export default function CrearTorneo() {
 												onChange={(event) => {
 													setHoraFin(event.target.value);
 												}}
-												className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+												className={(horaFinVacia() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
 												id="texto-general"
 												placeholder="Hora fin"
 											/>
@@ -370,22 +408,25 @@ export default function CrearTorneo() {
 												setNombreEvento(event.target.value);
 											}}
 											type="text"
-											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											className={(nombreEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
 											id="texto-general"
 										/>
 									</div>
 									<div className="flex items-center justify-center">
-										<input
+										<textarea
 											required
-											type="text"
 											onChange={(event) => {
 												setDescripcionEvento(event.target.value);
 											}}
-											className="bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black"
+											rows={3}
+											className={(descripcionEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full mx-5 my-2 p-2 text-black'}
 											id="texto-general"
 											placeholder="Descripcion general del evento"
 										/>
 									</div>
+									{fechaRepetida && (
+										<p className='text-center p-4 text-[125%] text-red-600'>Ya hay un evento programado para esa fecha</p>
+									)}
 								</div>
 								<div className="w-1/2 pr-4">
 									<div className="flex">
@@ -404,7 +445,7 @@ export default function CrearTorneo() {
 											placeholder="Categoría"
 											value={selectedCategoria}
 										>
-											<option value="">Selecciona una categoría</option>
+											<option value="-">Selecciona una categoría</option>
 											{categorias.map((categoria) => (
 												<option key={categoria._id} value={categoria._id}>
 													{categoria.name}
@@ -418,13 +459,14 @@ export default function CrearTorneo() {
 												setNuevoParticipante1(event.target.value);
 											}}
 											required
+											disabled = {categoriaVacia()}
 											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
 											id="texto-general"
 											value={nuevoParticipante1}
 										>
-											<option value="">Selecciona un participante</option>
+											<option value="-">Selecciona un participante</option>
 											{filteredUsuarios.map((usuario) => (
-												<option key={usuario._id} value={usuario._id}>
+												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante2}>
 													{usuario.name} {usuario.lastName}
 												</option>
 											))}
@@ -441,13 +483,14 @@ export default function CrearTorneo() {
 												setNuevoParticipante2(event.target.value);
 											}}
 											required
+											disabled = {categoriaVacia()}
 											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
 											id="texto-general"
 											value={nuevoParticipante2}
 										>
-											<option value="">Selecciona otro participante</option>
+											<option value="-">Selecciona otro participante</option>
 											{filteredUsuarios.map((usuario) => (
-												<option key={usuario._id} value={usuario._id}>
+												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante1}>
 													{usuario.name} {usuario.lastName}
 												</option>
 											))}
@@ -458,23 +501,23 @@ export default function CrearTorneo() {
 											required
 											value={combates.map((combat) => `${usuarios.find((user) => user._id === combat.boxer1)?.name} vs ${usuarios.find((user) => user._id === combat.boxer2)?.name}`).join('\n')}
 											readOnly
-											className="bg-neutral-200 rounded-lg w-full h-40 mx-5 my-5 p-4 text-black"
+											className={(combatesVacios() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-40 mx-5 my-5 p-2 text-black'}
 											id="texto-general"
 											placeholder="Combates"
 										/>
 									</div>
 									<div className="flex justify-center items-center mt-4">
-										<button type="button" onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2">
+										<button type="button" disabled={nuevoParticipante1Vacio() || nuevoParticipante2Vacio()} onClick={() => handlerSetParticipantes(false)} className={(nuevoParticipante1Vacio() || nuevoParticipante2Vacio() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' text-white rounded p-2'}>
 									Agregar Combate
 										</button>
 									</div>
 								</div>
 							</div>
 							<div className="flex justify-center items-center mt-4">
-								<button onClick={() => handlerSubmit()} type="button" className="bg-[#cd1919] text-white rounded p-2 mx-5">
+								<button onClick={() => handlerSubmit()} type="button" className={(!botonValido() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' text-white rounded p-2 mx-5'}>
 							Agregar Torneo
 								</button>
-								<button type="button" onClick={handlerCancelar} className="bg-[#cd1919] text-white rounded p-2">
+								<button type="button" onClick={handlerCancelar} className={styles.button + ' text-white rounded p-2 w-[130px]'}>
 							Cancelar
 								</button>
 							</div>

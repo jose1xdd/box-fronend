@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LoaderContenido } from '@/components/loaderContenido';
 import { parse } from 'path';
+import styles from '@/public/css/styles.module.scss';
 
 interface user {
     _id: string,
@@ -302,7 +303,7 @@ export default function VerEvento() {
 										))}
 
 										<div className='flex items-center justify-center'>
-											<button type='button' onClick={() => handleClickFinalizar()} disabled={!fechaPermitida()} className={`${fechaPermitida() ? 'bg-[#cd1919]' : 'bg-[#8b1212]'} text-white rounded p-2 text-center w-[200px]`}>
+											<button type='button' onClick={() => handleClickFinalizar()} disabled={!fechaPermitida()} className={`${fechaPermitida() ? styles.button : styles.buttonDisabled + ' cursor-not-allowed '} text-white rounded p-2 text-center w-[200px]`}>
 					        				Finalizar torneo
 											</button>
 										</div>
@@ -331,7 +332,7 @@ export default function VerEvento() {
 							</div>
 						</div>
 						<div className="flex  justify-center items-center mt-4 ">
-							<button type='button' onClick={() => handleClick()} className="bg-[#cd1919] text-white rounded p-2 mx-5 w-[300px]">
+							<button type='button' onClick={() => handleClick()} className={styles.button + '  text-white rounded p-2 mx-5 w-[300px]'}>
 					        volver
 							</button>
 						</div>
