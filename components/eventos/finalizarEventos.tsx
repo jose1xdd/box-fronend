@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 import { read } from 'fs';
+import styles from '@/public/css/styles.module.scss';
 
 export default function FinalizarEvento() {
   interface user {
@@ -128,6 +129,23 @@ export default function FinalizarEvento() {
   	}
   };
 
+  const volver = () => {
+  	let token;
+  	const datos = localStorage.getItem('userData');
+  	if (datos !== null) {
+  		token = JSON.parse(datos).token;
+  	}
+  	let rol;
+	  if (datos !== null) {
+  		rol = JSON.parse(datos).role;
+  	}
+	  let route;
+	  if (rol === 'Entrenador') route = 'entrenador';
+  	else route = 'administrador';
+
+	  router.push('/' + route + '/eventos/VerEvento?EventId=' + eventInfo._id);
+  };
+
   useEffect(() => {
   	cargarEvento();
   }, []);
@@ -168,7 +186,10 @@ export default function FinalizarEvento() {
   					))}
   				</div>
   				<div className="flex justify-center">
-  					<button type="button" onClick={handlerSubmit} disabled={disable} className={`${disable ? 'bg-[#8b1212]' : 'bg-[#cd1919]'} text-white rounded p-2 text-center w-[200px] m-11`}>
+				  <button type="button" onClick={volver} className={`${styles.button}  text-white rounded p-2 text-center w-[200px] m-11`}>
+		Volver
+  					</button>
+  					<button type="button" onClick={handlerSubmit} disabled={disable} className={`${disable ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button}  text-white rounded p-2 text-center w-[200px] m-11`}>
 		Cargar resultados
   					</button>
   				</div>

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 export default function InfoDeportista() {
 
@@ -251,7 +252,7 @@ export default function InfoDeportista() {
 							<Link href='/administrador/lista-usuarios/deportista'>
 								<button
 									type="button"
-									className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold' id='titulos-pequenos'
+									className={styles.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold'}
 								>
 						Volver
 								</button>

@@ -32,6 +32,7 @@ export default function CrearConvocatoria() {
 	const [selectedUsuarios, setSelectedUsuarios] = useState<String[]>([]);
 	const [eliminar, setEliminar] = useState(true);
 	const [botonListo, setBotonListo] = useState(true);
+	const [fechaRepetida, setFechaRepetida] = useState (false);
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const getEntrenadores = async (token:string) => {
@@ -150,8 +151,6 @@ export default function CrearConvocatoria() {
 		}
 	}
 
-	useEffect(() => {console.log(botonListo);}, [nombreEvento]);
-
 	useEffect(()=>{
 		let nuevosCorreos = '';
 		for(const user of selectedUsuarios){
@@ -190,6 +189,7 @@ export default function CrearConvocatoria() {
 			await axios.post(`${apiEndpoint}/event/meet`, body, { headers: headers });
 			router.push('/' + route + '/calendario');
 		}catch(error){
+			setFechaRepetida(true);
 			console.log(error);
 		}
 	}
@@ -345,8 +345,13 @@ export default function CrearConvocatoria() {
 									</div>
 								</div>
 							</div>
+							<>
+								{fechaRepetida && (
+									<p className='text-center p-4 text-[125%] text-red-600'>Ya hay un evento programado para esa fecha</p>
+								)}
+							</>
 							<div className="flex justify-center items-center mt-4 ">
-								<button onClick={() => handlerSubmit()}className={`${botonListo ? styles.button : styles.buttonDisabled + ' cursor-not-allowed'} p-2 mx-5`}>
+								<button type='button' onClick={() => handlerSubmit()}className={`${botonListo ? styles.button : styles.buttonDisabled + ' cursor-not-allowed'} p-2 mx-5`}>
 					        Agregar convocatoria
 								</button>
 								<button onClick={() => handlerCancelar()} className={`${styles.button} p-2 mx-5`}>
