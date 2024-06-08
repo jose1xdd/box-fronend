@@ -30,7 +30,7 @@ export default async function Home() {
 						<div className="w-1/3 flex justify-center items-center">
 							<Image
 								src={Mision}
-								alt="Logo Liga de Boxeo de Norte de Santander"
+								alt=" Logo Liga de Boxeo de Norte de Santander"
 								className="transform translate-x-[10px] translate-y-[20px]"
 								width={250}
 								priority
