@@ -7,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRouter } from 'next/navigation';
+import { LoaderContenido } from '@/components/loaderContenido';
 
 interface formatedEvents {
     id: string,
@@ -42,6 +43,7 @@ export default function CalendarioEventos() {
 			const response = await axios.get(`${apiEndpoint}/event`, {
 				headers: headers,
 			});
+			console.log(response.data.eventos);
 			return response.data.eventos;
 		} catch (error) {
 			console.log(error);

@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Table from '@/components/tablas/Table';
 import Link from 'next/link';
 import axios from 'axios';
-import { ModalArchivo } from '@/components/ModalArchivo/ModalArchivo';
+import { ModalArchivo } from '../../../../components/ModalArchivo/ModalArchivo';
+import styles from '@/public/css/styles.module.scss';
 
 const Home: React.FC = () => {
 
@@ -71,17 +72,17 @@ const Home: React.FC = () => {
 			<div className="flex justify-between items-center mt-4">
 				<button
 					onClick={handleDownload}
-					className="bg-[#cd1919] text-white rounded p-2"
+					className={`${styles.button} p-2`}
 				>
 					Descargar usuarios
 				</button>
 				<div className="flex gap-2">
-					<button onClick={handleOpenModal} className="bg-[#cd1919] text-white rounded p-2 cursor-pointer">
+					<button onClick={handleOpenModal} className={`${styles.button} p-2`}>
                         Carga masiva
 					</button>
 					<Link href='/administrador/crear-usuario/deportista'>
 						<button
-							className="bg-[#cd1919] text-white rounded p-2"
+							className={`${styles.button} p-2`}
 						>
 						+
 						</button>

@@ -10,24 +10,31 @@ import DropMenu from './dropmenu';
 export default function NavbarDeportista() {
 
 	const [logo, setLogo] = useState('');
+<<<<<<< HEAD
 
+=======
+	const [barraDesplegada, setBarraDesplegada] = useState(false);
+>>>>>>> origin/main
 	const [nombreUsuario, setNombreUsuario] = useState('');
 
 	useEffect(() => {
-		// Obtener datos del localStorage
-		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
-		if (datosUsuarioJSON) {
-			const datosUsuario = JSON.parse(datosUsuarioJSON);
-			// Actualizar el estado con el nombre y apellido del usuario
-			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+		// Verificar que estamos en el cliente
+		if (typeof window !== 'undefined') {
+			const datosUsuarioJSON = localStorage.getItem('datosUsuario');
+			if (datosUsuarioJSON) {
+				const datosUsuario = JSON.parse(datosUsuarioJSON);
+				// Actualizar el estado con el nombre y apellido del usuario
+				setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+			}
+			const fetchLogo = async () => {
+				setLogo(await ObtenerLogo());
+			};
+			fetchLogo();
 		}
-		const f = async () => {
-			setLogo(await ObtenerLogo());
-		};
-		f();
 	}, []);
 
 	return (
+<<<<<<< HEAD
 
 		<><nav className="bg-[#cd1919] p-4 md:flex md:justify-center text-xl">
 			<div className={'container ' + styles.responsive_text}>
@@ -38,6 +45,25 @@ export default function NavbarDeportista() {
 							alt="Logo Liga de Boxeo de Norte de Santander"
 							className="h-[125px] w-[125px] rounded-full bg-black"
 						/>}
+=======
+		<nav className="bg-[#1e1e1e] p-4">
+			<div className="container">
+				<div className="flex justify-between">
+					<div className="flex items-center">
+						<div className="text-white font-bold text-xl">
+							<div className="flex items-center">
+								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
+									{logo && <Image
+										width={125}
+										height={125}
+										src={logo}
+										alt="Logo Liga de Boxeo de Norte de Santander"
+										className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"
+									/>}
+								</div>
+							</div>
+						</div>
+>>>>>>> origin/main
 					</div>
 					<ul className='flex space-x-10 my-4 text-white text-center items-center align-middle justify-center' id='titulos-pequenos'>
 						<li>
@@ -75,6 +101,45 @@ export default function NavbarDeportista() {
 					</ul>
 				</div>
 			</div>
+<<<<<<< HEAD
+=======
+
+			{barraDesplegada && (
+				<>
+					<div className="fixed inset-0">
+						<div
+							className='w-[14%] absolute right-10 top-16 px-1 bg-[#1e1e1e] border border-gray-500 rounded shadow text-center' id='titulos-pequenos'
+						>
+							<button
+								className="absolute top-0 right-0 mx-1 cursor-pointer"
+								onClick={cerrarBarraDesplegable}
+							>
+                                X
+							</button>
+							<ul>
+								<li className='my-1'>
+									<Link href='/deportista/mi-perfil'>
+                                        Mi perfil
+									</Link>
+								</li>
+								<div className="border-t border-gray-500"></div>
+								<div className="border-t border-gray-500"></div>
+								<li className='text-[#cd1919] italic my-1'>
+									<Link href='/'>
+                                        Cerrar sesión
+									</Link>
+								</li>
+							</ul>
+						</div>
+						<div
+							className="bg-transparent"
+							onClick={cerrarBarraDesplegable}
+						/>
+					</div>
+				</>
+			)}
+
+>>>>>>> origin/main
 		</nav>
 		</>
 	);

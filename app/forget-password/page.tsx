@@ -174,6 +174,7 @@ export default function RecoveryPassword() {
 
 				<div className="flex gap-4 justify-center items-center">
 					  <Form.SubmitButton
+					  disable={false}
 						buttonText="ENVIAR CORREO"
 						handleButton={handleSubmit}
 					  />
@@ -248,6 +249,7 @@ export default function RecoveryPassword() {
 
 				<div className="flex gap-4 justify-center items-center">
 					  <Form.SubmitButton
+					  disable={false}
 						buttonText="Continuar"
 						handleButton={handleChangePassword}
 					  />

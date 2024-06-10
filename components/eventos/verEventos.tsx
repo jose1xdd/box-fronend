@@ -1,13 +1,11 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import {
-	useRouter,
-	useSearchParams,
-	useSelectedLayoutSegment
-} from 'next/navigation';
-import { EventEmitterAsyncResource } from 'events';
-import styles from '@/app/css/profiles.module.css';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { LoaderContenido } from '@/components/loaderContenido';
+import { parse } from 'path';
+import kevin from '@/public/css/styles.module.scss';
+import styles from '@/app/administrador/css/profiles.module.css';
 
 interface user {
     _id: string,
@@ -68,6 +66,7 @@ export default function VerEvento() {
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const EventId = useSearchParams().get('EventId');
+	const dia = new Date();
 
 	const getEvent = async (token:string, eventId: string) => {
 		try {
@@ -83,7 +82,7 @@ export default function VerEvento() {
 				headers: headers,
 				params: parametros
 			});
-			console.log(response.data.evento);
+			//console.log(response.data.evento);
 			return response.data.evento;
 		} catch (error) {
 			console.log(error);
@@ -180,140 +179,167 @@ export default function VerEvento() {
 		}
 		if(rol == 'Admin') rol = 'administrador';
 		rol = (rol as string).toLowerCase();
-		router.push('/' + rol + '/eventos/finalizarEvento');
+		router.push('/' + rol + '/eventos/finalizarEvento?EventId=' + EventId);
+	};
+
+	const fechaPermitida = () => {
+		let comparador = eventInfo.startsAt.split('-');
+		return ((dia.getFullYear() >= parseInt(comparador[0])) && (dia.getMonth() + 1 >= parseInt(comparador[1])) && (dia.getDate() >= parseInt(comparador[2])));
 	};
 
 	return (
-		<div className={'container mx-auto mt-8 ' + styles.container}>
-			<div className="p-4 ">
+		<>
+			{eventInfo._id == '' && (<LoaderContenido/>)}
+			{eventInfo._id != '' && (
+				<div className="container mx-auto mt-8">
+					<div className="p-4 ">
 
-				<div className='flex w-full'>
-					<div className="w-2/3 pr-4">
-						<h1 className='text-center text-[300%]' id='titulos-grandes'>Información del evento</h1>
-						<div className="flex">
-							<div className="w-1/3 mx-2">
-								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
+						<div className='flex w-full'>
+							<div className="w-2/3 pr-4">
+								<h1 className='text-center text-[400%]' id='titulos-grandes'>Información del evento</h1>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end'} id='texto-general'>
 										Nombre del evento
+										</div>
+									</div>
+									<div className='border-[3px] border-black text-black bg-white rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{eventInfo?.name}
+									</div>
 								</div>
-							</div>
-							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-								{eventInfo?.name}
-							</div>
-						</div>
-						<div className="flex">
-							<div className="w-1/3 mx-2">
-								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end'} id='texto-general'>
 										Tipo de evento
+										</div>
+									</div>
+									<div className='border-[3px] border-black text-black bg-white rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{eventInfo.type}
+									</div>
 								</div>
-							</div>
-							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-								{eventInfo.type}
-							</div>
-						</div>
-						<div className="flex">
-							<div className="w-1/3 mx-2">
-								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end'} id='texto-general'>
 										Entrenador a cargo
+										</div>
+									</div>
+									<div className='border-[3px] border-black text-black bg-white rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{(entrenador && entrenador.name && entrenador.lastName && entrenador.cedula) ? (entrenador.name + ' ' + entrenador.lastName + ' - ' + entrenador.cedula) : 'Entrenador no asignado'}
+									</div>
 								</div>
-							</div>
-							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-								{(entrenador && entrenador.name && entrenador.lastName && entrenador.cedula) ? (entrenador.name + ' ' + entrenador.lastName + ' - ' + entrenador.cedula) : 'Entrenador no asignado'}
-							</div>
-						</div>
 
-						<div className="flex">
-							<div className="w-1/3 mx-2">
-								<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end'} id='texto-general'>
 										Fecha del evento
+										</div>
+									</div>
+									<div className='border-[3px] border-black text-black bg-white rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										{fechaEvento}
+									</div>
 								</div>
-							</div>
-							<div className='  rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-								{fechaEvento}
-							</div>
-						</div>
-						<div className='flex'>
-							<div className="flex w-full">
-								<div className="w-1/3 mx-2">
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end ' + styles.label} id='texto-general'>
+								<div className='flex'>
+									<div className="flex w-full">
+										<div className="w-1/3 mx-2">
+											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end'} id='texto-general'>
 										Descripcion del evento
-									</div>
-								</div>
-								<textarea readOnly defaultValue={eventInfo?.description as string} className='   h-[100px] rounded-lg w-2/3 ms-[35px] my-2 p-4 flex items-center justify-center text-black' id='texto-general'>
+											</div>
+										</div>
+										<textarea readOnly defaultValue={eventInfo?.description as string} className='border-[3px] border-black text-black bg-white  h-[100px] rounded-lg w-2/3 ms-[35px] my-2 p-4 flex items-center justify-center text-black' id='texto-general'>
 
-								</textarea>
-							</div>
-							<div>
-								<div className="flex w-full justify-items-end justify-end">
-									<div className={'w-[100px] h-10 ms-5 me-3 my-2 flex items-center justify-center text-white ' + styles.labelTwo} id='texto-general'>
+										</textarea>
+									</div>
+									<div>
+										<div className="flex w-full justify-items-end justify-end">
+											<div className={'mx-4 w-[80px] bg-[#4B4B4B] text-white p-2 text-center rounded-3xl mb-2'} id='texto-general'>
 										Hora inicio
-									</div>
-									<div className='  rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{horaI}
-									</div>
-								</div>
-								<div className="flex w-full justify-items-end justify-end">
-									<div className={'w-[100px] h-10 ms-5 me-3 my-2 flex items-center justify-center text-white ' + styles.labelTwo} id='texto-general'>
+											</div>
+											<div className='border-[3px] border-black text-black bg-white rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+												{horaI}
+											</div>
+										</div>
+										<div className="flex w-full justify-items-end justify-end">
+											<div className={'mx-4 w-[80px] bg-[#4B4B4B] text-white p-2 text-center rounded-3xl'} id='texto-general'>
 										Hora fin
-									</div>
-									<div className='  rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{horaF}
+											</div>
+											<div className='border-[3px] border-black text-black bg-white rounded-full w-[100px] h-10 me-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+												{horaF}
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div className="w-1/3 pr-4">
-						{(eventInfo.type == 'Reunion') && (
-							<div className=" w-full  pr-4">
-								<div className='flex justify-center'>
-									<h1 className='text-center text-[300%]' id='titulos-grandes'>Participantes</h1>
-								</div>
-								<div className="flex items-center justify-center h-[250px]">
-									<textarea
-										required
-										value={correos}
-										readOnly
-										className='  rounded-lg h-full w-full mx-5 my-2 p-4 text-black' id='texto-general'
-										placeholder='Participantes del evento'
-									/>
-								</div>
-							</div>
-						)}
-						{(eventInfo.type == 'Combate') && (
-							<div className=" w-full  pr-4">
-								<div className='flex justify-center'>
-									<h1 className='text-center text-[300%]' id='titulos-grandes'>Combatientes</h1>
-								</div>
-								{eventInfo.combats.map((combat, index) => (
-									<div key={index} className="flex items-center justify-center mb-4">
-										<label className='border border-[#cd1919] rounded-lg text-center w-56 px-2 py-1'>
-											{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
-										</label>
-										<h1 className='p-4'>VS</h1>
-										<label className='border border-[#cd1919] rounded-lg text-center w-56 px-2 py-1'>
-											{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
-										</label>
-									</div>
-								))}
-
-								{(eventInfo.combats[0].status == 'En espera de resultados') && (
-									<div className='flex items-center justify-center'>
-										<button type='button' onClick={() => handleClickFinalizar()} className="bg-[#cd1919] text-white rounded p-2 text-center w-[200px]">
-					        				Finalizar torneo
-										</button>
+							<div className="w-1/3 pr-4">
+								{(eventInfo.type == 'Reunion') && (
+									<div className=" w-full  pr-4">
+										<div className='flex justify-center'>
+											<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
+										</div>
+										<div className="flex items-center justify-center h-[250px]">
+											<textarea
+												required
+												value={correos}
+												readOnly
+												className='border-[3px] border-black text-black bg-white rounded-lg h-full w-full mx-5 my-2 p-4 text-black' id='texto-general'
+												placeholder='Participantes del evento'
+											/>
+										</div>
 									</div>
 								)}
+								{(eventInfo.type == 'Combate' && eventInfo.combats[0].status == 'En espera de resultados') && (
+									<div className=" w-full  pr-4">
+										<div className='flex justify-center'>
+											<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
+										</div>
+										{eventInfo.combats.map((combat, index) => (
+											<div key={index} className="flex items-center justify-center mb-4">
+												<label className='border border-white rounded-lg text-center w-56'>
+													{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+												</label>
+												<h1 className='p-4'>VS</h1>
+												<label className='border border-white rounded-lg text-center w-56'>
+													{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+												</label>
+											</div>
+										))}
 
+										<div className='flex items-center justify-center'>
+											<button type='button' onClick={() => handleClickFinalizar()} disabled={!fechaPermitida()} className={`${fechaPermitida() ? kevin.button : kevin.buttonDisabled + ' cursor-not-allowed '} text-white rounded p-2 text-center w-[200px]`}>
+					        				Finalizar torneo
+											</button>
+										</div>
+
+									</div>
+								)}
+								{(eventInfo.type == 'Combate' && eventInfo.combats[0].status == 'Finalizado') && (
+									<div className=" w-full  pr-4">
+										<div className='flex justify-center'>
+											<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
+										</div>
+										{eventInfo.combats.map((combat, index) => (
+											<div key={index} className="flex items-center justify-center mb-4">
+												<label className={`border ${combat.winner === combat.boxer1._id ? 'border-yellow-400 text-yellow-200' : 'border-white'} rounded-lg text-center w-56`}>
+													{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+												</label>
+												<h1 className='p-4'>VS</h1>
+												<label className={`border ${combat.winner === combat.boxer2._id ? 'border-yellow-400 text-yellow-200' : 'border-white '} rounded-lg text-center w-56`}>
+													{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
+												</label>
+											</div>
+										))}
+
+									</div>
+								)}
 							</div>
-						)}
+						</div>
+						<div className="flex  justify-center items-center mt-4 ">
+							<button type='button' onClick={() => handleClick()} className={kevin.button + '  text-white rounded p-2 mx-5 w-[300px]'}>
+					        volver
+							</button>
+						</div>
 					</div>
 				</div>
-				<div className="flex  justify-center items-center mt-4 ">
-					<button type='button' onClick={() => handleClick()} className="bg-[#cd1919] text-white rounded p-2 mx-5 w-[300px]">
-					        volver
-					</button>
-				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 }

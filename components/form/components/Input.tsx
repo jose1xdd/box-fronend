@@ -27,6 +27,7 @@ export function Input({ label, name, placeholder, type, value, onChange, classNa
 			</label>
 			{/* Campo de entrada */}
 			<input
+				required
 				type={type}
 				id={name}
 				name={name}

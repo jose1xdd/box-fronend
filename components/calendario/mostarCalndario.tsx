@@ -2,6 +2,7 @@
 import CalendarioEventos from '@/components/calendario/calendario';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 export default function Calendario() {
 	const [crear, setCrear] = useState(false);
@@ -35,11 +36,11 @@ export default function Calendario() {
 				</div>
 			</div>
 			{crear && (
-				<div className="flex justify-end mr-28">
-					<button type='button' onClick={() => handlerCrear('Convocatoria')}className="bg-[#cd1919] text-white rounded p-2 mx-5">
+				<div className="container flex justify-end items-end mt-4 ">
+					<button type='button' onClick={() => handlerCrear('Convocatoria')}className={`${styles.button} p-2 mx-5`}>
 										Crear convocatoria
 					</button>
-					<button onClick={() => handlerCrear('Torneo')} className="bg-[#cd1919] text-white rounded p-2">
+					<button onClick={() => handlerCrear('Torneo')} className={`${styles.button} p-2`}>
 										Crear Torneo
 					</button>
 				</div>

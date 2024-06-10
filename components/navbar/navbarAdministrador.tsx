@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '@/public/images/logo.png';
 import { ObtenerLogo } from '@/app/lib/basic_request';
 import styles from '@/components/navbar/navbar.module.css';
 import DropMenu from './dropmenu';
@@ -11,27 +10,33 @@ import DropMenu from './dropmenu';
 export default function NavbarAdministrador() {
 
 	const [logo, setLogo] = useState('');
-
 	const [nombreUsuario, setNombreUsuario] = useState('');
-
-	useEffect(() => {
-		// Obtener datos del localStorage
-		const datosUsuarioJSON = localStorage.getItem('datosUsuario');
-		if (datosUsuarioJSON) {
-			const datosUsuario = JSON.parse(datosUsuarioJSON);
-			// Actualizar el estado con el nombre y apellido del usuario
-			setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
-		}
-		const f = async () => {
-			setLogo(await ObtenerLogo());
-		};
-		f();
-	}, []);
-
 	const [barraDesplegada, setBarraDesplegada] = useState(false);
 
 	// Agregar estado para el filtro
 	const [filtro, setFiltro] = useState('');
+
+	useEffect(() => {
+		// Verificar que estamos en el cliente
+		if (typeof window !== 'undefined') {
+			const datosUsuarioJSON = localStorage.getItem('datosUsuario');
+			if (datosUsuarioJSON) {
+				const datosUsuario = JSON.parse(datosUsuarioJSON);
+				setNombreUsuario(`${datosUsuario.nombre} ${datosUsuario.apellido}`);
+			}
+			const fetchLogo = async () => {
+				setLogo(await ObtenerLogo());
+			};
+			fetchLogo();
+		}
+	}, []);
+
+	useEffect(() => {
+		// UseEffect para manejar el cambio en el filtro y actualizar el localStorage
+		if (filtro && typeof window !== 'undefined') {
+			localStorage.setItem('filtro', filtro);
+		}
+	}, [filtro]);
 
 	const abrirBarraDesplegable = () => {
 		setBarraDesplegada(true);

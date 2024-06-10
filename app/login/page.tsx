@@ -70,15 +70,20 @@ export default function LoginPage() {
 			/>
 			<div className='flex flex-col items-end justify-center m-20'>
 				<Form title1='LIGA DE' title2='BOXEO' title3='NORTE' onSubmit={() => { }} description='' className=''>
-					<div className='flex flex-col gap-4 mt-7 mb-5'>
+					<div className='flex flex-col mt-12 mb-5'>
 						{incorrectData && (
 							<p className='text-red-500 mb-2'>Los datos ingresados son incorrectos</p>
 						)}
+						{
+							(!information.email.includes('@gmail.com') && information.email.length != 0) && (
+								<p className='text-red-500 '>El correo debe contener @gmail.com</p>
+							)
+						}
 						<Form.Input
-							className=''
+							className='mb-5'
 							label=''
 							name='email'
-							placeholder='email'
+							placeholder='usuario@gmail.com'
 							onChange={handleInput}
 							value={information.email}
 							type="text"
@@ -94,8 +99,8 @@ export default function LoginPage() {
 						/>
 					</div>
 
-					<div className='flex gap-4 items-center text-black font-light'>
-						<Form.SubmitButton buttonText='Ingresar' handleButton={handleButton} />
+					<div className='flex gap-4 items-center'>
+						<Form.SubmitButton disable= {information.password.length == 0 || !information.email.includes('@gmail.com') ? true : false} buttonText='INGRESAR' handleButton={handleButton} />
 						<Form.Footer
 							description=''
 							link='/forget-password'

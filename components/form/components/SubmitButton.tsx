@@ -4,11 +4,12 @@ interface SubmitButtonProps{
     buttonText: string
     isLoading?: boolean
 	handleButton: any
+	disable: boolean
 }
 
-export function SubmitButton({ buttonText, isLoading, handleButton }: SubmitButtonProps){
+export function SubmitButton({ buttonText, isLoading, disable: disable, handleButton }: SubmitButtonProps){
 	return(
-		<button className={styles.submitButton} type='submit' onClick={handleButton} disabled={isLoading}>
+		<button className={`${disable == true ? styles.submitButtonDisabled + ' cursor-not-allowed' : styles.submitButtonEnabled}`} type='button' onClick={handleButton} disabled={disable}>
 			{isLoading ? < Loader /> : buttonText}
 		</button>
 	);

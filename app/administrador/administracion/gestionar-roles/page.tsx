@@ -3,6 +3,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import styles from '@/public/css/styles.module.scss';
 
 interface roles {
 	_id: string,
@@ -115,6 +116,13 @@ export default function RolesAdmin() {
 		cargarRoles();
 	}, [rolesData, repeat]);
 
+	const nombreVacio = () => {
+		return nombreRol === '';
+	};
+	const rolValido = () => {
+		return rolEliminar !== '' && rolEliminar !== '-';
+	};
+
 	return (
 		<>
 			<div className="container mx-auto mt-8">
@@ -126,13 +134,13 @@ export default function RolesAdmin() {
 						<table className="w-full">
 							<thead>
 								<tr>
-									<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>rol</th>
+									<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>rol</th>
 								</tr>
 							</thead>
 							<tbody>
 								{rolesData && rolesData.map((rol, index) => (
 									<tr key={index}>
-										<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{rol.name}</td>
+										<td className="border-[#1e1e1e] border-[8px] p-3 bg-white text-center text-black">{rol.name}</td>
 									</tr>
 								))}
 							</tbody>
@@ -143,7 +151,7 @@ export default function RolesAdmin() {
 							<div className="flex items-center">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										Nombre del rol
+										NOMBRE DEL ROL
 									</h3>
 									<input
 										type="text"
@@ -151,7 +159,7 @@ export default function RolesAdmin() {
 										required
 										value={nombreRol}
 										onChange={handleInputChange}
-										className="bg-white border-2 border-black rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className={(nombreVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-white rounded-full w-80 h-10 my-2 pl-4 text-black'}
 										id="texto-general"
 										placeholder="Ingrese el nombre del rol"
 									/>
@@ -160,9 +168,9 @@ export default function RolesAdmin() {
 							<div className="mt-3 flex justify-center">
 								<button
 									type="button"
+									disabled = {nombreVacio()}
 									onClick={handleSubmit}
-									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-									id="titulos-pequenos"
+									className={(nombreVacio() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-80 h-10 text-white py-2 px-4 rounded-lg'}
 								>
 									Crear rol
 								</button>
@@ -172,17 +180,17 @@ export default function RolesAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										Nombre del rol a eliminar
+										NOMBRE DEL ROL A ELIMINAR
 									</h3>
 									<select
 										required
 										name="nombreRolEliminar"
 										value={rolEliminar}
 										onChange={handleEliminarChange}
-										className="bg-white border-2 border-black rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black"
 										id="texto-general"
 									>
-										<option value="" disabled>
+										<option value="-">
 											Seleccione el rol a eliminar
 										</option>
 										{rolesData && rolesData.map((rol, index) => (
@@ -197,8 +205,8 @@ export default function RolesAdmin() {
 								<button
 									type="button"
 									onClick={handleEliminarSubmit}
-									className="bg-[#cd1919] w-80 h-10 text-white py-2 px-4 rounded-lg"
-									id="titulos-pequenos"
+									disabled = {!rolValido()}
+									className={(!rolValido() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' w-80 h-10 text-white py-2 px-4 rounded-lg'}
 								>
 									Eliminar rol
 								</button>
@@ -241,8 +249,7 @@ export default function RolesAdmin() {
 						<div className="flex justify-center">
 							<button
 								onClick={()=>setRepeat(false)}
-								className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-								id="titulos-pequenos"
+								className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 							>
 								Aceptar
 							</button>
@@ -252,7 +259,7 @@ export default function RolesAdmin() {
 			)}
 
 			<div className="flex justify-center mt-8">
-				<Link href="../administracion" className="bg-[#cd1919] w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center">
+				<Link href="../administracion" className={styles.button + ' w-40 h-10 text-white py-2 px-4 rounded-lg flex justify-center'}>
 					Volver
 				</Link>
 			</div>

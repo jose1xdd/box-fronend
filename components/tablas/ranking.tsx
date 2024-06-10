@@ -1,6 +1,7 @@
 import '@/app/administrador/lista-usuarios/estilos.css';
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import styles from '@/public/css/styles.module.scss';
 
 // Definir las propiedades del componente Table
 interface TableProps {
@@ -93,7 +94,7 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 				type="text"
 				placeholder="Filtrar por nombre"
 				onChange={handleSearch}
-				className="px-5 py-2 rounded-[18px] bg-white focus:outline-none mb-4 text-black"
+				className="px-5 py-2 rounded-[18px] border-[3px] border-black focus:outline-none mb-4 text-black"
 			/>
 			<table className="w-full">
 				<thead>
@@ -112,8 +113,8 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 				containerClassName="pagination flex gap-2 justify-center"
 				activeClassName="active"
 				pageLinkClassName="page-link"
-				previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Anterior</button>}
-				nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Siguiente</button>}
+				previousLabel={<button className={styles.button + ' text-white rounded p-2'}>Anterior</button>}
+				nextLabel={<button className={styles.button + ' text-white rounded p-2'}>Siguiente</button>}
 				pageRangeDisplayed={2}
 				marginPagesDisplayed={1}
 			/>

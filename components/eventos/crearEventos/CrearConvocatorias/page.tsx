@@ -1,8 +1,15 @@
 'use client';
 import axios from 'axios';
-import styles from '@/app/css/profiles.module.css';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {
+	use,
+	useEffect,
+	useState
+} from 'react';
+import { LoaderContenido } from '@/components/loaderContenido';
+import kevin from '@/public/css/styles.module.scss';
+import styles from '@/app/administrador/css/profiles.module.css';
+
 interface User {
     _id: string;
     name: string;
@@ -25,7 +32,9 @@ export default function CrearConvocatoria() {
 	const [horaInvalida, setHoraInvalida] = useState(false);
 	const [nuevoParticipante, setNuevoParticipante] = useState('');
 	const [selectedUsuarios, setSelectedUsuarios] = useState<String[]>([]);
-	const [eliminar, setEliminar] = useState(false);
+	const [eliminar, setEliminar] = useState(true);
+	const [botonListo, setBotonListo] = useState(true);
+	const [fechaRepetida, setFechaRepetida] = useState (false);
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 	const getEntrenadores = async (token:string) => {
@@ -89,6 +98,10 @@ export default function CrearConvocatoria() {
 		cargarUsuarios();
 	}, []);
 
+	useEffect(() => {
+		setBotonListo(botonValido);
+	}, [fechaEvento, nombreEvento, selectedEntrenador, horaFin, horaInicio, descripcionEvento, correos]);
+
 	function handlerCancelar() {
 		const datos = localStorage.getItem('userData');
 		let rol;
@@ -128,16 +141,18 @@ export default function CrearConvocatoria() {
 	function handlerSetParticipantes(eliminar: boolean) {
 		let users = [...selectedUsuarios];
 		const indice = users.indexOf(nuevoParticipante);
-		if(eliminar){
-			if (indice != -1) {
-				users.splice(indice, 1);
+		if(nuevoParticipante !== '' && nuevoParticipante !== ' '){
+			if(eliminar){
+				if (indice != -1) {
+					users.splice(indice, 1);
+				}
+			}else{
+				if (indice == -1) {
+					users.push(nuevoParticipante);
+				}
 			}
-		}else{
-			if (indice == -1) {
-				users.push(nuevoParticipante);
-			}
+			setSelectedUsuarios(users);
 		}
-		setSelectedUsuarios(users);
 	}
 
 	useEffect(()=>{
@@ -178,154 +193,179 @@ export default function CrearConvocatoria() {
 			await axios.post(`${apiEndpoint}/event/meet`, body, { headers: headers });
 			router.push('/' + route + '/calendario');
 		}catch(error){
+			setFechaRepetida(true);
 			console.log(error);
 		}
 	}
 
+	const ready = () => {
+		return entrenadores.length != 0 && usuarios.length != 0;
+	};
+
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+		return soloLetras.test(nombreEvento);
+	};
+	const nombreVacio = () => {
+		return nombreEvento == '';
+	};
+
+	const botonValido = () =>{
+		return (selectedEntrenador !== '' && selectedEntrenador !== 'Selecciona un entrenador') && (fechaEvento !== '' && !fechainvalida) && (horaInicio !== '' && horaFin !== '' && !horaInvalida) && nombreEvento !== '' && descripcionEvento !== '' && (correos !== '');
+	};
+
 	return (
-		<div className={'container mx-auto mt-8 ' + styles.container}>
-			<div className="p-4 ">
-				<form onSubmit={handlerSubmit}>
-					<div className='flex'>
-						<div className="w-2/3 pr-4">
-							<h1 className='text-center text-[400%]' id='titulos-grandes'>Nueva Convocatoria</h1>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+		<>
+			{!ready() && (<LoaderContenido/>)}
+			{ready() && (
+				<div className="container mx-auto mt-8">
+					<div className="p-4 ">
+						<form onSubmit={handlerSubmit}>
+							<div className='flex'>
+								<div className="w-2/3 pr-4">
+									<h1 className='text-center text-[400%]' id='titulos-grandes'>Nueva Convocatoria</h1>
+									<div className="flex">
+										<div className="w-1/3 mx-2">
+											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id='texto-general'>
 										Entrenador encargado
+											</div>
+										</div>
+										<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className={`${(selectedEntrenador == '' || selectedEntrenador === 'Selecciona un entrenador') ? 'border-[3px] border-red-700' : ''} bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`} id='texto-general' placeholder='Entrenador encargado'>
+											<option>Selecciona un entrenador</option>
+											{entrenadores.map((entrenador) => (
+												<option key={entrenador._id} value={entrenador._id} placeholder='Entrenador encargado'>
+													{entrenador.name + entrenador.lastName + ' - ' + entrenador.cedula}
+												</option>
+											))}
+										</select>
 									</div>
-								</div>
-								<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-									{entrenadores.map((entrenador) => (
-										<option key={entrenador._id} value={entrenador._id} placeholder='Entrenador encargado'>
-											{entrenador.name + entrenador.lastName + ' - ' + entrenador.cedula}
-										</option>
-									))}
-								</select>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
+									<div className="flex">
+										<div className="w-1/3 mx-2">
 
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white '} id='texto-general'>
 										Fecha del evento
+											</div>
+										</div>
+										<input
+											required
+											type="date"
+											onChange={(event)=>{setFechaEvento(event.target.value); if(new Date(event.target.value) < new Date()) setFechainvalida(true); else setFechainvalida(false);}}
+											className={`${fechaEvento === '' ? 'border-[3px] border-red-700' : ''} bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black text-black border-[3px] border-black`} id='texto-general'
+										/>
 									</div>
-								</div>
-								<input
-									required
-									type="date"
-									onChange={(event)=>{setFechaEvento(event.target.value); if(new Date(event.target.value) < new Date()) setFechainvalida(true); else setFechainvalida(false);}}
-									className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-								/>
-							</div>
-							{fechainvalida && (
-								<div className='flex justify-center'>
-									<p className='text-red-500 mb-2'>La fecha no puede ser en un día anterior a la fecha de hoy</p>
-								</div>
+									{fechainvalida && (
+										<div className='flex ps-[28%]'>
+											<p className='text-red-500 mb-2'>La fecha no puede ser en un día anterior a la fecha de hoy</p>
+										</div>
 
-							)}
+									)}
 
-							<div className="flex items-center justify-center">
-								<div className="flex">
-									<div className="w-2/3 mx-4">
-										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+									<div className="flex items-center justify-center">
+										<div className="flex">
+											<div className="w-1/3 mx-4">
+												<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white '} id='texto-general'>
 										Hora inicio
+												</div>
+											</div>
+											<input
+												required
+												type="time"
+												onChange={(event)=>{setHoraInicio(event.target.value);}}
+												className={`${horaInicio === '' ? 'border-[3px] border-red-700 ' : ''} bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`} id='texto-general'
+												placeholder='Descripcion general del evento'
+											/>
 										</div>
-									</div>
-									<input
-										required
-										type="time"
-										onChange={(event)=>{setHoraInicio(event.target.value);}}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-										placeholder='Descripcion general del evento'
-									/>
-								</div>
-								<div className="flex">
-									<div className="w-2/3 mx-2">
-										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id='texto-general'>
+										<div className="flex">
+											<div className="w-1/3 mx-2">
+												<div className={styles.label + '  w-full h-10 mx-5 my-2 flex items-center justify-center text-white '} id='texto-general'>
 										Hora fin
+												</div>
+											</div>
+											<input
+												required
+												type="time"
+												onChange={(event)=>{setHoraFin(event.target.value);}}
+												className={`${horaFin === '' ? 'border-[3px] border-red-700 ' : ''} bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+												id='texto-general'
+												placeholder='Descripcion general del evento'
+											/>
 										</div>
 									</div>
-									<input
-										required
-										type="time"
-										onChange={(event)=>{setHoraFin(event.target.value);}}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-										placeholder='Descripcion general del evento'
-									/>
-								</div>
-							</div>
-							{horaInvalida && (
-								<div className='flex justify-center'>
-									<p className='text-red-500 mb-2'>La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
-								</div>
+									{horaInvalida && (
+										<div className='flex justify-center'>
+											<p className='text-red-500 mb-2'>La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
+										</div>
 
-							)}
-							<div className="flex">
-								<input
-									required
-									placeholder='Nombre del evento'
-									onChange={(event)=>{setNombreEvento(event.target.value);}}
-									type="text"
-									className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general'
-								/>
-							</div>
-							<div className="flex items-center justify-center">
-								<input
-									required
-									type="text"
-									onChange={(event)=>{setDescripcionEvento(event.target.value);}}
-									className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 pl-4 text-black' id='texto-general'
-									placeholder='Descripcion general del evento'
-								/>
-							</div>
-						</div>
-						<div className="w-1/2 pr-4">
-							<div className='flex justify-center'>
-								<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
-							</div>
-							<div className="flex">
-								<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-									{usuarios.map((usuario, i) => {
-										if(i == 0){
-											return <option key={usuario.email} selected={true} value={usuario.email} placeholder='Entrenador encargado'>
-												{usuario.email}
-											</option>;
-										}
-										return <option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
-											{usuario.email}
-										</option>;
-									})}
-								</select>
-							</div>
-							<div className="flex items-center justify-center">
-								<textarea
-									required
-									value={correos}
-									readOnly
-									className='bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black' id='texto-general'
-									placeholder='Participantes del evento'
-								/>
-							</div>
-							<div className="flex justify-center items-center mt-4 ">
-								<button type='button' onClick={()=> handlerSetParticipantes(true)} className="bg-[#cd1919] text-white rounded p-2 mx-5">
+									)}
+									<div className="flex">
+										<input
+											required
+											placeholder='Nombre del evento'
+											onChange={(event)=>{setNombreEvento(event.target.value);}}
+											type="text"
+											className={(nombreEvento === '' ? 'border-[3px] border-red-700 ' : '') + ' bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'} id='texto-general'
+										/>
+									</div>
+									<div className="flex items-center justify-center">
+										<input
+											required
+											type="text"
+											onChange={(event)=>{setDescripcionEvento(event.target.value);}}
+											className={(descripcionEvento === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-white text-black border-[3px] border-black rounded-lg w-full h-20 mx-5 my-2 pl-4 text-black'} id='texto-general'
+											placeholder='Descripcion general del evento'
+										/>
+									</div>
+								</div>
+								<div className="w-1/2 pr-4">
+									<div className='flex justify-center'>
+										<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
+									</div>
+									<div className="flex">
+										<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className= 'bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border-[3px] border-black' id='texto-general' placeholder='Entrenador encargado'>
+											<option value=' '>Selecciona un usuario</option>
+											{usuarios.map((usuario) => (
+												<option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
+													{usuario.email}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="flex items-center justify-center">
+										<textarea
+											required
+											value={correos}
+											readOnly
+											className={(correos === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-white text-black border-[3px] border-black rounded-lg w-full h-20 mx-5 my-2 p-4 text-black'} id='texto-general'
+											placeholder='Participantes del evento'
+										/>
+									</div>
+									<div className="flex justify-center items-center mt-4 ">
+										<button type='button' onClick={()=> handlerSetParticipantes(true)} className={`${correos !== '' ? kevin.button : kevin.buttonDisabled + ' cursor-not-allowed'} p-2 mx-5`}>
 					                Eliminar usuario
+										</button>
+										<button type='button' onClick={() => handlerSetParticipantes(false)} className={`${kevin.button} p-2 mx-5`}>
+					                Agregar Usuario
+										</button>
+									</div>
+								</div>
+							</div>
+							<>
+								{fechaRepetida && (
+									<p className='text-center p-4 text-[125%] text-red-600'>Ya hay un evento programado para esa fecha</p>
+								)}
+							</>
+							<div className="flex justify-center items-center mt-4 ">
+								<button type='button' onClick={() => handlerSubmit()}className={`${botonListo ? kevin.button : kevin.buttonDisabled + ' cursor-not-allowed'} p-2 mx-5`}>
+					        Agregar convocatoria
 								</button>
-								<button type='button' onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2">
-					                Agregar Usuarios
+								<button onClick={() => handlerCancelar()} className={`${kevin.button} p-2 mx-5`}>
+					        Cancelar
 								</button>
 							</div>
-						</div>
+						</form>
 					</div>
-					<div className="flex justify-center items-center mt-4 ">
-						<button onClick={() => handlerSubmit()}className="bg-[#cd1919] text-white rounded p-2 mx-5">
-					        Agregar convocatoria
-						</button>
-						<button onClick={() => handlerCancelar()} className="bg-[#cd1919] text-white rounded p-2">
-					        Cancelar
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
+				</div>
+			)}
+		</>
 	);
 }

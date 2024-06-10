@@ -1,10 +1,12 @@
 'use client';
+import { LoaderContenido } from '@/components/loaderContenido';
 import { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { json } from 'stream/consumers';
+import axios from 'axios';
+import Image from 'next/image';
 import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import { obtenerFotoPerfil } from '@/app/lib/basic_request';
-import styles from '@/app/css/profiles.module.css';
+import kevin from '@/public/css/styles.module.scss';
+import styles from '@/app/administrador/css/profiles.module.css';
 interface FormData {
 	nombre: string;
 	apellido: string;
@@ -13,12 +15,9 @@ interface FormData {
 	telefono: string;
 	correo: string;
 	contrasenia: string;
-  }
+}
 
 export default function Home() {
-
-	var cargado = false;
-
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const [datosPerfil, setDatosPerfil] = useState({
 		nombre: 'Texto',
@@ -30,22 +29,21 @@ export default function Home() {
 		imagen: ''
 	});
 	const [esEditable, setEsEditable] = useState(false);
-
 	const [modalVisible, setModalVisible] = useState(false);
+	const [botonListo, setBotonListo] = useState(true);
+	const [cargado, setCargado] = useState(false);
 
 	useEffect(() => {
 		const datos = localStorage.getItem('userData');
-		var arreglo;
+		let arreglo;
 
 		if (datos != null) {
 			arreglo = JSON.parse(datos);
 		}
 
 		carga(arreglo);
-		cargado = true;
-	}, [!cargado]);
-	console.log(datosPerfil);
-	//Método que hace el get de la base de datos
+	}, []);
+
 	async function carga(datos: { token: any; userId: any }): Promise<void> {
 		let tmpUser;
 		try {
@@ -61,30 +59,23 @@ export default function Home() {
 				headers: headers
 			});
 
-			// Actualizar el estado con los datos recibidos
-			tmpUser = { nombre: response.data.user.name,
+			tmpUser = {
+				nombre: response.data.user.name,
 				apellido: response.data.user.lastName,
 				cedula: response.data.user.cedula,
 				direccion: response.data.user.address,
 				telefono: response.data.user.phone,
 				correo: response.data.user.email,
-				imagen: '' };
+				imagen: ''
+			};
 			setDatosPerfil(tmpUser);
 
-			// Obtén los datos de nombre y apellido de tu variable "response"
-			const nombre = response.data.user.name;
-			const apellido = response.data.user.lastName;
-
-			// Define un objeto con los datos que deseas guardar
 			const datosUsuario = {
-				nombre: nombre,
-				apellido: apellido
+				nombre: response.data.user.name,
+				apellido: response.data.user.lastName
 			};
 
-			// Convierte el objeto a una cadena JSON
 			const datosUsuarioJSON = JSON.stringify(datosUsuario);
-
-			// Guarda la cadena JSON en localStorage
 			localStorage.setItem('datosUsuario', datosUsuarioJSON);
 
 		} catch (error) {
@@ -92,11 +83,15 @@ export default function Home() {
 			return;
 		}
 
-		setDatosPerfil({ ...tmpUser, ['imagen']: await obtenerFotoPerfil() });
+		const imagen = await obtenerFotoPerfil();
+		setDatosPerfil((prevDatosPerfil) => ({
+			...prevDatosPerfil,
+			imagen: imagen
+		}));
+		setCargado(true); // Estado de carga completado
 	}
 
-	//método para poder realizar el cambio de datos:
-	async function cambiar(datos: { token: any; userId: any}, info: { nombre: any; apellido: any; direccion: any; telefono: any }): Promise<void> {
+	async function cambiar(datos: { token: any; userId: any }, info: { nombre: any; apellido: any; direccion: any; telefono: any }): Promise<void> {
 		try {
 			const headers = {
 				sessiontoken: datos.token
@@ -111,11 +106,7 @@ export default function Home() {
 				address: info.direccion
 			};
 
-			console.log(parametros);
-			console.log(headers);
-			console.log(cuerpo);
-
-			const response = await axios.patch(`${apiEndpoint}/users`, cuerpo, {
+			await axios.patch(`${apiEndpoint}/users`, cuerpo, {
 				params: parametros,
 				headers: headers
 			});
@@ -129,19 +120,22 @@ export default function Home() {
 	}
 
 	const handleChange = (field: keyof FormData, value: string) => {
-		setDatosPerfil((prevFormData) => ({
-			...prevFormData,
-			[field]: value
-		}));
+		setDatosPerfil((prevFormData) => {
+			const newFormData = {
+				...prevFormData,
+				[field]: value
+			};
+			setBotonListo(botonValido(newFormData)); // Usar el nuevo estado para validar
+			return newFormData;
+		});
 	};
 
 	const handleToggleEdit = async () => {
 		if (!esEditable) {
 			console.log(datosPerfil);
-		}
-		else{
+		} else {
 			const datos = localStorage.getItem('userData');
-			var arreglo;
+			let arreglo;
 
 			if (datos != null) {
 				arreglo = JSON.parse(datos);
@@ -155,151 +149,218 @@ export default function Home() {
 		setModalVisible(true);
 	};
 
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;;
+		return soloLetras.test(datosPerfil.nombre);
+	};
+	const nombreVacio = () => {
+		return datosPerfil.nombre == '';
+	};
+
+	const apellidoValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;;
+		return soloLetras.test(datosPerfil.apellido);
+	};
+	const apellidoVacio = () => {
+		return datosPerfil.apellido == '';
+	};
+	const direccionVacia = () => {
+		return datosPerfil.direccion == '';
+	};
+	const numeroValido = () => {
+		const soloLetras = /^[0-9]*$/;
+		return soloLetras.test(datosPerfil.telefono);
+	};
+	const numeroVacio = () => {
+		return datosPerfil.telefono == '';
+	};
+	const numeroCompleto = () => {
+		return datosPerfil.telefono.length == 10;
+	};
+
+	const botonValido = (formData = datosPerfil) => {
+		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && !direccionVacia() && numeroValido() && !numeroVacio() && numeroCompleto();
+	};
+
+	useEffect(() => {
+		setBotonListo(botonValido());
+	}, [datosPerfil]);
+
 	return (
 		<>
-			<div className={'container mx-auto mt-8 ' + styles.container}>
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>MI PERFIL</h1>
-				<div className="p-4 mx-auto md:flex">
-					<div className="md:w-2/3 md:pr-4">
-						<form className={styles.form}>
-							<div className="flex responsive_text">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
-										Nombre:
+			{!cargado && <LoaderContenido />}
+			{cargado && (
+				<div className="container mx-auto mt-8">
+					<h1 className='text-center text-[400%]' id='titulos-grandes'>MI PERFIL</h1>
+					<div className="p-4 max-w-5xl mx-auto flex">
+						<div className="w-2/3 pr-4">
+							<form>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+											Nombre:
+										</div>
 									</div>
-								</div>
-								<div className={'w-2/3 mx-2 ' + styles.text}>
-									{esEditable ?
-										(
+									<div className="w-2/3 mx-2">
+										{esEditable ? (
 											<input
 												type="text"
-												className={'bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black'} id='texto-general'
+												className={'bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black border-[3px] border-black'} id='texto-general'
 												value={datosPerfil.nombre}
 												onChange={(e) => handleChange('nombre', e.target.value)}
 											/>
 										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center border-[3px] border-black text-black' id='texto-general'>
 												{datosPerfil.nombre}
 											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex responsive_text">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
-										Apellido:
+										)}
 									</div>
 								</div>
-								<div className={'w-2/3 mx-2 ' + styles.text}>
-									{esEditable ?
-										(
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{nombreVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!nombreValido() && !nombreVacio()) && (
+										<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
+									)}
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+											Apellido:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ? (
 											<input
 												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black border-[3px] border-black' id='texto-general'
 												value={datosPerfil.apellido}
 												onChange={(e) => handleChange('apellido', e.target.value)}
 											/>
 										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black border-[3px] border-black' id='texto-general'>
 												{datosPerfil.apellido}
 											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex responsive_text">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
-										Cédula:
+										)}
 									</div>
 								</div>
-								<div className={'w-2/3 mx-2 ' + styles.text}>
-
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosPerfil.cedula}
-									</div>
-
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{apellidoVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!apellidoValido() && !apellidoVacio()) && (
+										<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
+									)}
 								</div>
-							</div>
-							<div className="flex responsive_text">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
-										Dirección:
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+											Cedula:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black border-[3px] border-black' id='texto-general'>
+											{datosPerfil.cedula}
+										</div>
 									</div>
 								</div>
-								<div className={'w-2/3 mx-2 ' + styles.text}>
-									{esEditable ?
-										(
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+											Dirección:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ? (
 											<input
 												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center border-[3px] border-black text-black' id='texto-general'
 												value={datosPerfil.direccion}
 												onChange={(e) => handleChange('direccion', e.target.value)}
 											/>
 										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black border-[3px] border-black' id='texto-general'>
 												{datosPerfil.direccion}
 											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex responsive_text">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
-										Teléfono:
+										)}
 									</div>
 								</div>
-								<div className={'w-2/3 mx-2 ' + styles.text}>
-									{esEditable ?
-										(
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{direccionVacia() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+											Teléfono:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										{esEditable ? (
 											<input
 												type="text"
-												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black' id='texto-general'
+												className='bg-white rounded-full w-full h-10 mx-5 my-2 text-center text-black border-[3px] border-black' id='texto-general'
 												value={datosPerfil.telefono}
 												onChange={(e) => handleChange('telefono', e.target.value)}
 											/>
 										) : (
-											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black border-[3px] border-black' id='texto-general'>
 												{datosPerfil.telefono}
 											</div>
-										)
-									}
-								</div>
-							</div>
-							<div className="flex responsive_text">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
-										Correo:
+										)}
 									</div>
 								</div>
-								<div className={'w-2/3 mx-2 ' + styles.text}>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosPerfil.correo}
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{numeroVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!numeroValido() && !numeroVacio()) && (
+										<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
+									)}
+									{(!numeroCompleto() && (!numeroVacio() && numeroValido())) && (
+										<label className='text-red-600 mx-10'>El número debe ser de 10 dígitos</label>
+									)}
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+											Correo:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2">
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black border-[3px] border-black' id='texto-general'>
+											{datosPerfil.correo}
+										</div>
 									</div>
 								</div>
-							</div>
-							<div className="mt-5 flex justify-center">
-								<button
-									type="button"
-									onClick={handleToggleEdit}
-									className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-								>
-									{esEditable ? 'Guardar cambios' : 'Editar información'}
-								</button>
-							</div>
-						</form>
+								<div className="mt-5 flex justify-center">
+									<button
+										type="button"
+										onClick={handleToggleEdit}
+										className={`${botonListo ? kevin.button : kevin.buttonDisabled + ' cursor-not-allowed'} w-60 h-10 text-white py-2 px-4 rounded-lg`}
+										disabled = {botonListo ? false : true}
+									>
+										{esEditable ? 'Guardar cambios' : 'Editar información'}
+									</button>
+								</div>
+							</form>
+						</div>
+						<div className="w-1/3 flex flex-col justify-center items-center">
+							{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={512} height={512} src={datosPerfil.imagen}/>}
+							<button className={`${kevin.button} w-60 h-10  py-2 px-4 mt-10`} onClick={handleChangeImage}>
+								Cargar nueva foto de perfil
+		  					</button>
+						</div>
+						{modalVisible && <ModalImage setView={setModalVisible}></ModalImage>}
 					</div>
-					<div className="md:w-1/3 flex flex-col md:my-0 my-10 justify-center items-center">
-						{datosPerfil.imagen != '' && <img src={datosPerfil.imagen} className='w-64 h-64'/>}
-						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
-							Cargar nueva foto de perfil
-		  				</button>
-					</div>
-					{modalVisible && <ModalImage setView={setModalVisible}></ModalImage>}
 				</div>
-			</div>
+			)}
 		</>
 	);
 }

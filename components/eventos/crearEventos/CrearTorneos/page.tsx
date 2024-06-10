@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from '@/app/css/profiles.module.css';
+import { LoaderContenido } from '@/components/loaderContenido';
+import kevin from '@/public/css/styles.module.scss';
+import styles from '@/app/administrador/css/profiles.module.css';
 
 interface User {
   _id: string;
@@ -50,8 +52,9 @@ export default function CrearTorneo() {
 	const [selectedUsuarios, setSelectedUsuarios] = useState<string[]>([]);
 	const [selectedCategoria, setSelectedCategoria] = useState<string>('');
 	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>([]);
-	const [eliminar, setEliminar] = useState(false);
 	const [combates, setCombates] = useState<Combat[]>([]);
+	const [fechaRepetida, setFechaRepetida] = useState(false);
+
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
 
@@ -142,9 +145,9 @@ export default function CrearTorneo() {
 	}, []);
 
 	useEffect(()=>{
-		console.log(selectedEntrenador);
-		console.log(fechaEvento);
-		console.log(combates);
+		//console.log(selectedEntrenador);
+		//console.log(fechaEvento);
+		//console.log(combates);
 	}, [combates]);
 
 	useEffect(() => {
@@ -250,230 +253,280 @@ export default function CrearTorneo() {
 		else route = 'administrador';
 		try {
 			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
-			console.log(response);
+			//console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
+			setFechaRepetida(true);
 			console.log(error);
 		}
 	};
 
-	return (
-		<div className={'container mx-auto mt-8 ' + styles.container}>
-			<div className="p-4 ">
-				<form onSubmit={handlerSubmit}>
-					<div className="flex">
-						<div className="w-2/3 pr-4">
-							<h1 className="text-center text-[400%]" id="titulos-grandes">
-								Nuevo torneo
-							</h1>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
-										Entrenador encargado
-									</div>
-								</div>
-								<select
-									onChange={(event) => {
-										setSelectedEntrenador(event.target.value);
-									}}
-									required
-									className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-									id="texto-general"
-									placeholder="Entrenador encargado"
-									value={selectedEntrenador}
-								>
-									<option value="">Selecciona un entrenador</option>
-									{entrenadores.map((entrenador) => (
-										<option key={entrenador._id} value={entrenador._id}>
-											{entrenador.name} {entrenador.lastName}
-										</option>
-									))}
-								</select>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
-										Fecha del evento
-									</div>
-								</div>
-								<input
-									required
-									type="date"
-									onChange={(event) => {
-										setFechaEvento(event.target.value);
-										if (new Date(event.target.value) < new Date()) setFechainvalida(true);
-										else setFechainvalida(false);
-									}}
-									className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-									id="texto-general"
-								/>
-							</div>
-							{fechainvalida && (
-								<div className="flex justify-center">
-									<p className="text-red-500 mb-2">La fecha no puede ser en un día anterior a la fecha de hoy</p>
-								</div>
-							)}
+	const ready = () => {
+		return usuarios.length != 0 && entrenadores.length != 0 && categorias.length != 0;
+	};
 
-							<div className="flex items-center justify-center">
-								<div className="flex">
-									<div className="w-2/3 mx-4">
-										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
+	const entrenadorSeleccionadoValido = () => {
+		return selectedEntrenador !== '' && selectedEntrenador !== '-';
+	};
+	const fechaEventoVacio = () => {
+		return fechaEvento === '';
+	};
+	const horaInicioVacia = () =>{
+		return horaInicio === '';
+	};
+	const horaFinVacia = () => {
+		return horaFin === '';
+	};
+	const nombreEventoVacio = () => {
+		return nombreEvento === '';
+	};
+	const descripcionEventoVacio = () => {
+		return descripcionEvento === '';
+	};
+	const categoriaVacia = () => {
+		return selectedCategoria === '-' || selectedCategoria === '';
+	};
+	const nuevoParticipante1Vacio = () => {
+		return nuevoParticipante1 === '' || nuevoParticipante1 === '-';
+	};
+	const nuevoParticipante2Vacio = () => {
+		return nuevoParticipante2 === '' || nuevoParticipante2 === '-';
+	};
+	const combatesVacios = () => {
+		return combates.length === 0;
+	};
+
+	const botonValido = () => {
+		return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+	};
+
+	return (
+		<>
+			{!ready() && (<LoaderContenido/>)}
+			{ready() && (
+				<div className="container mx-auto mt-8">
+					<div className="p-4 ">
+						<form onSubmit={handlerSubmit}>
+							<div className="flex">
+								<div className="w-2/3 pr-4">
+									<h1 className="text-center text-[400%]" id="titulos-grandes">
+								Nuevo torneo
+									</h1>
+									<div className="flex">
+										<div className="w-1/3 mx-2">
+											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id="texto-general">
+										Entrenador encargado
+											</div>
+										</div>
+										<select
+											onChange={(event) => {
+												setSelectedEntrenador(event.target.value);
+											}}
+											required
+											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											id="texto-general"
+											placeholder="Entrenador encargado"
+											value={selectedEntrenador}
+										>
+											<option value="-">Selecciona un entrenador</option>
+											{entrenadores.map((entrenador) => (
+												<option key={entrenador._id} value={entrenador._id}>
+													{entrenador.name} {entrenador.lastName}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="flex">
+										<div className="w-1/3 mx-2">
+											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id="texto-general">
+										Fecha del evento
+											</div>
+										</div>
+										<input
+											required
+											type="date"
+											onChange={(event) => {
+												setFechaEvento(event.target.value);
+												if (new Date(event.target.value) < new Date()) setFechainvalida(true);
+												else setFechainvalida(false);
+											}}
+											className={(fechaEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+											id="texto-general"
+										/>
+									</div>
+									{fechainvalida && (
+										<div className="flex justify-center">
+											<p className="text-red-500 mb-2">La fecha no puede ser en un día anterior a la fecha de hoy</p>
+										</div>
+									)}
+
+									<div className="flex items-center justify-center">
+										<div className="flex">
+											<div className="w-1/3 mx-4">
+												<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id="texto-general">
 											Hora inicio
+												</div>
+											</div>
+											<input
+												required
+												type="time"
+												onChange={(event) => {
+													setHoraInicio(event.target.value);
+												}}
+												className={(horaInicioVacia() ? ' border-[3px] border-red-700 ' : '') + 'bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+												id="texto-general"
+												placeholder="Hora inicio"
+											/>
 										</div>
-									</div>
-									<input
-										required
-										type="time"
-										onChange={(event) => {
-											setHoraInicio(event.target.value);
-										}}
-										className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-										id="texto-general"
-										placeholder="Hora inicio"
-									/>
-								</div>
-								<div className="flex">
-									<div className="w-2/3 mx-2">
-										<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
+										<div className="flex">
+											<div className="w-1/3 mx-2">
+												<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id="texto-general">
 											Hora fin
+												</div>
+											</div>
+											<input
+												required
+												type="time"
+												onChange={(event) => {
+													setHoraFin(event.target.value);
+												}}
+												className={(horaFinVacia() ? ' border-[3px] border-red-700 ' : '') + 'bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+												id="texto-general"
+												placeholder="Hora fin"
+											/>
 										</div>
 									</div>
-									<input
-										required
-										type="time"
-										onChange={(event) => {
-											setHoraFin(event.target.value);
-										}}
-										className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-										id="texto-general"
-										placeholder="Hora fin"
-									/>
+									{horaInvalida && (
+										<div className="flex justify-center">
+											<p className="text-red-500 mb-2">La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
+										</div>
+									)}
+									<div className="flex">
+										<input
+											required
+											placeholder="Nombre del evento"
+											onChange={(event) => {
+												setNombreEvento(event.target.value);
+											}}
+											type="text"
+											className={(nombreEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+											id="texto-general"
+										/>
+									</div>
+									<div className="flex items-center justify-center">
+										<textarea
+											required
+											onChange={(event) => {
+												setDescripcionEvento(event.target.value);
+											}}
+											rows={3}
+											className={(descripcionEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-white border-[3px] border-black text-black rounded-lg w-full mx-5 my-2 p-2 text-black'}
+											id="texto-general"
+											placeholder="Descripcion general del evento"
+										/>
+									</div>
+									{fechaRepetida && (
+										<p className='text-center p-4 text-[125%] text-red-600'>Ya hay un evento programado para esa fecha</p>
+									)}
 								</div>
-							</div>
-							{horaInvalida && (
-								<div className="flex justify-center">
-									<p className="text-red-500 mb-2">La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
-								</div>
-							)}
-							<div className="flex">
-								<input
-									required
-									placeholder="Nombre del evento"
-									onChange={(event) => {
-										setNombreEvento(event.target.value);
-									}}
-									type="text"
-									className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-									id="texto-general"
-								/>
-							</div>
-							<div className="flex items-center justify-center">
-								<input
-									required
-									type="text"
-									onChange={(event) => {
-										setDescripcionEvento(event.target.value);
-									}}
-									className="bg-neutral-200 rounded-lg w-full h-20 mx-5 my-2 p-4 text-black"
-									id="texto-general"
-									placeholder="Descripcion general del evento"
-								/>
-							</div>
-						</div>
-						<div className="w-1/2 pr-4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={'w-full h-10 mx-5 my-2 flex items-center justify-center text-white ' + styles.label} id="texto-general">
+								<div className="w-1/2 pr-4">
+									<div className="flex">
+										<div className="w-1/3 mx-2">
+											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id="texto-general">
 										Categoría
+											</div>
+										</div>
+										<select
+											onChange={(event) => {
+												setSelectedCategoria(event.target.value);
+											}}
+											required
+											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											id="texto-general"
+											placeholder="Categoría"
+											value={selectedCategoria}
+										>
+											<option value="-">Selecciona una categoría</option>
+											{categorias.map((categoria) => (
+												<option key={categoria._id} value={categoria._id}>
+													{categoria.name}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="flex">
+										<select
+											onChange={(event) => {
+												setNuevoParticipante1(event.target.value);
+											}}
+											required
+											disabled = {categoriaVacia()}
+											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											id="texto-general"
+											value={nuevoParticipante1}
+										>
+											<option value="-">Selecciona un participante</option>
+											{filteredUsuarios.map((usuario) => (
+												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante2}>
+													{usuario.name} {usuario.lastName}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="flex justify-center">
+										<h1 className="text-center text-[250%]" id="titulos-grandes">
+									VS
+										</h1>
+									</div>
+									<div className="flex">
+										<select
+											onChange={(event) => {
+												setNuevoParticipante2(event.target.value);
+											}}
+											required
+											disabled = {categoriaVacia()}
+											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											id="texto-general"
+											value={nuevoParticipante2}
+										>
+											<option value="-">Selecciona otro participante</option>
+											{filteredUsuarios.map((usuario) => (
+												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante1}>
+													{usuario.name} {usuario.lastName}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="flex">
+										<textarea
+											required
+											value={combates.map((combat) => `${usuarios.find((user) => user._id === combat.boxer1)?.name} vs ${usuarios.find((user) => user._id === combat.boxer2)?.name}`).join('\n')}
+											readOnly
+											className={(combatesVacios() ? 'border-[3px] border-red-700 ' : '') + 'bg-white border-[3px] border-black text-black rounded-lg w-full h-40 mx-5 my-5 p-2 text-black'}
+											id="texto-general"
+											placeholder="Combates"
+										/>
+									</div>
+									<div className="flex justify-center items-center mt-4">
+										<button type="button" disabled={nuevoParticipante1Vacio() || nuevoParticipante2Vacio()} onClick={() => handlerSetParticipantes(false)} className={(nuevoParticipante1Vacio() || nuevoParticipante2Vacio() ? kevin.buttonDisabled + ' cursor-not-allowed' : kevin.button) + ' text-white rounded p-2'}>
+									Agregar Combate
+										</button>
 									</div>
 								</div>
-								<select
-									onChange={(event) => {
-										setSelectedCategoria(event.target.value);
-									}}
-									required
-									className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-									id="texto-general"
-									placeholder="Categoría"
-									value={selectedCategoria}
-								>
-									<option value="">Selecciona una categoría</option>
-									{categorias.map((categoria) => (
-										<option key={categoria._id} value={categoria._id}>
-											{categoria.name}
-										</option>
-									))}
-								</select>
-							</div>
-							<div className="flex">
-								<select
-									onChange={(event) => {
-										setNuevoParticipante1(event.target.value);
-									}}
-									required
-									className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-									id="texto-general"
-									value={nuevoParticipante1}
-								>
-									<option value="">Selecciona un participante</option>
-									{filteredUsuarios.map((usuario) => (
-										<option key={usuario._id} value={usuario._id}>
-											{usuario.name} {usuario.lastName}
-										</option>
-									))}
-								</select>
-							</div>
-							<div className="flex justify-center">
-								<h1 className="text-center text-[250%]" id="titulos-grandes">
-									VS
-								</h1>
-							</div>
-							<div className="flex">
-								<select
-									onChange={(event) => {
-										setNuevoParticipante2(event.target.value);
-									}}
-									required
-									className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-									id="texto-general"
-									value={nuevoParticipante2}
-								>
-									<option value="">Selecciona otro participante</option>
-									{filteredUsuarios.map((usuario) => (
-										<option key={usuario._id} value={usuario._id}>
-											{usuario.name} {usuario.lastName}
-										</option>
-									))}
-								</select>
-							</div>
-							<div className="flex">
-								<textarea
-									required
-									value={combates.map((combat) => `${usuarios.find((user) => user._id === combat.boxer1)?.name} vs ${usuarios.find((user) => user._id === combat.boxer2)?.name}`).join('\n')}
-									readOnly
-									className="bg-neutral-200 rounded-lg w-full h-40 mx-5 my-5 p-4 text-black"
-									id="texto-general"
-									placeholder="Combates"
-								/>
 							</div>
 							<div className="flex justify-center items-center mt-4">
-								<button type="button" onClick={() => handlerSetParticipantes(false)} className="bg-[#cd1919] text-white rounded p-2">
-									Agregar Combate
+								<button onClick={() => handlerSubmit()} type="button" className={(!botonValido() ? kevin.buttonDisabled + ' cursor-not-allowed' : kevin.button) + ' text-white rounded p-2 mx-5'}>
+							Agregar Torneo
+								</button>
+								<button type="button" onClick={handlerCancelar} className={kevin.button + ' text-white rounded p-2 w-[130px]'}>
+							Cancelar
 								</button>
 							</div>
-						</div>
+						</form>
 					</div>
-					<div className="flex justify-center items-center mt-4">
-						<button onClick={() => handlerSubmit()} type="button" className="bg-[#cd1919] text-white rounded p-2 mx-5">
-							Agregar Torneo
-						</button>
-						<button type="button" onClick={handlerCancelar} className="bg-[#cd1919] text-white rounded p-2">
-							Cancelar
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
+				</div>
+			)}
+		</>
 	);
 
 }

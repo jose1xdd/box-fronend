@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from '@/app/css/profiles.module.css';
+import { LoaderContenido } from '@/components/loaderContenido';
+import kevin from '@/public/css/styles.module.scss';
 
 export default function InfoDeportista() {
 
@@ -130,129 +132,137 @@ export default function InfoDeportista() {
 		}
 	}
 
+	const ready = () =>{
+		return datoCategoria.name != '' && datoClub.name != '' && datosDeportista.name != '';
+	};
+
 	///////////////////Retorno del render////////////////////
 	return (
 		<>
-			<div className={styles.container + 'container mx-auto mt-8'}>
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN DEPORTISTA</h1>
-				<div className='flex items-center justify-center my-4'>
-					{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
-				</div>
-				<form>
-					<div className="mx-auto px-12 md:px-32 md:flex">
-						<div className="md:w-2/4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+
+			{!ready() && (<LoaderContenido/>)}
+			{ready() && (
+				<div className={styles.container + 'container mx-auto mt-8'}>
+					<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN DEPORTISTA</h1>
+					<div className='flex items-center justify-center my-4'>
+						{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
+					</div>
+					<form>
+						<div className="mx-auto px-12 md:px-32 md:flex">
+							<div className="md:w-2/4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                         Nombre:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosDeportista.name}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosDeportista.name}
-									</div>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                         Apellido:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosDeportista.lastName}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosDeportista.lastName}
-									</div>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                         Documento:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosDeportista.cedula}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosDeportista.cedula}
-									</div>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                         Dirección
+										</div>
 									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosDeportista.address}
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosDeportista.address}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div className="md:w-2/4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+							<div className="md:w-2/4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                         Teléfono
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosDeportista.phone}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosDeportista.phone}
-									</div>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                         Correo
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datosDeportista.email}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datosDeportista.email}
-									</div>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                     Club:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datoClub.name}
+										</div>
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datoClub.name}
-									</div>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label} id='texto-general'>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
                                     Categoria:
+										</div>
 									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-										{datoCategoria.name}
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+											{datoCategoria.name}
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className="mt-5 flex justify-center">
-						<Link href='/administrador/lista-usuarios/deportista'>
-							<button
-								type="button"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold' id='titulos-pequenos'
-							>
+						<div className="mt-5 flex justify-center">
+							<Link href='/administrador/lista-usuarios/deportista'>
+								<button
+									type="button"
+									className={kevin.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold'}
+								>
                             Volver
-							</button>
-						</Link>
-					</div>
-				</form>
-			</div>
+								</button>
+							</Link>
+						</div>
+					</form>
+				</div>
+			)}
 		</>
 	);
 };

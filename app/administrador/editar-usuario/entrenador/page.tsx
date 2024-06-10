@@ -10,8 +10,11 @@ import {
 	useState
 } from 'react';
 import styles from '@/app/css/profiles.module.css';
+import { LoaderContenido } from '@/components/loaderContenido';
+import kevin from '@/public/css/styles.module.scss';
 
 interface FormData {
+	_id : string;
 	name: string;
 	lastName: string;
 	phone: string;
@@ -22,6 +25,7 @@ interface FormData {
 export default function EditarEntrenador() {
 
 	const [viewModal, setViewModal] = useState(false);
+	const [botonListo, setBotonListo] = useState(true);
 
 	//TRAER ID DE USUARIO DE LA URL
 	const valor = useSearchParams();
@@ -29,6 +33,7 @@ export default function EditarEntrenador() {
 	if(id == null) id = '';
 
 	const [datosEntrenador, setDatosEntrenador] = useState<FormData>({
+		_id: '',
 		name: '',
 		lastName: '',
 		phone: '',
@@ -42,6 +47,10 @@ export default function EditarEntrenador() {
 			[field]: value
 		}));
 	};
+
+	useEffect(()=>{
+		setBotonListo(botonValido());
+	}, [datosEntrenador]);
 
 	const handleChangeImage = () => {
 		setViewModal(true);
@@ -127,102 +136,179 @@ export default function EditarEntrenador() {
 		cargado = true;
 	}, [!cargado]);
 
+	const nombreValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;;
+		return soloLetras.test(datosEntrenador.name);
+	};
+	const nombreVacio = () => {
+		return datosEntrenador.name == '';
+	};
+
+	const apellidoValido = () => {
+		const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;;
+		return soloLetras.test(datosEntrenador.lastName);
+	};
+	const apellidoVacio = () => {
+		return datosEntrenador.lastName == '';
+	};
+	const direccionVacia = () => {
+		return datosEntrenador.address == '';
+	};
+	const numeroValido = () => {
+		const soloLetras = /^[0-9]*$/;
+		return soloLetras.test(datosEntrenador.phone);
+	};
+	const numeroVacio = () => {
+		return datosEntrenador.phone == '';
+	};
+	const numeroCompleto = () => {
+		return datosEntrenador.phone.length == 10;
+	};
+
+	const botonValido = (formData = datosEntrenador) => {
+		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && !direccionVacia() && numeroValido() && !numeroVacio() && numeroCompleto();
+	};
+
+	const ready = () =>{
+		return datosEntrenador._id != '';
+	};
+
 	return (
 		<>
-			<div className={styles.container + ' container mx-auto mt-8'}>
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR ENTRENADOR</h1>
-				<div className='flex items-center justify-center my-4'>
-					{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-72 h-72'></img>}
+			{!ready() && (<LoaderContenido/>)}
+			{ready() && (
+				<div className="container mx-auto mt-8">
+					<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR ENTRENADOR</h1>
+					<div className='flex items-center justify-center'>
+						{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-72 h-72'></img>}
+					</div>
+					<form>
+						<div className="p-4 max-w-5xl mx-auto flex">
+							<div className="w-2/4 pr-4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+									Nombre:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="nombre"
+											value={datosEntrenador.name}
+											onChange={(e) => handleChange('name', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{nombreVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!nombreValido() && !nombreVacio()) && (
+										<label className='text-red-600 mx-10'>El nombre sólo debe contener letras</label>
+									)}
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+									Apellido:
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="apellido"
+											value={datosEntrenador.lastName}
+											onChange={(e) => handleChange('lastName', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+								<div className='flex'>
+									<div className='w-1/3 mx-2'></div>
+									{apellidoVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!apellidoValido() && !apellidoVacio()) && (
+										<label className=' text-red-600 mx-10'>El apellido sólo debe contener letras</label>
+									)}
+								</div>
+							</div>
+							<div className="w-2/4 pr-4">
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+									Dirección
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="direccion"
+											value={datosEntrenador.address}
+											onChange={(e) => handleChange('address', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{direccionVacia() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+								</div>
+								<div className="flex">
+									<div className="w-1/3 mx-2">
+										<div className={styles.label} id='texto-general'>
+									Teléfono
+										</div>
+									</div>
+									<div className="w-2/3 mx-2" id='texto-general'>
+										<input
+											type="text"
+											name="telefono"
+											value={datosEntrenador.phone}
+											onChange={(e) => handleChange('phone', e.target.value)}
+											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										/>
+									</div>
+								</div>
+								<div className='flex'>
+									<div className="w-1/3 mx-2"></div>
+									{numeroVacio() && (
+										<label className='text-red-600 mx-10'>El campo no puede estar vacío</label>
+									)}
+									{(!numeroValido() && !numeroVacio()) && (
+										<label className='text-red-600 mx-10'>El campo sólo puede contener números</label>
+									)}
+									{(!numeroCompleto() && (!numeroVacio() && numeroValido())) && (
+										<label className='text-red-600 mx-10'>El número debe ser de 10 dígitos</label>
+									)}
+								</div>
+							</div>
+						</div>
+						<div className="mt-5 flex justify-center items-center">
+							<button
+								onClick={handleGuardarCambios}
+								type="button"
+								disabled = {!botonListo}
+								className={`${!botonListo ? kevin.buttonDisabled + ' cursor-not-allowed' : kevin.button} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
+							>
+						Guardar cambios
+							</button>
+							<button className={(kevin.button) + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} onClick={(event) => {
+								event.preventDefault();
+								handleChangeImage();
+							}}>
+						Cargar nueva foto de perfil
+					  </button>
+						</div>
+					</form>
+					{viewModal && <ModalImage setView={setViewModal} id={id}></ModalImage>}
 				</div>
-				<form>
-					<div className="p-4 my-4 space-x-14 flex">
-						<div className="w-2/4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label}>
-                                        Nombre:
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="nombre"
-										value={datosEntrenador.name}
-										onChange={(e) => handleChange('name', e.target.value)}
-										className='rounded-full w-full mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label}>
-                                        Apellido:
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="apellido"
-										value={datosEntrenador.lastName}
-										onChange={(e) => handleChange('lastName', e.target.value)}
-										className='rounded-full w-full mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="w-2/4">
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label}>
-                                        Dirección
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="direccion"
-										value={datosEntrenador.address}
-										onChange={(e) => handleChange('address', e.target.value)}
-										className='rounded-full w-full mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-							<div className="flex">
-								<div className="w-1/3 mx-2">
-									<div className={styles.label}>
-                                        Teléfono
-									</div>
-								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
-									<input
-										type="text"
-										name="telefono"
-										value={datosEntrenador.phone}
-										onChange={(e) => handleChange('phone', e.target.value)}
-										className='rounded-full w-full mx-5 my-2 pl-4 text-black'
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="mt-5 flex justify-center items-center">
-						<button
-							onClick={handleGuardarCambios}
-							type="button"
-							className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
-						>
-                            Guardar cambios
-						</button>
-						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos' onClick={(event) => {
-							event.preventDefault();
-							handleChangeImage();
-						}}>
-							Cargar nueva foto de perfil
-		  				</button>
-					</div>
-				</form>
-				{viewModal && <ModalImage setView={setViewModal} id={id}></ModalImage>}
-			</div>
+			)}
 		</>
 	);
 };
