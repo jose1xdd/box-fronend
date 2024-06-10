@@ -248,7 +248,7 @@ export default function AdministrarCategorias() {
 						</button>
 					</div>
 				</form>
-				{checkPeso && (
+				{(checkPeso && !nombreRepetido()) && (
 					<div className='mt-5'>
 						<p className="text-[#cd1919] text-center mb-4 text-[110%]">
 								El peso máximo no puede ser menor al peso minimo
@@ -261,7 +261,7 @@ export default function AdministrarCategorias() {
 					<div className='text-red-600'>El nombre sólo debe contener letras</div>
 				)}
 				{(nombreRepetido() && categoria !== '' && nombreValido()) && (
-					<div className='text-red-600'>Ya existe un club con este nombre</div>
+					<div className='text-red-600'>Ya existe una categoría con este nombre</div>
 				)}
 				{(pesoInvalido() && !nombreRepetido() && categoria !== '' && nombreValido() && !checkPeso) && (
 					<div className='text-red-600 text-center'>Ya existe una categoría con ese rango de pesos</div>

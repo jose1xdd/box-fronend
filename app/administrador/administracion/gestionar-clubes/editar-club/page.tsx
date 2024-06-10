@@ -201,15 +201,6 @@ export default function EditarClub() {
 							>
                 Guardar cambios
 							</button>
-							<button
-								type="button"
-								className={
-									styles.button +
-                  ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
-								}
-							>
-                Cargar nuevo logo del club
-							</button>
 						</div>
 					</form>
 					{repetido && (
@@ -241,6 +232,12 @@ export default function EditarClub() {
 								>
                   Club actualizado con exito
 								</h3>
+								<button
+									onClick={() => {setActualizado(false);}}
+									className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
+								>
+                    Aceptar
+								</button>
 							</div>
 						</div>
 					)}

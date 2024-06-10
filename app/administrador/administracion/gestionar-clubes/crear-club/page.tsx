@@ -152,8 +152,7 @@ export default function CrearClub() {
 							<div className="flex justify-center">
 								<button
 									onClick={()=>setRepetido(false)}
-									className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
-									id="titulos-pequenos"
+									className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
 								>
 								Aceptar
 								</button>
@@ -167,6 +166,12 @@ export default function CrearClub() {
 							<h3 className="text-white text-center mb-4 text-[125%]" >
 								Club creado con exito
 							</h3>
+							<button
+								onClick={() => {setCreado(false);}}
+								className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
+							>
+                    Aceptar
+							</button>
 						</div>
 					</div>
 				)}

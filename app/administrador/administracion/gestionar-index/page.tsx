@@ -75,7 +75,7 @@ export default function GestionarIndex() {
 	};
 
 	const ready = () => {
-		return datosIndex.mision !== '';
+		return datosIndex !== undefined;
 	};
 
 	return (
