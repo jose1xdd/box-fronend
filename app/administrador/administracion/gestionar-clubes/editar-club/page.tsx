@@ -11,8 +11,8 @@ import {
 import { LoaderContenido } from '@/components/loaderContenido';
 
 interface FormData {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }
 import styles from '@/public/css/styles.module.scss';
 
@@ -23,11 +23,11 @@ export default function EditarClub() {
 	const clubId = useSearchParams().get('clubId');
 	const [nuevosDatosClub, setNuevosDatosClub] = useState<FormData>({
 		name: '',
-		description: ''
+		description: '',
 	});
 	const [cargado, setCargado] = useState(false);
 
-	const getClub = async (token:string, clubId: string) => {
+	const getClub = async (token: string, clubId: string) => {
 		try {
 			const headers = {
 				sessiontoken: token,
@@ -37,7 +37,7 @@ export default function EditarClub() {
 			};
 			const response = await axios.get(`${apiEndpoint}/club`, {
 				headers: headers,
-				params: params
+				params: params,
 			});
 			return response.data.club;
 		} catch (error) {
@@ -47,18 +47,20 @@ export default function EditarClub() {
 	const cargarClub = async () => {
 		const datos = localStorage.getItem('userData');
 		let token;
-		if(datos != null){
+		if (datos != null) {
 			token = JSON.parse(datos).token;
 		}
 		setNuevosDatosClub(await getClub(token, clubId as string));
 		setCargado(true);
 	};
-	useEffect(()=>{
+	useEffect(() => {
 		cargarClub();
 	}, []);
 	const router = useRouter();
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+	const handleInputChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+	) => {
 		const { name, value } = e.target;
 		setNuevosDatosClub((prevData) => ({
 			...prevData,
@@ -66,7 +68,11 @@ export default function EditarClub() {
 		}));
 	};
 
-	const actualizarClub = async (token: string, clubId: string, club:FormData) => {
+	const actualizarClub = async (
+		token: string,
+		clubId: string,
+		club: FormData
+	) => {
 		try {
 			const headers = {
 				sessiontoken: token,
@@ -76,11 +82,13 @@ export default function EditarClub() {
 			};
 			const body = {
 				name: club.name,
-				description: club.description
+				description: club.description,
 			};
-			const response = await axios.patch(`${apiEndpoint}/club`, body,
-			 { headers: headers, params: params });
-			 setActualizado(true);
+			const response = await axios.patch(`${apiEndpoint}/club`, body, {
+				headers: headers,
+				params: params,
+			});
+			setActualizado(true);
 		} catch (error) {
 			setRepetido(true);
 		}
@@ -90,7 +98,7 @@ export default function EditarClub() {
 		event.preventDefault();
 		const datos = localStorage.getItem('userData');
 		let token;
-		if(datos != null){
+		if (datos != null) {
 			token = JSON.parse(datos).token;
 		}
 		await actualizarClub(token, clubId as string, nuevosDatosClub);
@@ -110,13 +118,13 @@ export default function EditarClub() {
 
 	return (
 		<>
-			{!cargado && (
-				<LoaderContenido></LoaderContenido>
-			)}
+			{!cargado && <LoaderContenido></LoaderContenido>}
 			{cargado && (
 				<div className="container mx-auto mt-8">
-					<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR CLUB</h1>
-					<div className='flex items-center justify-center'>
+					<h1 className="text-center text-[400%]" id="titulos-grandes">
+            EDITAR CLUB
+					</h1>
+					<div className="flex items-center justify-center">
 						<svg
 							className="my-1"
 							xmlns="http://www.w3.org/2000/svg"
@@ -131,70 +139,94 @@ export default function EditarClub() {
 						<div className="max-w-xl mx-auto my-5">
 							<div className="flex">
 								<div className="w-1/3 m-0">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Nombre:
+									<div
+										className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black"
+										id="texto-general"
+									>
+                    Nombre:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
+								<div className="w-2/3 mx-2" id="texto-general">
 									<input
 										required
 										type="text"
 										name="name"
 										value={nuevosDatosClub.name}
 										onChange={handleInputChange}
-										className={(nombreVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
-										placeholder='Ingrese el nombre'
+										className={
+											(nombreVacio() ? 'border-[3px] border-red-700 ' : '') +
+                      'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+										}
+										placeholder="Ingrese el nombre"
 									/>
 								</div>
 							</div>
 							<div className="flex">
 								<div className="w-1/3 m-0">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
-                                        Descripción:
+									<div
+										className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black"
+										id="texto-general"
+									>
+                    Descripción:
 									</div>
 								</div>
-								<div className="w-2/3 mx-2" id='texto-general'>
+								<div className="w-2/3 mx-2" id="texto-general">
 									<textarea
 										name="description"
 										required
 										value={nuevosDatosClub.description}
 										onChange={handleInputChange}
-										className={(descripcionVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full mx-5 my-2 p-2 text-black'}
+										className={
+											(descripcionVacio()
+												? 'border-[3px] border-red-700 '
+												: '') +
+                      'bg-neutral-200 rounded-lg w-full mx-5 my-2 p-2 text-black'
+										}
 										rows={6} // Esto define el número de filas visibles del textarea
-										placeholder='Ingrese la descripción'
+										placeholder="Ingrese la descripción"
 									/>
-
 								</div>
 							</div>
 						</div>
 						<div className="mt-5 flex justify-center">
 							<button
 								type="submit"
-								disabled ={nombreVacio() || descripcionVacio()}
-								className={(nombreVacio() || descripcionVacio() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
+								disabled={nombreVacio() || descripcionVacio()}
+								className={
+									(nombreVacio() || descripcionVacio()
+										? styles.buttonDisabled + ' cursor-not-allowed'
+										: styles.button) +
+                  ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+								}
 							>
-                            Guardar cambios
+                Guardar cambios
 							</button>
 							<button
 								type="button"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+								className={
+									styles.button +
+                  ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+								}
 							>
-                            Cargar nuevo logo del club
+                Cargar nuevo logo del club
 							</button>
 						</div>
 					</form>
 					{repetido && (
 						<div className="fixed inset-0 flex items-center justify-center z-50">
 							<div className="bg-[#141414] p-10 rounded-lg">
-								<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-								Existe un club que posee alguno de los nuevos datos
+								<h3
+									className="text-white text-center mb-4 text-[175%]"
+									id="titulos-grandes"
+								>
+                  Existe un club que posee alguno de los nuevos datos
 								</h3>
 								<div className="flex justify-center">
 									<button
-										onClick={()=>setRepetido(false)}
+										onClick={() => setRepetido(false)}
 										className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg"
 									>
-								Aceptar
+                    Aceptar
 									</button>
 								</div>
 							</div>
@@ -203,22 +235,27 @@ export default function EditarClub() {
 					{actualizado && (
 						<div className="fixed inset-0 flex items-center justify-center z-50">
 							<div className="bg-[#141414] p-10 rounded-lg">
-								<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-								Club actualizado con exito
+								<h3
+									className="text-white text-center mb-4 text-[175%]"
+									id="titulos-grandes"
+								>
+                  Club actualizado con exito
 								</h3>
 							</div>
 						</div>
 					)}
 					<div className="flex justify-center">
 						<button
-							onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
-							className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg w-[10%] mt-4"
+							onClick={() =>
+								router.push('/administrador/administracion/gestionar-clubes')
+							}
+							className={styles.button + ' h-10 text-white py-2 px-4 mx-2 rounded-lg w-[10%] mt-4'}
 						>
-								Volver
+              Volver
 						</button>
 					</div>
 				</div>
 			)}
 		</>
 	);
-};
+}
