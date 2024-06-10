@@ -1,6 +1,6 @@
 
 import './loading.css';
-import loading from '@/public/images/guantes-de-boxeo(blancos).png';
+import loading from '@/public/images/guantes-de-boxeo(negros).png';
 import Image from 'next/image';
 export const LoaderContenido = () =>{
 	return(

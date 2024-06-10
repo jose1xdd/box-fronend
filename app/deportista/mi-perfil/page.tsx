@@ -3,6 +3,8 @@ import { obtenerFotoPerfil } from '@/app/lib/basic_request';
 import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import kevin from '@/public/css/styles.module.scss';
+import styles from '@/app/administrador/css/profiles.module.css';
 
 interface FormData {
 	nombre: string;
@@ -158,7 +160,7 @@ export default function Home() {
 						<form>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black'} id='texto-general'>
 										Nombre:
 									</div>
 								</div>
@@ -181,7 +183,7 @@ export default function Home() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black'} id='texto-general'>
 										Apellido:
 									</div>
 								</div>
@@ -204,7 +206,7 @@ export default function Home() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black'} id='texto-general'>
 										Cedula:
 									</div>
 								</div>
@@ -216,7 +218,7 @@ export default function Home() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black'} id='texto-general'>
 										Dirección:
 									</div>
 								</div>
@@ -239,7 +241,7 @@ export default function Home() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black'} id='texto-general'>
 										Teléfono:
 									</div>
 								</div>
@@ -262,7 +264,7 @@ export default function Home() {
 							</div>
 							<div className="flex">
 								<div className="w-1/3 mx-2">
-									<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+									<div className={styles.label + ' bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black'} id='texto-general'>
 										Correo:
 									</div>
 								</div>
@@ -276,7 +278,7 @@ export default function Home() {
 								<button
 									type="button"
 									onClick={handleToggleEdit}
-									className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg' id='titulos-pequenos'
+									className={kevin.button + ' bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg'} id='titulos-pequenos'
 								>
 									{esEditable ? 'Guardar cambios' : 'Editar información'}
 								</button>
@@ -285,7 +287,7 @@ export default function Home() {
 					</div>
 					<div className="w-1/3 flex flex-col justify-center items-center">
 						{datosPerfil.imagen != '' && <img src={datosPerfil.imagen} className='w-64 h-64'/>}
-						<button className='bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' id='titulos-pequenos' onClick={handleChangeImage}>
+						<button className= {kevin.button + ' bg-[#cd1919] w-60 h-10 text-white py-2 px-4 rounded-lg mt-4' }id='titulos-pequenos' onClick={handleChangeImage}>
 							Cargar nueva foto de perfil
 		  				</button>
 					</div>
