@@ -19,8 +19,8 @@ export const ObtenerLogo = async () : Promise<string> => {
 	try {
 		const response = await axios.get(`${apiEndpoint}/indexPag/get-logo`);
 		return response.data.image;
-	} catch (error) {
-		console.log(error);
+	} catch (error: any) {
+		console.log(error.message);
 		return '';
 	}
 };
