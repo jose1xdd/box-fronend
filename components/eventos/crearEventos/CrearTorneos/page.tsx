@@ -53,6 +53,7 @@ export default function CrearTorneo() {
 	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>([]);
 	const [combates, setCombates] = useState<Combat[]>([]);
 	const [fechaRepetida, setFechaRepetida] = useState(false);
+	const [misDatos, setMisDatos] = useState <User>();
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
@@ -137,10 +138,48 @@ export default function CrearTorneo() {
 		}
 	};
 
+	const esAdmin = () => {
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if (datos != null) {
+			rol = JSON.parse(datos).role;
+		}
+		if(rol === 'Admin'){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
+
+	const cargarMisDatos = () => {
+		const datos = localStorage.getItem('datosUsuario');
+		let nombre;
+		if (datos != null) {
+			nombre = JSON.parse(datos).nombre + ' ' + JSON.parse(datos).apellido;
+		}
+		const datos2 = localStorage.getItem('userData');
+		let id;
+		if (datos2 != null) {
+			id = JSON.parse(datos2).userId;
+		  }
+
+		if(nombre !== undefined && id !== undefined){
+			const newUser: User = {
+				_id: id,
+				name: nombre,
+				lastName: ''
+			};
+			setMisDatos(newUser);
+		}
+
+	};
+
 	useEffect(() => {
 		cargarEntrenadores();
 		cargarUsuarios();
 		cargarCategorias();
+		cargarMisDatos();
 	}, []);
 
 	useEffect(()=>{
@@ -234,15 +273,30 @@ export default function CrearTorneo() {
 			sessiontoken: token,
 		};
 
-		const body = {
-			name: nombreEvento,
-			description: descripcionEvento,
-			trainer: selectedEntrenador,
-			date: fechaEvento,
-			startsAt: horaInicio,
-			endsAt: horaFin,
-			combats: combates
-		};
+		let body;
+
+		if(esAdmin()){
+			body = {
+				name: nombreEvento,
+				description: descripcionEvento,
+				trainer: selectedEntrenador,
+				date: fechaEvento,
+				startsAt: horaInicio,
+				endsAt: horaFin,
+				combats: combates
+			};
+		}
+		else{
+			body = {
+				name: nombreEvento,
+				description: descripcionEvento,
+				trainer: misDatos?._id,
+				date: fechaEvento,
+				startsAt: horaInicio,
+				endsAt: horaFin,
+				combats: combates
+			};
+		}
 		let rol;
 		let route;
 		if (datos !== null) {
@@ -251,7 +305,7 @@ export default function CrearTorneo() {
 		if (rol === 'Entrenador') route = 'entrenador';
 		else route = 'administrador';
 		try {
-			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
+			await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
 			//console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
@@ -296,7 +350,12 @@ export default function CrearTorneo() {
 	};
 
 	const botonValido = () => {
-		return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+		if(esAdmin()){
+			return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+		}
+		else{
+			return !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+		}
 	};
 
 	return (
@@ -317,23 +376,28 @@ export default function CrearTorneo() {
 										Entrenador encargado
 											</div>
 										</div>
-										<select
-											onChange={(event) => {
-												setSelectedEntrenador(event.target.value);
-											}}
-											required
-											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
-											id="texto-general"
-											placeholder="Entrenador encargado"
-											value={selectedEntrenador}
-										>
-											<option value="-">Selecciona un entrenador</option>
-											{entrenadores.map((entrenador) => (
-												<option key={entrenador._id} value={entrenador._id}>
-													{entrenador.name} {entrenador.lastName}
-												</option>
-											))}
-										</select>
+										{esAdmin() && (
+											<select
+												onChange={(event) => {
+													setSelectedEntrenador(event.target.value);
+												}}
+												required
+												className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+												id="texto-general"
+												placeholder="Entrenador encargado"
+												value={selectedEntrenador}
+											>
+												<option value="-">Selecciona un entrenador</option>
+												{entrenadores.map((entrenador) => (
+													<option key={entrenador._id} value={entrenador._id}>
+														{entrenador.name} {entrenador.lastName}
+													</option>
+												))}
+											</select>
+										)}
+										{!esAdmin() && (
+											<label className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 p-2 pl-3 text-black" id="texto-general">{misDatos?.name}</label>
+										)}
 									</div>
 									<div className="flex">
 										<div className="w-1/3 mx-2">

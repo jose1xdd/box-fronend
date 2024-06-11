@@ -54,10 +54,23 @@ export default function InfoDeportista() {
 		}
 		const dataDeportista = await cargaDeportista(arreglo);
 		if(id != null) setDatosDeportista({ ... dataDeportista.data.user, ['image']: await obtenerFotoPerfil(id) });
+
 		const dataClub = await cargaClub(arreglo, dataDeportista.data.user.club);
-		setDatoClub(dataClub.data.club);
+		if(dataClub === null || dataClub === undefined){
+			setDatoClub({ name: 'Sin club' });
+		}
+		else{
+			setDatoClub(dataClub.data.club);
+		}
+
 		const dataCategoria = await cargaCategoria(arreglo, dataDeportista.data.user.weightCategory);
-		setDatCategoria(dataCategoria.data.Category);
+		if(dataCategoria === null || dataCategoria === undefined){
+			setDatCategoria({ name: 'Sin categoría' });
+		}
+		else{
+			setDatCategoria(dataCategoria.data.Category);
+		}
+
 	};
 
 	//Consumir endpoint
@@ -95,11 +108,13 @@ export default function InfoDeportista() {
 				clubId: idClub
 			};
 
-			const response = await axios.get(`${apiEndpoint}/club`, {
-				params: parametros,
-				headers: headers
-			});
-			return response;
+			if(headers.sessiontoken !== null && parametros.clubId !== null && headers.sessiontoken !== undefined && parametros.clubId !== undefined){
+				const response = await axios.get(`${apiEndpoint}/club`, {
+					params: parametros,
+					headers: headers
+				});
+				return response;
+			}
 
 			//console.log(response);
 		} catch (error) {
@@ -118,12 +133,14 @@ export default function InfoDeportista() {
 				weightCategoryId: idCategoria
 			};
 
-			const response = await axios.get(`${apiEndpoint}/weightCategory`, {
-				params: parametros,
-				headers: headers
-			});
-			//console.log(response);
-			return response;
+			if(headers.sessiontoken !== null && parametros.weightCategoryId !== null && headers.sessiontoken !== undefined && parametros.weightCategoryId !== undefined){
+				const response = await axios.get(`${apiEndpoint}/weightCategory`, {
+					params: parametros,
+					headers: headers
+				});
+				//console.log(response);
+				return response;
+			}
 
 			//console.log(response);
 		} catch (error) {
@@ -132,7 +149,7 @@ export default function InfoDeportista() {
 	}
 
 	const ready = () =>{
-		return datoCategoria.name != '' && datoClub.name != '' && datosDeportista.name != '';
+		return datoCategoria.name != '';
 	};
 
 	///////////////////Retorno del render////////////////////

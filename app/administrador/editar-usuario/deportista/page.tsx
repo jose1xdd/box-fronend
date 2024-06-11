@@ -168,8 +168,16 @@ export default function EditarDeportista() {
 		return datosDeportista.weight > 0;
 	};
 
+	const clubVacio = () => {
+		return datosDeportista.club === '' || datosDeportista.club === null || datosDeportista.club === '-';
+	};
+
+	const categoriaVacia = () => {
+		return datosDeportista.weightCategory === '' || datosDeportista.weightCategory === null || datosDeportista.weightCategory === '-';
+	};
+
 	const botonValido = (formData = datosDeportista) => {
-		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && numeroValido() && !numeroVacio() && numeroCompleto() && pesoValido();
+		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && numeroValido() && !numeroVacio() && numeroCompleto() && pesoValido() && !categoriaVacia() && !clubVacio();
 	};
 
 	const ready = () => {
@@ -301,10 +309,13 @@ export default function EditarDeportista() {
 									<div className="w-2/3 mx-2" id='texto-general'>
 										<select
 											name="club"
-											value={datosDeportista.club}
+											value={datosDeportista.club === null ? '-' : datosDeportista.club}
 											onChange={(e) => handleChange('club', e.target.value)}
 											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										>
+											{clubVacio() && (
+												<option value='-'>Selecciona un club</option>
+											)}
 											<OpcionesClubes/>
 										</select>
 									</div>
@@ -318,10 +329,13 @@ export default function EditarDeportista() {
 									<div className="w-2/3 mx-2" id='texto-general'>
 										<select
 											name="categoria"
-											value={datosDeportista.weightCategory}
+											value={datosDeportista.weightCategory === null ? '-' : datosDeportista.weightCategory}
 											onChange={(e) => handleChange('weightCategory', e.target.value)}
 											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
 										>
+											{categoriaVacia() && (
+												<option value='-'>Selecciona una categoria</option>
+											)}
 											<OpcionesCategorias/>
 										</select>
 									</div>
