@@ -88,6 +88,17 @@ export default function VerEvento() {
 		}
 	};
 
+	const puedeFinalizar = () => {
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if(datos != null){
+			rol = JSON.parse(datos).role;
+		}
+		return rol === 'Admin';
+	};
+
+	useEffect (()=>{puedeFinalizar();}, []);
+
 	const getEntrenador = async (token:string, entrenadorId: string) => {
 		try {
 			const headers = {
@@ -302,11 +313,13 @@ export default function VerEvento() {
 											</div>
 										))}
 
-										<div className='flex items-center justify-center'>
-											<button type='button' onClick={() => handleClickFinalizar()} disabled={!fechaPermitida()} className={`${fechaPermitida() ? styles.button : styles.buttonDisabled + ' cursor-not-allowed '} text-white rounded p-2 text-center w-[200px]`}>
+										{puedeFinalizar() && (
+											<div className='flex items-center justify-center'>
+												<button type='button' onClick={() => handleClickFinalizar()} disabled={!fechaPermitida()} className={`${fechaPermitida() ? styles.button : styles.buttonDisabled + ' cursor-not-allowed '} text-white rounded p-2 text-center w-[200px]`}>
 					        				Finalizar torneo
-											</button>
-										</div>
+												</button>
+											</div>
+										)}
 
 									</div>
 								)}
