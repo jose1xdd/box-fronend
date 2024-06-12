@@ -78,10 +78,10 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 		const end = start + usersPerPage;
 		return filteredData.slice(start, end).map((item, index) => (
 			<tr key={item.id}>
-				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.nombre + ' ' + item.apellido}</td>
-				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.Ranking.win}</td>
-				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.Ranking.lose}</td>
-				<td className=" border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{item.Ranking.draw}</td>
+				<td className=" border-[#1e1e1e] border-[3px] p-3 bg-white text-center text-black">{item.nombre + ' ' + item.apellido}</td>
+				<td className=" border-[#1e1e1e] border-[3px] p-3 bg-white text-center text-black">{item.Ranking.win}</td>
+				<td className=" border-[#1e1e1e] border-[3px] p-3 bg-white text-center text-black">{item.Ranking.lose}</td>
+				<td className=" border-[#1e1e1e] border-[3px] p-3 bg-white text-center text-black">{item.Ranking.draw}</td>
 			</tr>
 		));
 	};
@@ -99,10 +99,10 @@ const RankingTable: React.FC<TableProps> = ({ data }) => {
 			<table className="w-full">
 				<thead>
 					<tr>
-						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
-						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">VICTORIAS</th>
-						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">DERROTAS</th>
-						<th className=" border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">EMPATES</th>
+						<th className=" border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
+						<th className=" border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] text-white text-center">VICTORIAS</th>
+						<th className=" border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] text-white text-center">DERROTAS</th>
+						<th className=" border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] text-white text-center">EMPATES</th>
 					</tr>
 				</thead>
 				<tbody>{renderUsers()}</tbody>

@@ -334,8 +334,9 @@ export default function CrearConvocatoria() {
 										<textarea
 											required
 											value={correos}
+											rows={6}
 											readOnly
-											className={(correos === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-white text-black border-[3px] border-black rounded-lg w-full h-20 mx-5 my-2 p-4 text-black'} id='texto-general'
+											className={(correos === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-white text-black border-[3px] border-black rounded-lg w-full mx-5 my-2 p-4 text-black'} id='texto-general'
 											placeholder='Participantes del evento'
 										/>
 									</div>

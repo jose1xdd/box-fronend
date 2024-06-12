@@ -2,6 +2,8 @@ import '@/app/administrador/lista-usuarios/estilos.css';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import { LoaderContenido } from '@/components/loaderContenido';
+import styles from '@/public/css/styles.module.scss';
 
 interface User {
     _id: string;
@@ -79,7 +81,8 @@ const TableDeportistas: React.FC<TableProps> = ({ rol }) => {
 					clubId: clubId,
 				};
 
-				const response = await axios.get(`${apiEndpoint}/club`, {
+				if(parametros.clubId !== null && parametros.clubId !== undefined)
+				{const response = await axios.get(`${apiEndpoint}/club`, {
 					params: parametros,
 					headers: headers,
 				});
@@ -90,7 +93,7 @@ const TableDeportistas: React.FC<TableProps> = ({ rol }) => {
 					[clubId]: clubName,
 				}));
 
-				return clubName;
+				return clubName;}
 			}
 		} catch (error) {
 			console.log(error);
@@ -113,18 +116,19 @@ const TableDeportistas: React.FC<TableProps> = ({ rol }) => {
 					weightCategoryId: weightCategoryId,
 				};
 
-				const response = await axios.get(`${apiEndpoint}/weightCategory`, {
-					params: parametros,
-					headers: headers,
-				});
+				if(parametros.weightCategoryId !== undefined && parametros.weightCategoryId !== null){
+					const response = await axios.get(`${apiEndpoint}/weightCategory`, {
+						params: parametros,
+						headers: headers,
+					});
+					const weightCategoryName = response.data.Category.name;
+					setWeightCategories((prevCategories) => ({
+						...prevCategories,
+						[weightCategoryId]: weightCategoryName,
+					}));
 
-				const weightCategoryName = response.data.Category.name;
-				setWeightCategories((prevCategories) => ({
-					...prevCategories,
-					[weightCategoryId]: weightCategoryName,
-				}));
-
-				return weightCategoryName;
+					return weightCategoryName;
+				}
 			}
 		} catch (error) {
 			console.log(error);
@@ -178,55 +182,66 @@ const TableDeportistas: React.FC<TableProps> = ({ rol }) => {
 
 		return usersToRender.slice(start, end).map((item) => (
 			<tr key={item._id}>
-				<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center" id='texto-general'>
+				<td className="border-[#1e1e1e] border-[3px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>
 					{item.name + ' ' + item.lastName}
 				</td>
-				<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center" id='texto-general'>
-					{clubes[item.club]}
+				<td className="border-[#1e1e1e] border-[3px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>
+					{(item.club !== null && item.club !== undefined) ? clubes[item.club] : 'Sin club'}
 				</td>
-				<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center" id='texto-general'>
-					{weightCategories[item.weightCategory]}
+				<td className="border-[#1e1e1e] border-[3px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>
+					{(item.weightCategory !== null && item.weightCategory !== undefined) ? weightCategories[item.weightCategory] : 'Sin categoría'}
 				</td>
-				<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-black text-center">
+				<td className="border-[#1e1e1e] border-[3px] p-3 bg-[#dfdfdf] text-black text-center" id='texto-general'>
 					{item.email}
 				</td>
 			</tr>
 		));
 	};
 
+	const ready = () => {
+		return users.length != 0 && Object.keys(clubes).length !== 0 && Object.keys(weightCategories).length !== 0;
+	};
+
 	return (
-		<div className="w-80% mx-auto">
-			<h1 className="text-5xl text-black mb-4">Deportistas</h1>
-			<input
-				type="text"
-				placeholder="Filtrar por nombre"
-				onChange={handleSearch}
-				className="p-2 rounded-[18px] bg-white border border-black focus:outline-none mb-4 text-black"
-				id='texto-general'
-			/>
-			<table className="w-full bg-white">
-				<thead>
-					<tr>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] w-1/4 text-white text-center">NOMBRE</th>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] w-1/4 text-white text-center">CLUB</th>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] w-1/4 text-white text-center">CATEGORÍA DE PESO</th>
-						<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] w-1/4 text-white text-center">CORREO</th>
-					</tr>
-				</thead>
-				<tbody>{renderUsers()}</tbody>
-			</table>
-			<ReactPaginate
-				pageCount={Math.ceil(filteredData.length / usersPerPage)}
-				onPageChange={handlePageChange}
-				containerClassName="pagination flex gap-2 justify-center"
-				activeClassName="active"
-				pageLinkClassName="page-link"
-				previousLabel={<button className="bg-[#cd1919] text-white rounded p-2">Anterior</button>}
-				nextLabel={<button className="bg-[#cd1919] text-white rounded p-2">Siguiente</button>}
-				pageRangeDisplayed={0}
-				marginPagesDisplayed={0}
-			/>
-		</div>
+		<>
+			{!ready() && (
+				<LoaderContenido/>
+			)}
+			{ready() && (
+				<div className="w-80% mx-auto">
+					<h1 className="text-5xl text-black mb-4">USUARIOS</h1>
+					<input
+						type="text"
+						placeholder="Filtrar por nombre"
+						onChange={handleSearch}
+						className="p-2 rounded-[18px] border-[3px] border-black focus:outline-none mb-4 text-black"
+						id='texto-general'
+					/>
+					<table className="w-full">
+						<thead>
+							<tr>
+								<th className="border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] w-1/4 text-white text-center">NOMBRE</th>
+								<th className="border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] w-1/4 text-white text-center">CLUB</th>
+								<th className="border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] w-1/4 text-white text-center">CATEGORÍA DE PESO</th>
+								<th className="border-[#1e1e1e] border-[3px] p-3 bg-[#cd1919] w-1/4 text-white text-center">CORREO</th>
+							</tr>
+						</thead>
+						<tbody>{renderUsers()}</tbody>
+					</table>
+					<ReactPaginate
+						pageCount={Math.ceil(filteredData.length / usersPerPage)}
+						onPageChange={handlePageChange}
+						containerClassName="pagination flex gap-2 justify-center"
+						activeClassName="active"
+						pageLinkClassName="page-link"
+						previousLabel={<button className={styles.button + ' text-white rounded p-2'}>Anterior</button>}
+						nextLabel={<button className={styles.button + ' text-white rounded p-2'}>Siguiente</button>}
+						pageRangeDisplayed={0}
+						marginPagesDisplayed={0}
+					/>
+				</div>
+			)}
+		</>
 	);
 };
 
