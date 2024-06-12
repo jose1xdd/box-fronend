@@ -52,19 +52,19 @@ export default function TableCategorias({ categorias, cargarCategorias }:props) 
 					<thead>
 						<tr>
 							<th
-								className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 								id="titulos-grandes"
 							>
 								CATEGORÍA
 							</th>
 							<th
-								className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 								id="titulos-grandes"
 							>
 								RANGO DE PESO (KG)
 							</th>
 							<th
-								className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 								id="titulos-grandes"
 							>
 								ACCIONES
@@ -74,13 +74,13 @@ export default function TableCategorias({ categorias, cargarCategorias }:props) 
 					<tbody>
 						{categorias.map((categoria) => (
 							<tr key={categoria._id}>
-								<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
+								<td className=" border-[#1e1e1e] border-[4px] p-3 bg-[#dfdfdf] text-center text-black">
 									{categoria.name}
 								</td>
-								<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
+								<td className=" border-[#1e1e1e] border-[4px] p-3 bg-[#dfdfdf] text-center text-black">
 									[{categoria.minWeight} - {categoria.maxWeight}]
 								</td>
-								<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
+								<td className=" border-[#1e1e1e] border-[4px] p-3 bg-[#dfdfdf] text-center text-black">
 									<button onClick={() => setCategoriaEliminar(categoria._id)} className="bg-[#cd1919] text-white rounded p-2">
 										<svg
 											className="ml-0.5"

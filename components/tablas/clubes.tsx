@@ -84,13 +84,13 @@ export default function TableClubes() {
 							<thead>
 								<tr>
 									<th
-										className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+										className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 										id="titulos-grandes"
 									>
                                 CLUB
 									</th>
 									<th
-										className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+										className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 										id="titulos-grandes"
 									>
                                 ACCIONES
@@ -100,10 +100,10 @@ export default function TableClubes() {
 							<tbody>
 								{clubes.map((club) => (
 									<tr key={club._id}>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
+										<td className=" border-[#1e1e1e] border-[4px] p-3 bg-[#dfdfdf] text-center text-black">
 											{club.name}
 										</td>
-										<td className=" border-[#1e1e1e] border-[8px] p-3 bg-[#dfdfdf] text-center text-black">
+										<td className=" border-[#1e1e1e] border-[4px] p-3 bg-[#dfdfdf] text-center text-black">
 											<Link href={'/administrador/administracion/gestionar-clubes/info-club?clubId=' + club._id}>
 												<button className="bg-[#cd1919] text-white rounded p-2 mr-2">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">

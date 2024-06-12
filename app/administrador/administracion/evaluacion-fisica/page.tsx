@@ -80,6 +80,7 @@ export default function EvaluacionFisicaAdmin() {
 			});
 			cargarCriterios();
 			setShowConfirmation(false);
+			setCriterioEliminar('.');
 		} catch (error) {
 			console.log(error);
 		}
@@ -186,7 +187,7 @@ export default function EvaluacionFisicaAdmin() {
 												name="nombreCriterioEliminar"
 												value={criterioEliminar}
 												onChange={handleEliminarChange}
-												className="bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black"
+												className="bg-neutral-200 rounded-full w-full h-10 my-2 pl-4 text-black border-black border-[2px]"
 												id="texto-general"
 											>
 												<option value=".">

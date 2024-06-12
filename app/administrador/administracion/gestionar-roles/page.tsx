@@ -134,13 +134,13 @@ export default function RolesAdmin() {
 						<table className="w-full">
 							<thead>
 								<tr>
-									<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>rol</th>
+									<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>rol</th>
 								</tr>
 							</thead>
 							<tbody>
 								{rolesData && rolesData.map((rol, index) => (
 									<tr key={index}>
-										<td className="border-[#1e1e1e] border-[8px] p-3 bg-white text-center text-black">{rol.name}</td>
+										<td className="border-[#1e1e1e] border-[4px] p-3 bg-white text-center text-black">{rol.name}</td>
 									</tr>
 								))}
 							</tbody>
@@ -159,7 +159,7 @@ export default function RolesAdmin() {
 										required
 										value={nombreRol}
 										onChange={handleInputChange}
-										className={(nombreVacio() ? 'border-[3px] border-red-700 ' : '') + 'bg-white rounded-full w-80 h-10 my-2 pl-4 text-black'}
+										className={(nombreVacio() ? 'border-[3px] border-red-700 ' : 'border-[3px] border-black ') + 'bg-white rounded-full w-80 h-10 my-2 pl-4 text-black'}
 										id="texto-general"
 										placeholder="Ingrese el nombre del rol"
 									/>
@@ -187,7 +187,7 @@ export default function RolesAdmin() {
 										name="nombreRolEliminar"
 										value={rolEliminar}
 										onChange={handleEliminarChange}
-										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black"
+										className="bg-white rounded-full w-80 h-10 my-2 pl-4 text-black border-[3px] border-black"
 										id="texto-general"
 									>
 										<option value="-">

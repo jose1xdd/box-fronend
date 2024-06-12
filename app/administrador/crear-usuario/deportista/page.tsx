@@ -242,7 +242,7 @@ export default function CrearDeportista() {
 										name="nombre"
 										value={datosNuevoDeportista.nombre}
 										onChange={(e) => handleChange('nombre', e.target.value)}
-										className={`${nombreVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+										className={`${nombreVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el nombre'
 									/>
 								</div>
@@ -265,7 +265,7 @@ export default function CrearDeportista() {
 										name="apellido"
 										value={datosNuevoDeportista.apellido}
 										onChange={(e) => handleChange('apellido', e.target.value)}
-										className={`${apellidoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+										className={`${apellidoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el apellido'
 									/>
 								</div>
@@ -288,7 +288,7 @@ export default function CrearDeportista() {
 										name="documento"
 										value={datosNuevoDeportista.documento}
 										onChange={(e) => handleChange('documento', e.target.value)}
-										className={`${documentoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+										className={`${documentoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el número de documento'
 									/>
 								</div>
@@ -314,7 +314,7 @@ export default function CrearDeportista() {
 										name="direccion"
 										value={datosNuevoDeportista.direccion}
 										onChange={(e) => handleChange('direccion', e.target.value)}
-										className={`${direccionVacia() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+										className={`${direccionVacia() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese la dirección'
 									/>
 								</div>
@@ -331,7 +331,7 @@ export default function CrearDeportista() {
 										name="peso"
 										value={datosNuevoDeportista.peso}
 										onChange={(e) => handleChange('peso', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border border-black'
+										className={`${!pesoValido() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingresa el peso'
 									/>
 								</div>
@@ -356,7 +356,7 @@ export default function CrearDeportista() {
 										name="telefono"
 										value={datosNuevoDeportista.telefono}
 										onChange={(e) => handleChange('telefono', e.target.value)}
-										className={`${telefonoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+										className={`${telefonoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el teléfono'
 									/>
 								</div>
@@ -382,7 +382,7 @@ export default function CrearDeportista() {
 										name="correo"
 										value={datosNuevoDeportista.correo}
 										onChange={(e) => handleChange('correo', e.target.value)}
-										className={`${correoVacio() ? ' border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+										className={`${correoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										placeholder='Ingrese el correo'
 									/>
 								</div>
@@ -404,7 +404,7 @@ export default function CrearDeportista() {
 										name="club"
 										value={datosNuevoDeportista.club}
 										onChange={(e) => handleChange('club', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border border-black'
+										className='bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border border-black'
 									>
 										<option value="">Seleccione un club</option>
 										<OpcionesClubes/>
@@ -422,7 +422,7 @@ export default function CrearDeportista() {
 										name="categoria"
 										value={datosNuevoDeportista.categoria}
 										onChange={(e) => handleChange('categoria', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black border border-black'
+										className='bg-white rounded-full w-full h-10 mx-5 my-2 px-4 text-black border border-black'
 									>
 										<option value="">Seleccione una categoria</option>
 										<OpcionesCategorias/>
@@ -441,7 +441,7 @@ export default function CrearDeportista() {
 										type="date"
 										name="fecha"
 										onChange={(e) => handleChangeFecha('fecha', e.target.value)}
-										className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border border-black'
+										className='bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border border-black'
 										min="1900-01-01"
 										required
 									/>
@@ -464,12 +464,6 @@ export default function CrearDeportista() {
 							className={`${ botonListo ? 'bg-[#cd1919]' : 'bg-[#8b1212] cursor-not-allowed'} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 						>
                             Guardar cambios
-						</button>
-						<button
-							type="button"
-							className={(kevin.button) + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
-						>
-                            Cargar foto de perfil
 						</button>
 					</div>
 				</form>

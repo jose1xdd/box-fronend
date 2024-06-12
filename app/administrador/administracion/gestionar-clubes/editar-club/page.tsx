@@ -176,10 +176,10 @@ export default function EditarClub() {
                             Guardar cambios
 							</button>
 							<button
-								type="button"
-								className='bg-[#cd1919] mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'
+								onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
+								className={styles.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg'}
 							>
-                            Cargar nuevo logo del club
+								Volver
 							</button>
 						</div>
 					</form>
@@ -203,20 +203,21 @@ export default function EditarClub() {
 					{actualizado && (
 						<div className="fixed inset-0 flex items-center justify-center z-50">
 							<div className="bg-[#141414] p-10 rounded-lg">
-								<h3 className="text-white text-center mb-4 text-[175%]" id='titulos-grandes'>
-								Club actualizado con exito
+								<h3
+									className="text-white text-center mb-4 text-[175%]"
+									id="titulos-grandes"
+								>
+                  Club actualizado con exito
 								</h3>
+								<button
+									onClick={() => {setActualizado(false);}}
+									className={styles.button + ' w-full h-10 text-white py-2 px-4 mx-2 rounded-lg'}
+								>
+                    Aceptar
+								</button>
 							</div>
 						</div>
 					)}
-					<div className="flex justify-center">
-						<button
-							onClick={()=>router.push('/administrador/administracion/gestionar-clubes')}
-							className="bg-[#cd1919] w-full h-10 text-white py-2 px-4 mx-2 rounded-lg w-[10%] mt-4"
-						>
-								Volver
-						</button>
-					</div>
 				</div>
 			)}
 		</>

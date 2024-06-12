@@ -192,7 +192,7 @@ export default function CrearEntrenador() {
 											name="nombre"
 											value={datosNuevoEntrenador.nombre}
 											onChange={(e) => handleChange('nombre', e.target.value)}
-											className={`${nombreVacio() ? ' border-[3px] border border-black' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+											className={`${nombreVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 											placeholder='Ingrese el nombre'
 										/>
 									</div>
@@ -215,7 +215,7 @@ export default function CrearEntrenador() {
 											name="apellido"
 											value={datosNuevoEntrenador.apellido}
 											onChange={(e) => handleChange('apellido', e.target.value)}
-											className={`${apellidoVacio() ? ' border-[3px] border border-black' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+											className={`${apellidoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 											placeholder='Ingrese el apellido'
 										/>
 									</div>
@@ -241,7 +241,7 @@ export default function CrearEntrenador() {
 											name="cedula"
 											value={datosNuevoEntrenador.cedula}
 											onChange={(e) => handleChange('cedula', e.target.value)}
-											className={`${documentoVacio() ? ' border-[3px] border border-black' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+											className={`${documentoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 											placeholder='Ingrese el número de cedula'
 										/>
 									</div>
@@ -266,7 +266,7 @@ export default function CrearEntrenador() {
 											type="date"
 											name="fecha"
 											onChange={(e) => handleChangeFecha('nacimiento', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 border border-black text-black'
+											className='bg-white border-black border-[3px] rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 											min="1900-01-01"
 											required
 										/>
@@ -292,7 +292,7 @@ export default function CrearEntrenador() {
 											name="direccion"
 											value={datosNuevoEntrenador.direccion}
 											onChange={(e) => handleChange('direccion', e.target.value)}
-											className={`${direccionVacia() ? ' border-[3px] border border-black' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+											className={`${direccionVacia() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 											placeholder='Ingrese la dirección'
 										/>
 									</div>
@@ -309,7 +309,7 @@ export default function CrearEntrenador() {
 											name="telefono"
 											value={datosNuevoEntrenador.telefono}
 											onChange={(e) => handleChange('telefono', e.target.value)}
-											className={`${telefonoVacio() ? ' border-[3px] border border-black' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+											className={`${telefonoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 											placeholder='Ingrese el teléfono'
 										/>
 									</div>
@@ -336,7 +336,7 @@ export default function CrearEntrenador() {
 											value={datosNuevoEntrenador.correo}
 											onChange={(e) => handleChange('correo', e.target.value)}
 											placeholder='Ingresa el correo electrónico'
-											className={`${correoVacio() ? ' border-[3px] border border-black' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
+											className={`${correoVacio() ? ' border-[3px] border-red-700' : 'border-[3px] border-black'} bg-white rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`}
 										/>
 									</div>
 								</div>

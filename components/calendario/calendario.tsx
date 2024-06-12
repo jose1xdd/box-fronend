@@ -74,34 +74,39 @@ export default function CalendarioEventos() {
 	}, []);
 
 	return (
-		<div>
-			<div>
-				<h1 className="text-5xl text-black mb-4 mt-[2%]">Calendario de eventos</h1>
-				<div className='bg-red-50 p-5 rounded-3xl my-4 border border-black'>
-					<FullCalendar
-						plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-						locales={[esLocale]}
-						initialView={'dayGridMonth'}
-						headerToolbar={{
-							start: 'today prev,next',
-							center: 'title',
-							end: 'dayGridMonth,timeGridWeek,timeGridDay',
-						}}
-						events={events}
-						eventClick={(info) => {
-							const e = info.event;
-							const datos = localStorage.getItem('userData');
-							let role;
-							if(datos != null){
-								role = JSON.parse(datos).role;
-							}
-							if(role == 'Admin') role = 'administrador';
-							router.push('/' + (role as string).toLowerCase() + '/eventos/VerEvento?EventId=' + info.event.id as string);
-						}}
-						height={'90vh'}
-					/>
+		<>
+			{events.length == 0 && (<LoaderContenido/>)}
+			{events.length != 0 && (
+				<div>
+					<div>
+						<h1 className="text-5xl text-black mb-4 mt-[2%]">Calendario de eventos</h1>
+						<div className='bg-red-50 p-5 rounded-3xl my-4 border border-black'>
+							<FullCalendar
+								plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+								locales={[esLocale]}
+								initialView={'dayGridMonth'}
+								headerToolbar={{
+									start: 'today prev,next',
+									center: 'title',
+									end: 'dayGridMonth,timeGridWeek,timeGridDay',
+								}}
+								events={events}
+								eventClick={(info) => {
+									const e = info.event;
+									const datos = localStorage.getItem('userData');
+									let role;
+									if(datos != null){
+										role = JSON.parse(datos).role;
+									}
+									if(role == 'Admin') role = 'administrador';
+									router.push('/' + (role as string).toLowerCase() + '/eventos/VerEvento?EventId=' + info.event.id as string);
+								}}
+								height={'90vh'}
+							/>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 }
