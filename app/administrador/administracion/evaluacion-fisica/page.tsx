@@ -150,7 +150,7 @@ export default function EvaluacionFisicaAdmin() {
 									<div className="flex items-center">
 										<div className="w-full">
 											<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL CRITERIO
+										Nombre del criterio
 											</h3>
 											<input
 												type="text"
@@ -158,7 +158,7 @@ export default function EvaluacionFisicaAdmin() {
 												required
 												value={nombreCriterio}
 												onChange={handleInputChange}
-												className={(nombreCriterio === '' ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-80 h-10 my-2 pl-4 text-black'}
+												className={(nombreCriterio === '' ? 'border-[3px] border-red-700 ' : 'border-[#1e1e1e] border-[2px] ') + ' bg-white rounded-full w-80 h-10 my-2 pl-4 text-black'}
 												id="texto-general"
 												placeholder="Ingrese el nombre del criterio"
 											/>
