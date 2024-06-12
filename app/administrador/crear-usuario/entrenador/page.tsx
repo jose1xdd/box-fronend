@@ -2,7 +2,11 @@
 
 import fechaCompleta from '@/app/types/funcionesDate';
 import axios from 'axios';
-import { ChangeEvent, useState, useEffect } from 'react';
+import {
+	ChangeEvent,
+	useState,
+	useEffect
+} from 'react';
 import styles from '@/app/css/profiles.module.css';
 import { LoaderContenido } from '@/components/loaderContenido';
 interface FormData {
