@@ -1,14 +1,21 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { ObtenerLogo } from '@/app/lib/basic_request';
 import Image from 'next/image';
-//import Logo from '@/public/images/logo.png';
 import Link from 'next/link';
 
-export default async function NavbarHome(){
+export default function NavbarHome() {
+	const [logo, setLogo] = useState('');
 
-	const Logo = await ObtenerLogo();
+	useEffect(() => {
+		async function fetchLogo() {
+			const logoUrl = await ObtenerLogo();
+			setLogo(logoUrl);
+		}
+		fetchLogo();
+	}, []);
 
-	return(
+	return (
 		<nav className="bg-[#1e1e1e] p-4">
 			<div className="container">
 				<div className="flex justify-between">
@@ -16,11 +23,13 @@ export default async function NavbarHome(){
 						<div className="text-white font-bold text-xl">
 							<div className="flex items-center">
 								<div className="w-60 h-60 bg-[#141414] rounded-full flex items-center justify-center mr-4 absolute -top-14 -left-14">
-									<img
-										src={Logo}
-										alt="Logo Liga de Boxeo de Norte de Santander"
-										className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"
-									/>
+									{logo && (
+										<img
+											src={logo}
+											alt="Logo Liga de Boxeo de Norte de Santander"
+											className="transform translate-x-[10px] translate-y-[20px] h-[125px] w-[125px] rounded-full"
+										/>
+									)}
 								</div>
 							</div>
 						</div>
