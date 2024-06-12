@@ -40,12 +40,11 @@ export default function AdministracionAdmin() {
 						<h1 className="text-center text-[400%]" id="titulos-grandes">
               MENÚ DE ADMINISTRADOR
 						</h1>
-						<div className="flex p-4 max-w-5xl mx-auto">
-							<div>
+						<div className="flex-col p-3 max-w-5xl mx-auto">
+							<div className="flex space-x-4">
 								{logo != '' && (
-									<div className='m-0 my-5 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px] p-4 rounded-3xl'>
+									<div className='m-0 my-5 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
 										<div className="flex items-center justify-center">
-											{' '}
 											<Image
 												width={200}
 												height={200}
@@ -60,16 +59,15 @@ export default function AdministracionAdmin() {
 													handleChangeImage();
 												}}
 												className={
-													styles.button +
-                          ' w-60 h-10 text-white py-2 px-4 rounded-lg'
+													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
 												}
 											>
-                        Cambiar logo
+												Cambiar logo
 											</button>
 										</div>
 									</div>
 								)}
-								<div className='m-0 my-5 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px] p-4 rounded-3xl'>
+								<div className='m-0 my-5 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
 									<div className="flex items-center justify-center">
 										<Image
 											src={evaluacionFisica}
@@ -82,17 +80,103 @@ export default function AdministracionAdmin() {
 										<Link href="/administrador/administracion/evaluacion-fisica">
 											<button
 												className={
-													styles.button +
-                          ' w-60 h-10 text-white py-2 px-4 rounded-lg'
+													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
 												}
 											>
-                        Evaluación física
+												Evaluación física
+											</button>
+										</Link>
+									</div>
+								</div>
+								<div className='m-0 my-5 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
+									<div className="flex items-center justify-center">
+										<Image
+											src={gestionarClubes}
+											alt="Logo Liga de Boxeo de Norte de Santander"
+											width={200}
+											priority
+										/>
+									</div>
+									<div className="flex items-center justify-center mt-3">
+										<Link href="/administrador/administracion/gestionar-clubes">
+											<button
+												className={
+													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
+												}
+											>
+												Gestionar clubes
 											</button>
 										</Link>
 									</div>
 								</div>
 							</div>
-							<div></div>
+
+							<div className="flex space-x-4">
+								<div className='m-0 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
+									<div className="flex items-center justify-center">
+										<Image
+											src={administrarCategorias}
+											alt="Logo Liga de Boxeo de Norte de Santander"
+											width={200}
+											height={200}
+											priority
+										/>
+									</div>
+									<div className="flex items-center justify-center mt-3">
+										<Link href="/administrador/administracion/administrar-categorias">
+											<button
+												className={
+													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
+												}
+											>
+												Administrar categorías
+											</button>
+										</Link>
+									</div>
+								</div>
+								<div className='m-0 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
+									<div className="flex items-center justify-center">
+										<Image
+											src={gestionarRoles}
+											alt="Logo Liga de Boxeo de Norte de Santander"
+											width={200}
+											priority
+										/>
+									</div>
+									<div className="flex items-center justify-center mt-3">
+										<Link href="/administrador/administracion/gestionar-roles">
+											<button
+												className={
+													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
+												}
+											>
+												Gestionar roles
+											</button>
+										</Link>
+									</div>
+								</div>
+								<div className="m-0 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]">
+									<div className="flex items-center justify-center">
+										<Image
+											src={gestionarIndex}
+											alt="Logo Liga de Boxeo de Norte de Santander"
+											width={200}
+											priority
+										/>
+									</div>
+									<div className="flex items-center justify-center mt-3">
+										<Link href="/administrador/administracion/gestionar-index">
+											<button
+												className={
+													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
+												}
+											>
+												Gestionar index
+											</button>
+										</Link>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					{viewModal && (
