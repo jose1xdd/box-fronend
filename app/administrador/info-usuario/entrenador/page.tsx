@@ -86,7 +86,7 @@ export default function InfoEntrenador() {
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosEntrenador.name}
 										</div>
 									</div>
@@ -98,7 +98,7 @@ export default function InfoEntrenador() {
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosEntrenador.lastName}
 										</div>
 									</div>
@@ -110,7 +110,7 @@ export default function InfoEntrenador() {
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosEntrenador.cedula}
 										</div>
 									</div>
@@ -124,7 +124,7 @@ export default function InfoEntrenador() {
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosEntrenador.address}
 										</div>
 									</div>
@@ -136,7 +136,7 @@ export default function InfoEntrenador() {
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosEntrenador.phone}
 										</div>
 									</div>
@@ -148,7 +148,7 @@ export default function InfoEntrenador() {
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosEntrenador.email}
 										</div>
 									</div>

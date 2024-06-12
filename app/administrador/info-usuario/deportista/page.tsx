@@ -5,9 +5,9 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from '@/app/css/profiles.module.css';
 import { LoaderContenido } from '@/components/loaderContenido';
-import kevin from '@/public/css/styles.module.scss';
+import styles from '@/public/css/styles.module.scss';
+import estilos from '@/app/css/profiles.module.css';
 
 export default function InfoDeportista() {
 
@@ -55,10 +55,23 @@ export default function InfoDeportista() {
 		}
 		const dataDeportista = await cargaDeportista(arreglo);
 		if(id != null) setDatosDeportista({ ... dataDeportista.data.user, ['image']: await obtenerFotoPerfil(id) });
+
 		const dataClub = await cargaClub(arreglo, dataDeportista.data.user.club);
-		setDatoClub(dataClub.data.club);
+		if(dataClub === null || dataClub === undefined){
+			setDatoClub({ name: 'Sin club' });
+		}
+		else{
+			setDatoClub(dataClub.data.club);
+		}
+
 		const dataCategoria = await cargaCategoria(arreglo, dataDeportista.data.user.weightCategory);
-		setDatCategoria(dataCategoria.data.Category);
+		if(dataCategoria === null || dataCategoria === undefined){
+			setDatCategoria({ name: 'Sin categoría' });
+		}
+		else{
+			setDatCategoria(dataCategoria.data.Category);
+		}
+
 	};
 
 	//Consumir endpoint
@@ -96,11 +109,13 @@ export default function InfoDeportista() {
 				clubId: idClub
 			};
 
-			const response = await axios.get(`${apiEndpoint}/club`, {
-				params: parametros,
-				headers: headers
-			});
-			return response;
+			if(headers.sessiontoken !== null && parametros.clubId !== null && headers.sessiontoken !== undefined && parametros.clubId !== undefined){
+				const response = await axios.get(`${apiEndpoint}/club`, {
+					params: parametros,
+					headers: headers
+				});
+				return response;
+			}
 
 			//console.log(response);
 		} catch (error) {
@@ -119,12 +134,14 @@ export default function InfoDeportista() {
 				weightCategoryId: idCategoria
 			};
 
-			const response = await axios.get(`${apiEndpoint}/weightCategory`, {
-				params: parametros,
-				headers: headers
-			});
-			//console.log(response);
-			return response;
+			if(headers.sessiontoken !== null && parametros.weightCategoryId !== null && headers.sessiontoken !== undefined && parametros.weightCategoryId !== undefined){
+				const response = await axios.get(`${apiEndpoint}/weightCategory`, {
+					params: parametros,
+					headers: headers
+				});
+				//console.log(response);
+				return response;
+			}
 
 			//console.log(response);
 		} catch (error) {
@@ -133,117 +150,116 @@ export default function InfoDeportista() {
 	}
 
 	const ready = () =>{
-		return datoCategoria.name != '' && datoClub.name != '' && datosDeportista.name != '';
+		return datoCategoria.name != '';
 	};
 
 	///////////////////Retorno del render////////////////////
 	return (
 		<>
-
 			{!ready() && (<LoaderContenido/>)}
 			{ready() && (
-				<div className={styles.container + 'container mx-auto mt-8'}>
+				<div className="container mx-auto mt-8">
 					<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN DEPORTISTA</h1>
-					<div className='flex items-center justify-center my-4'>
+					<div className='flex items-center justify-center'>
 						{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
 					</div>
 					<form>
-						<div className="mx-auto px-12 md:px-32 md:flex">
-							<div className="md:w-2/4">
+						<div className="p-4 max-w-5xl mx-auto flex">
+							<div className="w-2/4 pr-4">
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                        Nombre:
+										<div className={estilos.label} id='texto-general'>
+									Nombre:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosDeportista.name}
 										</div>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                        Apellido:
+										<div className={estilos.label} id='texto-general'>
+									Apellido:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosDeportista.lastName}
 										</div>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                        Documento:
+										<div className={estilos.label} id='texto-general'>
+									Documento:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosDeportista.cedula}
 										</div>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                        Dirección
+										<div className={estilos.label} id='texto-general'>
+									Dirección
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosDeportista.address}
 										</div>
 									</div>
 								</div>
 							</div>
-							<div className="md:w-2/4">
+							<div className="w-2/4 pr-4">
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                        Teléfono
+										<div className={estilos.label} id='texto-general'>
+									Teléfono
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosDeportista.phone}
 										</div>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                        Correo
+										<div className={estilos.label} id='texto-general'>
+									Correo
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datosDeportista.email}
 										</div>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                    Club:
+										<div className={estilos.label} id='texto-general'>
+								Club:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datoClub.name}
 										</div>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
-                                    Categoria:
+										<div className={estilos.label} id='texto-general'>
+								Categoria:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
-										<div className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
+										<div className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 flex items-center justify-center text-black' id='texto-general'>
 											{datoCategoria.name}
 										</div>
 									</div>
@@ -254,9 +270,9 @@ export default function InfoDeportista() {
 							<Link href='/administrador/lista-usuarios/deportista'>
 								<button
 									type="button"
-									className={kevin.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold'}
+									className={styles.button + ' mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg font-bold'}
 								>
-                            Volver
+						Volver
 								</button>
 							</Link>
 						</div>

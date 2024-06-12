@@ -9,9 +9,9 @@ import {
 	useEffect,
 	useState
 } from 'react';
-import styles from '@/app/css/profiles.module.css';
 import { LoaderContenido } from '@/components/loaderContenido';
-import kevin from '@/public/css/styles.module.scss';
+import styles from '@/public/css/styles.module.scss';
+import estilos from '@/app/css/profiles.module.css';
 
 interface FormData {
 	_id : string;
@@ -187,7 +187,7 @@ export default function EditarEntrenador() {
 							<div className="w-2/4 pr-4">
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
 									Nombre:
 										</div>
 									</div>
@@ -197,7 +197,7 @@ export default function EditarEntrenador() {
 											name="nombre"
 											value={datosEntrenador.name}
 											onChange={(e) => handleChange('name', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -212,7 +212,7 @@ export default function EditarEntrenador() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
 									Apellido:
 										</div>
 									</div>
@@ -222,7 +222,7 @@ export default function EditarEntrenador() {
 											name="apellido"
 											value={datosEntrenador.lastName}
 											onChange={(e) => handleChange('lastName', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -239,7 +239,7 @@ export default function EditarEntrenador() {
 							<div className="w-2/4 pr-4">
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
 									Dirección
 										</div>
 									</div>
@@ -249,7 +249,7 @@ export default function EditarEntrenador() {
 											name="direccion"
 											value={datosEntrenador.address}
 											onChange={(e) => handleChange('address', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -261,7 +261,7 @@ export default function EditarEntrenador() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
 									Teléfono
 										</div>
 									</div>
@@ -271,7 +271,7 @@ export default function EditarEntrenador() {
 											name="telefono"
 											value={datosEntrenador.phone}
 											onChange={(e) => handleChange('phone', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -294,11 +294,11 @@ export default function EditarEntrenador() {
 								onClick={handleGuardarCambios}
 								type="button"
 								disabled = {!botonListo}
-								className={`${!botonListo ? kevin.buttonDisabled + ' cursor-not-allowed' : kevin.button} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
+								className={`${!botonListo ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 							>
 						Guardar cambios
 							</button>
-							<button className={(kevin.button) + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} onClick={(event) => {
+							<button className={(styles.button) + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} onClick={(event) => {
 								event.preventDefault();
 								handleChangeImage();
 							}}>

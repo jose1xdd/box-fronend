@@ -7,9 +7,9 @@ import { ModalImage } from '@/components/imgLoader/ModalImageInput/ModalImage';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from '@/app/css/profiles.module.css';
 import { LoaderContenido } from '@/components/loaderContenido';
-import kevin from '@/public/css/styles.module.scss';
+import styles from '@/public/css/styles.module.scss';
+import estilos from '@/app/css/profiles.module.css';
 
 interface FormData {
 	_id: string;
@@ -169,8 +169,16 @@ export default function EditarDeportista() {
 		return datosDeportista.weight > 0;
 	};
 
+	const clubVacio = () => {
+		return datosDeportista.club === '' || datosDeportista.club === null || datosDeportista.club === '-';
+	};
+
+	const categoriaVacia = () => {
+		return datosDeportista.weightCategory === '' || datosDeportista.weightCategory === null || datosDeportista.weightCategory === '-';
+	};
+
 	const botonValido = (formData = datosDeportista) => {
-		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && numeroValido() && !numeroVacio() && numeroCompleto() && pesoValido();
+		return nombreValido() && !nombreVacio() && apellidoValido() && !apellidoVacio() && numeroValido() && !numeroVacio() && numeroCompleto() && pesoValido() && !categoriaVacia() && !clubVacio();
 	};
 
 	const ready = () => {
@@ -192,7 +200,7 @@ export default function EditarDeportista() {
 							<div className="w-2/4 pr-4">
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
                                         Nombre:
 										</div>
 									</div>
@@ -202,7 +210,7 @@ export default function EditarDeportista() {
 											name="nombre"
 											value={datosDeportista.name}
 											onChange={(e) => handleChange('name', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -217,7 +225,7 @@ export default function EditarDeportista() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
                                         Apellido:
 										</div>
 									</div>
@@ -227,7 +235,7 @@ export default function EditarDeportista() {
 											name="apellido"
 											value={datosDeportista.lastName}
 											onChange={(e) => handleChange('lastName', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -242,7 +250,7 @@ export default function EditarDeportista() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
                                         Peso
 										</div>
 									</div>
@@ -252,7 +260,7 @@ export default function EditarDeportista() {
 											name="peso"
 											value={datosDeportista.weight}
 											onChange={(e) => handleChange('weight', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 											placeholder='Ingresa el peso'
 										/>
 									</div>
@@ -267,7 +275,7 @@ export default function EditarDeportista() {
 							<div className="w-2/4 pr-4">
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
                                         Teléfono
 										</div>
 									</div>
@@ -277,7 +285,7 @@ export default function EditarDeportista() {
 											name="telefono"
 											value={datosDeportista.phone}
 											onChange={(e) => handleChange('phone', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										/>
 									</div>
 								</div>
@@ -295,34 +303,40 @@ export default function EditarDeportista() {
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
                                     Club:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
 										<select
 											name="club"
-											value={datosDeportista.club}
+											value={datosDeportista.club === null ? '-' : datosDeportista.club}
 											onChange={(e) => handleChange('club', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
 										>
+											{clubVacio() && (
+												<option value='-'>Selecciona un club</option>
+											)}
 											<OpcionesClubes/>
 										</select>
 									</div>
 								</div>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
-										<div className={styles.label} id='texto-general'>
+										<div className={estilos.label} id='texto-general'>
                                     Categoria:
 										</div>
 									</div>
 									<div className="w-2/3 mx-2" id='texto-general'>
 										<select
 											name="categoria"
-											value={datosDeportista.weightCategory}
+											value={datosDeportista.weightCategory === null ? '-' : datosDeportista.weightCategory}
 											onChange={(e) => handleChange('weightCategory', e.target.value)}
-											className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
+											className='bg-white border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 px-4 text-black'
 										>
+											{categoriaVacia() && (
+												<option value='-'>Selecciona una categoria</option>
+											)}
 											<OpcionesCategorias/>
 										</select>
 									</div>
@@ -334,11 +348,11 @@ export default function EditarDeportista() {
 								onClick={handleGuardarCambios}
 								type="button"
 								disabled = {!botonListo}
-								className={` ${!botonListo ? kevin.buttonDisabled + ' cursor-not-allowed' : kevin.button} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
+								className={` ${!botonListo ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button} mx-5 w-60 h-10 text-white py-2 px-4 rounded-lg`}
 							>
                             Guardar cambios
 							</button>
-							<button className={kevin.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} onClick={(event) => {
+							<button className={styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'} onClick={(event) => {
 								event.preventDefault();
 								handleChangeImage();
 							}}>
