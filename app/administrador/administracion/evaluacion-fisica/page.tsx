@@ -80,6 +80,7 @@ export default function EvaluacionFisicaAdmin() {
 			});
 			cargarCriterios();
 			setShowConfirmation(false);
+			setCriterioEliminar('.');
 		} catch (error) {
 			console.log(error);
 		}
