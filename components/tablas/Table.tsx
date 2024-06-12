@@ -150,10 +150,10 @@ const Table: React.FC<TableProps> = ({ rol, linkVer, linkEditar }) => {
 					<table className="w-full">
 						<thead>
 							<tr>
-								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
-								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ROL</th>
-								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">CÉDULA</th>
-								<th className="border-[#1e1e1e] border-[8px] p-3 bg-[#cd1919] text-white text-center">ACCIONES</th>
+								<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">NOMBRE</th>
+								<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">ROL</th>
+								<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">CÉDULA</th>
+								<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center">ACCIONES</th>
 							</tr>
 						</thead>
 						<tbody>{renderUsers()}</tbody>
