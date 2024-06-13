@@ -240,23 +240,32 @@ export default function CrearTorneo() {
 	const handlerSetParticipantes = (eliminar: boolean) => {
 		let users = [...selectedUsuarios];
 		const indice = users.indexOf(nuevoParticipante1);
+
+		// Verificar si el participante ya está en algún combate
+		const participanteYaEnCombate = combates.some((combat) =>
+			combat.boxer1 === nuevoParticipante1 || combat.boxer2 === nuevoParticipante1
+		);
+
 		if (eliminar) {
 			if (indice !== -1) {
 				users.splice(indice, 1);
 			}
 		} else {
-			if (indice === -1) {
+			if (indice === -1 && !participanteYaEnCombate) {
 				users.push(nuevoParticipante1);
 			}
 		}
+
 		setSelectedUsuarios(users);
 
-		// Guardar el combate en el estado de combates
-		const nuevoCombate: Combat = {
-			boxer1: nuevoParticipante1,
-			boxer2: nuevoParticipante2,
-		};
-		setCombates([...combates, nuevoCombate]);
+		// Guardar el combate en el estado de combates si no existe aún
+		if (!participanteYaEnCombate) {
+			const nuevoCombate: Combat = {
+				boxer1: nuevoParticipante1,
+				boxer2: nuevoParticipante2,
+			};
+			setCombates([...combates, nuevoCombate]);
+		}
 
 		// Imprimir el arreglo de combates en la consola
 	};
