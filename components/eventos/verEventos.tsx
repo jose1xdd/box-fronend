@@ -318,11 +318,11 @@ export default function VerEvento() {
 										</div>
 										{eventInfo.combats.map((combat, index) => (
 											<div key={index} className="flex items-center justify-center mb-4">
-												<label className={`border ${combat.winner === combat.boxer1._id ? 'border-yellow-400 text-yellow-200' : 'border-white'} rounded-lg text-center w-56`}>
+												<label className={`border ${combat.winner === combat.boxer1._id ? 'border-black border-[3px] text-black' : 'text-gray-600 border-gray-500 border-[2px]'} rounded-lg text-center w-56`} id={combat.winner !== combat.boxer1._id ? 'texto-general' : ''}>
 													{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
 												</label>
 												<h1 className='p-4'>VS</h1>
-												<label className={`border ${combat.winner === combat.boxer2._id ? 'border-yellow-400 text-yellow-200' : 'border-white '} rounded-lg text-center w-56`}>
+												<label className={`border ${combat.winner === combat.boxer2._id ? 'border-black border-[3px] text-black' : 'text-gray-600 border-gray-500 border-[2px]'} rounded-lg text-center w-56`} id={combat.winner !== combat.boxer2._id ? 'texto-general' : ''}>
 													{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
 												</label>
 											</div>
