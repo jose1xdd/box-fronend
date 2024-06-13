@@ -50,10 +50,12 @@ export default function CrearTorneo() {
 	const [nuevoParticipante2, setNuevoParticipante2] = useState('');
 	const [selectedUsuarios, setSelectedUsuarios] = useState<string[]>([]);
 	const [selectedCategoria, setSelectedCategoria] = useState<string>('');
-	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>([]);
+	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>(
+		[]
+	);
 	const [combates, setCombates] = useState<Combat[]>([]);
 	const [fechaRepetida, setFechaRepetida] = useState(false);
-	const [misDatos, setMisDatos] = useState <User>();
+	const [misDatos, setMisDatos] = useState<User>();
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
@@ -144,10 +146,9 @@ export default function CrearTorneo() {
 		if (datos != null) {
 			rol = JSON.parse(datos).role;
 		}
-		if(rol === 'Admin'){
+		if (rol === 'Admin') {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	};
@@ -162,17 +163,16 @@ export default function CrearTorneo() {
 		let id;
 		if (datos2 != null) {
 			id = JSON.parse(datos2).userId;
-		  }
+		}
 
-		if(nombre !== undefined && id !== undefined){
+		if (nombre !== undefined && id !== undefined) {
 			const newUser: User = {
 				_id: id,
 				name: nombre,
-				lastName: ''
+				lastName: '',
 			};
 			setMisDatos(newUser);
 		}
-
 	};
 
 	useEffect(() => {
@@ -182,7 +182,7 @@ export default function CrearTorneo() {
 		cargarMisDatos();
 	}, []);
 
-	useEffect(()=>{
+	useEffect(() => {
 		//console.log(selectedEntrenador);
 		//console.log(fechaEvento);
 		//console.log(combates);
@@ -190,10 +190,17 @@ export default function CrearTorneo() {
 
 	useEffect(() => {
 		if (selectedCategoria) {
-			const categoriaSeleccionada = categorias.find((categoria) => categoria._id === selectedCategoria);
+			const categoriaSeleccionada = categorias.find(
+				(categoria) => categoria._id === selectedCategoria
+			);
 			if (categoriaSeleccionada) {
 				const { minWeight, maxWeight } = categoriaSeleccionada;
-				setFilteredUsuarios(usuarios.filter((usuario) => usuario.weight >= minWeight && usuario.weight <= maxWeight));
+				setFilteredUsuarios(
+					usuarios.filter(
+						(usuario) =>
+							usuario.weight >= minWeight && usuario.weight <= maxWeight
+					)
+				);
 			}
 		}
 	}, [selectedCategoria, categorias, usuarios]);
@@ -245,7 +252,10 @@ export default function CrearTorneo() {
 		setSelectedUsuarios(users);
 
 		// Guardar el combate en el estado de combates
-		const nuevoCombate: Combat = { boxer1: nuevoParticipante1, boxer2: nuevoParticipante2 };
+		const nuevoCombate: Combat = {
+			boxer1: nuevoParticipante1,
+			boxer2: nuevoParticipante2,
+		};
 		setCombates([...combates, nuevoCombate]);
 
 		// Imprimir el arreglo de combates en la consola
@@ -275,7 +285,7 @@ export default function CrearTorneo() {
 
 		let body;
 
-		if(esAdmin()){
+		if (esAdmin()) {
 			body = {
 				name: nombreEvento,
 				description: descripcionEvento,
@@ -283,10 +293,9 @@ export default function CrearTorneo() {
 				date: fechaEvento,
 				startsAt: horaInicio,
 				endsAt: horaFin,
-				combats: combates
+				combats: combates,
 			};
-		}
-		else{
+		} else {
 			body = {
 				name: nombreEvento,
 				description: descripcionEvento,
@@ -294,7 +303,7 @@ export default function CrearTorneo() {
 				date: fechaEvento,
 				startsAt: horaInicio,
 				endsAt: horaFin,
-				combats: combates
+				combats: combates,
 			};
 		}
 		let rol;
@@ -305,7 +314,9 @@ export default function CrearTorneo() {
 		if (rol === 'Entrenador') route = 'entrenador';
 		else route = 'administrador';
 		try {
-			await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
+			await axios.post(`${apiEndpoint}/event/battle`, body, {
+				headers: headers,
+			});
 			//console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
@@ -315,7 +326,9 @@ export default function CrearTorneo() {
 	};
 
 	const ready = () => {
-		return usuarios.length != 0 && entrenadores.length != 0 && categorias.length != 0;
+		return (
+			usuarios.length != 0 && entrenadores.length != 0 && categorias.length != 0
+		);
 	};
 
 	const entrenadorSeleccionadoValido = () => {
@@ -324,7 +337,7 @@ export default function CrearTorneo() {
 	const fechaEventoVacio = () => {
 		return fechaEvento === '';
 	};
-	const horaInicioVacia = () =>{
+	const horaInicioVacia = () => {
 		return horaInicio === '';
 	};
 	const horaFinVacia = () => {
@@ -349,18 +362,59 @@ export default function CrearTorneo() {
 		return combates.length === 0;
 	};
 
-	const botonValido = () => {
-		if(esAdmin()){
-			return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+	const guessFechaInvalida = (fhoy: Date, fteclado: Date) => {
+		console.log(fteclado.getUTCDate());
+		console.log(fhoy.getUTCDate());
+		if(fteclado.getFullYear() > fhoy.getFullYear()){
+			setFechainvalida(false);
 		}
-		else{
-			return !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+		else if(fteclado.getFullYear() === fhoy.getFullYear()){
+			if(fteclado.getMonth() > fhoy.getMonth()){
+				setFechainvalida(false);
+			}
+			else if(fteclado.getMonth() === fhoy.getMonth()){
+				if(fteclado.getUTCDate() >= fhoy.getUTCDate()){
+					setFechainvalida(false);
+				}
+				else{
+					setFechainvalida(true);
+				}
+			}
+			else{
+				setFechainvalida(true);
+			}
+		}
+		else{setFechainvalida(true);}
+	};
+
+	const botonValido = () => {
+		if (esAdmin()) {
+			return (
+				entrenadorSeleccionadoValido() &&
+        !fechaEventoVacio() &&
+        !fechainvalida &&
+        !horaInicioVacia() &&
+        !horaFinVacia() &&
+        !nombreEventoVacio() &&
+        !descripcionEventoVacio() &&
+        !combatesVacios()
+			);
+		} else {
+			return (
+				!fechaEventoVacio() &&
+        !fechainvalida &&
+        !horaInicioVacia() &&
+        !horaFinVacia() &&
+        !nombreEventoVacio() &&
+        !descripcionEventoVacio() &&
+        !combatesVacios()
+			);
 		}
 	};
 
 	return (
 		<>
-			{!ready() && (<LoaderContenido/>)}
+			{!ready() && <LoaderContenido />}
 			{ready() && (
 				<div className="container mx-auto mt-8">
 					<div className="p-4 ">
@@ -368,12 +422,15 @@ export default function CrearTorneo() {
 							<div className="flex">
 								<div className="w-2/3 pr-4">
 									<h1 className="text-center text-[400%]" id="titulos-grandes">
-								Nuevo torneo
+                    Nuevo torneo
 									</h1>
 									<div className="flex">
 										<div className="w-1/3 mx-2">
-											<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
-										Entrenador encargado
+											<div
+												className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white"
+												id="texto-general"
+											>
+                        Entrenador encargado
 											</div>
 										</div>
 										{esAdmin() && (
@@ -396,13 +453,21 @@ export default function CrearTorneo() {
 											</select>
 										)}
 										{!esAdmin() && (
-											<label className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 p-2 pl-3 text-black" id="texto-general">{misDatos?.name}</label>
+											<label
+												className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 p-2 pl-3 text-black"
+												id="texto-general"
+											>
+												{misDatos?.name}
+											</label>
 										)}
 									</div>
 									<div className="flex">
 										<div className="w-1/3 mx-2">
-											<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
-										Fecha del evento
+											<div
+												className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white"
+												id="texto-general"
+											>
+                        Fecha del evento
 											</div>
 										</div>
 										<input
@@ -410,24 +475,34 @@ export default function CrearTorneo() {
 											type="date"
 											onChange={(event) => {
 												setFechaEvento(event.target.value);
-												if (new Date(event.target.value) < new Date()) setFechainvalida(true);
-												else setFechainvalida(false);
+												guessFechaInvalida(new Date(), new Date(event.target.value));
 											}}
-											className={(fechaEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+											className={
+												(fechaEventoVacio()
+													? ' border-[3px] border-red-700 '
+													: '') +
+                        'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											}
 											id="texto-general"
 										/>
 									</div>
 									{fechainvalida && (
 										<div className="flex justify-center">
-											<p className="text-red-500 mb-2">La fecha no puede ser en un día anterior a la fecha de hoy</p>
+											<p className="text-red-500 mb-2">
+                        La fecha no puede ser en un día anterior a la fecha de
+                        hoy
+											</p>
 										</div>
 									)}
 
 									<div className="flex items-center justify-center">
 										<div className="flex">
 											<div className="w-1/3 mx-4">
-												<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
-											Hora inicio
+												<div
+													className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white"
+													id="texto-general"
+												>
+                          Hora inicio
 												</div>
 											</div>
 											<input
@@ -436,15 +511,23 @@ export default function CrearTorneo() {
 												onChange={(event) => {
 													setHoraInicio(event.target.value);
 												}}
-												className={(horaInicioVacia() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+												className={
+													(horaInicioVacia()
+														? ' border-[3px] border-red-700 '
+														: '') +
+                          'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+												}
 												id="texto-general"
 												placeholder="Hora inicio"
 											/>
 										</div>
 										<div className="flex">
 											<div className="w-1/3 mx-2">
-												<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
-											Hora fin
+												<div
+													className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white"
+													id="texto-general"
+												>
+                          Hora fin
 												</div>
 											</div>
 											<input
@@ -453,7 +536,12 @@ export default function CrearTorneo() {
 												onChange={(event) => {
 													setHoraFin(event.target.value);
 												}}
-												className={(horaFinVacia() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+												className={
+													(horaFinVacia()
+														? ' border-[3px] border-red-700 '
+														: '') +
+                          'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+												}
 												id="texto-general"
 												placeholder="Hora fin"
 											/>
@@ -461,7 +549,10 @@ export default function CrearTorneo() {
 									</div>
 									{horaInvalida && (
 										<div className="flex justify-center">
-											<p className="text-red-500 mb-2">La hora de fin no puede corresponder a una hora anterior a la hora de inicio</p>
+											<p className="text-red-500 mb-2">
+                        La hora de fin no puede corresponder a una hora anterior
+                        a la hora de inicio
+											</p>
 										</div>
 									)}
 									<div className="flex">
@@ -472,7 +563,12 @@ export default function CrearTorneo() {
 												setNombreEvento(event.target.value);
 											}}
 											type="text"
-											className={(nombreEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'}
+											className={
+												(nombreEventoVacio()
+													? ' border-[3px] border-red-700 '
+													: '') +
+                        'bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black'
+											}
 											id="texto-general"
 										/>
 									</div>
@@ -483,20 +579,30 @@ export default function CrearTorneo() {
 												setDescripcionEvento(event.target.value);
 											}}
 											rows={3}
-											className={(descripcionEventoVacio() ? ' border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full mx-5 my-2 p-2 text-black'}
+											className={
+												(descripcionEventoVacio()
+													? ' border-[3px] border-red-700 '
+													: '') +
+                        'bg-neutral-200 rounded-lg w-full mx-5 my-2 p-2 text-black'
+											}
 											id="texto-general"
 											placeholder="Descripcion general del evento"
 										/>
 									</div>
 									{fechaRepetida && (
-										<p className='text-center p-4 text-[125%] text-red-600'>Ya hay un evento programado para esa fecha</p>
+										<p className="text-center p-4 text-[125%] text-red-600">
+                      Ya hay un evento programado para esa fecha
+										</p>
 									)}
 								</div>
 								<div className="w-1/2 pr-4">
 									<div className="flex">
 										<div className="w-1/3 mx-2">
-											<div className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white" id="texto-general">
-										Categoría
+											<div
+												className="w-full h-10 mx-5 my-2 flex items-center justify-center text-white"
+												id="texto-general"
+											>
+                        Categoría
 											</div>
 										</div>
 										<select
@@ -523,22 +629,29 @@ export default function CrearTorneo() {
 												setNuevoParticipante1(event.target.value);
 											}}
 											required
-											disabled = {categoriaVacia()}
+											disabled={categoriaVacia()}
 											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
 											id="texto-general"
 											value={nuevoParticipante1}
 										>
 											<option value="-">Selecciona un participante</option>
 											{filteredUsuarios.map((usuario) => (
-												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante2}>
+												<option
+													key={usuario._id}
+													value={usuario._id}
+													disabled={usuario._id === nuevoParticipante2}
+												>
 													{usuario.name} {usuario.lastName}
 												</option>
 											))}
 										</select>
 									</div>
 									<div className="flex justify-center">
-										<h1 className="text-center text-[250%]" id="titulos-grandes">
-									VS
+										<h1
+											className="text-center text-[250%]"
+											id="titulos-grandes"
+										>
+                      VS
 										</h1>
 									</div>
 									<div className="flex">
@@ -547,14 +660,18 @@ export default function CrearTorneo() {
 												setNuevoParticipante2(event.target.value);
 											}}
 											required
-											disabled = {categoriaVacia()}
+											disabled={categoriaVacia()}
 											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
 											id="texto-general"
 											value={nuevoParticipante2}
 										>
 											<option value="-">Selecciona otro participante</option>
 											{filteredUsuarios.map((usuario) => (
-												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante1}>
+												<option
+													key={usuario._id}
+													value={usuario._id}
+													disabled={usuario._id === nuevoParticipante1}
+												>
 													{usuario.name} {usuario.lastName}
 												</option>
 											))}
@@ -563,26 +680,69 @@ export default function CrearTorneo() {
 									<div className="flex">
 										<textarea
 											required
-											value={combates.map((combat) => `${usuarios.find((user) => user._id === combat.boxer1)?.name} vs ${usuarios.find((user) => user._id === combat.boxer2)?.name}`).join('\n')}
+											value={combates
+												.map(
+													(combat) =>
+														`${
+															usuarios.find(
+																(user) => user._id === combat.boxer1
+															)?.name
+														} vs ${
+															usuarios.find(
+																(user) => user._id === combat.boxer2
+															)?.name
+														}`
+												)
+												.join('\n')}
 											readOnly
-											className={(combatesVacios() ? 'border-[3px] border-red-700 ' : '') + 'bg-neutral-200 rounded-lg w-full h-40 mx-5 my-5 p-2 text-black'}
+											className={
+												(combatesVacios()
+													? 'border-[3px] border-red-700 '
+													: '') +
+                        'bg-neutral-200 rounded-lg w-full h-40 mx-5 my-5 p-2 text-black'
+											}
 											id="texto-general"
 											placeholder="Combates"
 										/>
 									</div>
 									<div className="flex justify-center items-center mt-4">
-										<button type="button" disabled={nuevoParticipante1Vacio() || nuevoParticipante2Vacio()} onClick={() => handlerSetParticipantes(false)} className={(nuevoParticipante1Vacio() || nuevoParticipante2Vacio() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' text-white rounded p-2'}>
-									Agregar Combate
+										<button
+											type="button"
+											disabled={
+												nuevoParticipante1Vacio() || nuevoParticipante2Vacio()
+											}
+											onClick={() => handlerSetParticipantes(false)}
+											className={
+												(nuevoParticipante1Vacio() || nuevoParticipante2Vacio()
+													? styles.buttonDisabled + ' cursor-not-allowed'
+													: styles.button) + ' text-white rounded p-2'
+											}
+										>
+                      Agregar Combate
 										</button>
 									</div>
 								</div>
 							</div>
 							<div className="flex justify-center items-center mt-4">
-								<button onClick={() => handlerSubmit()} type="button" className={(!botonValido() ? styles.buttonDisabled + ' cursor-not-allowed' : styles.button) + ' text-white rounded p-2 mx-5'}>
-							Agregar Torneo
+								<button
+									onClick={() => handlerSubmit()}
+									type="button"
+									className={
+										(!botonValido()
+											? styles.buttonDisabled + ' cursor-not-allowed'
+											: styles.button) + ' text-white rounded p-2 mx-5'
+									}
+								>
+                  Agregar Torneo
 								</button>
-								<button type="button" onClick={handlerCancelar} className={styles.button + ' text-white rounded p-2 w-[130px]'}>
-							Cancelar
+								<button
+									type="button"
+									onClick={handlerCancelar}
+									className={
+										styles.button + ' text-white rounded p-2 w-[130px]'
+									}
+								>
+                  Cancelar
 								</button>
 							</div>
 						</form>
@@ -591,5 +751,4 @@ export default function CrearTorneo() {
 			)}
 		</>
 	);
-
 }
