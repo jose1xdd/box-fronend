@@ -37,8 +37,8 @@ export default function AdministracionAdmin() {
 			{logo != '' && (
 				<div>
 					<div className="container mx-auto mt-8">
-						<h1 className="text-center text-[400%]" id="titulos-grandes">
-              MENÚ DE ADMINISTRADOR
+						<h1 className="text-center text-[350%]" id="titulos-grandes">
+              Menú de administrador
 						</h1>
 						<div className="flex-col p-3 max-w-5xl mx-auto">
 							<div className="flex space-x-4">

@@ -196,7 +196,7 @@ export default function VerEvento() {
 
 						<div className='flex w-full'>
 							<div className="w-2/3 pr-4">
-								<h1 className='text-center text-[400%]' id='titulos-grandes'>Información del evento</h1>
+								<h1 className='text-center text-[350%]' id='titulos-grandes'>Información del evento</h1>
 								<div className="flex">
 									<div className="w-1/3 mx-2">
 										<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white text-end'} id='texto-general'>
@@ -273,7 +273,7 @@ export default function VerEvento() {
 								{(eventInfo.type == 'Reunion') && (
 									<div className=" w-full  pr-4">
 										<div className='flex justify-center'>
-											<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
+											<h1 className='text-center text-[350%]' id='titulos-grandes'>Participantes</h1>
 										</div>
 										<div className="flex items-center justify-center h-[250px]">
 											<textarea
@@ -289,15 +289,15 @@ export default function VerEvento() {
 								{(eventInfo.type == 'Combate' && eventInfo.combats[0].status == 'En espera de resultados') && (
 									<div className=" w-full  pr-4">
 										<div className='flex justify-center'>
-											<h1 className='text-center text-[400%]' id='titulos-grandes'>Combatientes</h1>
+											<h1 className='text-center text-[350%]' id='titulos-grandes'>Combatientes</h1>
 										</div>
 										{eventInfo.combats.map((combat, index) => (
 											<div key={index} className="flex items-center justify-center mb-4">
-												<label className='border border-white rounded-lg text-center w-56'>
+												<label className='border-[2px] border-gray-500 rounded-lg text-center w-56'>
 													{combat.boxer1 ? combat.boxer1.name : 'Unknown'}  {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
 												</label>
 												<h1 className='p-4'>VS</h1>
-												<label className='border border-white rounded-lg text-center w-56'>
+												<label className='border-[2px] border-gray-500 rounded-lg text-center w-56'>
 													{combat.boxer2 ? combat.boxer2.name : 'Unknown'} {' '} {combat.boxer1 ? combat.boxer1.lastName : 'Unknown'}
 												</label>
 											</div>

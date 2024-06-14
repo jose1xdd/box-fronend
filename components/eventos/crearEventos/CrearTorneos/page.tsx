@@ -322,7 +322,7 @@ export default function CrearTorneo() {
 						<form onSubmit={handlerSubmit}>
 							<div className="flex">
 								<div className="w-2/3 pr-4">
-									<h1 className="text-center text-[400%]" id="titulos-grandes">
+									<h1 className="text-center text-[350%]" id="titulos-grandes">
 								Nuevo torneo
 									</h1>
 									<div className="flex">

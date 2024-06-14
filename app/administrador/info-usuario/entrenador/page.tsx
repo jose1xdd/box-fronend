@@ -72,7 +72,7 @@ export default function InfoEntrenador() {
 			{datosEntrenador.name == '' && (<LoaderContenido/>)}
 			{datosEntrenador.name != '' && (
 				<div className="container mx-auto mt-8">
-					<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN ENTRENADOR</h1>
+					<h1 className='text-center text-[350%]' id='titulos-grandes'>Información entrenador</h1>
 					<div className='flex items-center justify-center'>
 						{datosEntrenador.image != '' && <img src={datosEntrenador.image} className='w-40 h-40'></img>}
 					</div>

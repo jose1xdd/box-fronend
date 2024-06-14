@@ -133,7 +133,7 @@ export default function Comunicados() {
 			{usuarios.length == 0 && (<LoaderContenido/>)}
 			{usuarios.length != 0 && (
 				<div className="container mx-auto mt-8">
-					<h1 className='text-center text-[400%]' id='textos-grandes'>COMUNICADOS</h1>
+					<h1 className='text-center text-[350%]' id='titulos-grandes'>Comunicados</h1>
 					<form>
 						<div className="p-4 max-w-5xl mx-auto flex">
 							<div className="w-2/3 pr-4">

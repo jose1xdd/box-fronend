@@ -223,7 +223,7 @@ export default function CrearConvocatoria() {
 						<form onSubmit={handlerSubmit}>
 							<div className='flex'>
 								<div className="w-2/3 pr-4">
-									<h1 className='text-center text-[400%]' id='titulos-grandes'>Nueva Convocatoria</h1>
+									<h1 className='text-center text-[350%]' id='titulos-grandes'>Nueva Convocatoria</h1>
 									<div className="flex">
 										<div className="w-1/3 mx-2">
 											<div className={styles.label + ' w-full h-10 mx-5 my-2 flex items-center justify-center text-white'} id='texto-general'>
@@ -318,7 +318,7 @@ export default function CrearConvocatoria() {
 								</div>
 								<div className="w-1/2 pr-4">
 									<div className='flex justify-center'>
-										<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
+										<h1 className='text-center text-[350%]' id='titulos-grandes'>Participantes</h1>
 									</div>
 									<div className="flex">
 										<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className= 'bg-white text-black border-[3px] border-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black border-[3px] border-black' id='texto-general' placeholder='Entrenador encargado'>

@@ -52,22 +52,22 @@ export default function TableCategorias({ categorias, cargarCategorias }:props) 
 					<thead>
 						<tr>
 							<th
-								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%]"
 								id="titulos-grandes"
 							>
-								CATEGORÍA
+								Categoría
 							</th>
 							<th
-								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%]"
 								id="titulos-grandes"
 							>
-								RANGO DE PESO (KG)
+								Rango de peso (KG)
 							</th>
 							<th
-								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
+								className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%]"
 								id="titulos-grandes"
 							>
-								ACCIONES
+								Acciones
 							</th>
 						</tr>
 					</thead>

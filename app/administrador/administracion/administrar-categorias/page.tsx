@@ -156,8 +156,8 @@ export default function AdministrarCategorias() {
 		<>
 			{categorias.length == 0 && (<LoaderContenido></LoaderContenido>)}
 			{categorias.length != 0 && (<div><div className='w-[80%] mx-auto mt-[6%]'>
-				<h1 className='text-[300%]' id='textos-grandes'>
-					CATEGORÍAS
+				<h1 className='text-[350%]' id='titulos-grandes'>
+					Categorías
 				</h1>
 			</div>
 			<Tabla categorias={categorias} cargarCategorias={()=>cargarCategorias()}/>
@@ -165,7 +165,7 @@ export default function AdministrarCategorias() {
 				<form className='flex col' onSubmit={handleSubmit}>
 					<div className='w-2/4'>
 						<div className='flex items-center justify-center'>
-							<label className='block mb-2 tex-center text-[150%]' id='titulos-grandes'>NOMBRE DE LA CATEGORÍA</label>
+							<label className='block mb-2 tex-center text-[150%]' id='titulos-grandes'>Nombre de la categoría</label>
 						</div>
 						<input
 							type='text'
@@ -179,7 +179,7 @@ export default function AdministrarCategorias() {
 					</div>
 					<div className='w-1/4 mx-4'>
 						<div className='flex items-center justify-center'>
-							<label className='block mb-2 tex-center text-[150%]' id='titulos-grandes'>MIN</label>
+							<label className='block mb-2 tex-center text-[150%]' id='titulos-grandes'>Min</label>
 						</div>
 						<div className='flex items-center'>
 							<button
@@ -208,7 +208,7 @@ export default function AdministrarCategorias() {
 					</div>
 					<div className='w-1/4'>
 						<div className='flex items-center justify-center'>
-							<label className='block mb-2 tex-center text-[150%]' id='titulos-grandes'>MAX</label>
+							<label className='block mb-2 tex-center text-[150%]' id='titulos-grandes'>Max</label>
 						</div>
 						<div className='flex items-center'>
 							<button

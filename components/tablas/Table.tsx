@@ -139,12 +139,12 @@ const Table: React.FC<TableProps> = ({ rol, linkVer, linkEditar }) => {
 			{users.length == 0 && (<LoaderContenido/>)}
 			{users.length != 0 && (
 				<div className="w-80% mx-auto">
-					<h1 className="text-5xl text-black mb-4">USUARIOS</h1>
+					<h1 className="text-[350%] text-black" id='titulos-grandes'>Usuarios</h1>
 					<input
 						type="text"
 						placeholder="Filtrar por nombre"
 						onChange={handleSearch}
-						className="p-2 rounded-[18px] border-[3px] border-black focus:outline-none mb-4 text-black"
+						className="p-2 rounded-[18px] w-[30%] text-center border-[3px] border-black focus:outline-none mb-4 text-black"
 						id='texto-general'
 					/>
 					<table className="w-full">

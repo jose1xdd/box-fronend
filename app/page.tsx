@@ -17,12 +17,12 @@ export default async function Home() {
 		<>
 			<NavbarHome />
 			<div className="container mx-auto mt-8">
-				<h1 className='text-black text-center text-[500%]' id='titulos-grandes' style={{ textShadow: '3px 3px 0 #cd1919' }}>LIGA DE BOXEO DE NORTE DE SANTANDER</h1>
+				<h1 className='text-black text-center text-[500%]' id='titulos-grandes' style={{ textShadow: '3px 3px 0 #cd1919' }}>Liga de boxeo de Norte de Santander</h1>
 
 				<div className="p-4 max-w-5xl mx-auto my-5">
 					<div className="flex">
 						<div className="w-2/3 pr-4">
-							<h2 className='text-[380%] text-black' id='titulos-grandes'>MISIÓN</h2>
+							<h2 className='text-[380%] text-black' id='titulos-grandes'>Misión</h2>
 							<div className='bg-white rounded-lg w-full p-5 flex items-center justify-center text-black border border-black' id='texto-general'>
 								{information?.mision}
 							</div>
@@ -50,7 +50,7 @@ export default async function Home() {
 							/>
 						</div>
 						<div className="w-2/3 pr-4">
-							<h2 className='text-[380%] text-black' id='titulos-grandes'>VISIÓN</h2>
+							<h2 className='text-[380%] text-black' id='titulos-grandes'>Visión</h2>
 							<div className='bg-white rounded-lg w-full p-5 flex items-center justify-center text-black text-black border border-black' id='texto-general'>
 								{information?.vision}
 							</div>

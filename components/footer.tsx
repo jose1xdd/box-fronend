@@ -14,8 +14,8 @@ export default function Footer(){
 					<p>Desarrollado por: TDSF</p>
 				</div>
 				<div className=' text-3xl text-white' id='titulos-grandes'>
-					<p>LIGA DE BOXEO DE</p>
-					<p>NORTE DE SANTANDER</p>
+					<p>Liga de boxeo de</p>
+					<p>Norte de Santander</p>
 				</div>
 				<div className='grid grid-rows-2 items-center justify-center text-white' id='titulos-pequenos'>
 					<a href="https://wa.me/3108107341" target="Blank">+57 310 810 7341</a>

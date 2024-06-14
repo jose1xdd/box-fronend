@@ -68,7 +68,7 @@ export default function CrearClub() {
 	return (
 		<>
 			<div className="container mx-auto mt-8">
-				<h1 className='text-center text-[400%]' id='titulos-grandes'>CREAR CLUB</h1>
+				<h1 className='text-center text-[350%]' id='titulos-grandes'>Crear club</h1>
 				<div className='flex items-center justify-center'>
 					<svg
 						className="my-1"

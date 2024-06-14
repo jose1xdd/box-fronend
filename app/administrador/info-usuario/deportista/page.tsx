@@ -159,7 +159,7 @@ export default function InfoDeportista() {
 			{!ready() && (<LoaderContenido/>)}
 			{ready() && (
 				<div className="container mx-auto mt-8">
-					<h1 className='text-center text-[400%]' id='titulos-grandes'>INFORMACIÓN DEPORTISTA</h1>
+					<h1 className='text-center text-[350%]' id='titulos-grandes'>Información deportista</h1>
 					<div className='flex items-center justify-center'>
 						{datosDeportista.image != '' && <img src={datosDeportista.image} className='w-72 h-72'></img>}
 					</div>

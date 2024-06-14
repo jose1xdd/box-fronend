@@ -126,15 +126,15 @@ export default function RolesAdmin() {
 	return (
 		<>
 			<div className="container mx-auto mt-8">
-				<h1 className="text-center text-[400%]" id="titulos-grandes">
-					ROLES
+				<h1 className="text-center text-[350%]" id="titulos-grandes">
+					Roles
 				</h1>
 				<div className="p-4 max-w-5xl mx-auto flex">
 					<div className="w-2/3">
 						<table className="w-full">
 							<thead>
 								<tr>
-									<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>rol</th>
+									<th className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest" id='titulos-grandes'>Rol</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -151,7 +151,7 @@ export default function RolesAdmin() {
 							<div className="flex items-center">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL ROL
+										Nombre del rol
 									</h3>
 									<input
 										type="text"
@@ -180,7 +180,7 @@ export default function RolesAdmin() {
 							<div className="flex items-center mt-5">
 								<div className="w-full">
 									<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL ROL A ELIMINAR
+										Nombre del rol a eliminar
 									</h3>
 									<select
 										required

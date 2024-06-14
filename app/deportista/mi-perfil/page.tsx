@@ -197,8 +197,8 @@ export default function Home() {
 			{!cargado && <LoaderContenido />}
 			{cargado && (
 				<div className="container mx-auto mt-8">
-					<h1 className="text-center text-[400%]" id="titulos-grandes">
-            MI PERFIL
+					<h1 className="text-center text-[350%]" id="titulos-grandes">
+            Mi perfil
 					</h1>
 					<div className="p-4 max-w-5xl mx-auto flex">
 						<div className="w-2/3 pr-4">

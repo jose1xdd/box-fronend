@@ -115,7 +115,7 @@ export default function EditarClub() {
 			)}
 			{cargado && (
 				<div className="container mx-auto mt-8">
-					<h1 className='text-center text-[400%]' id='titulos-grandes'>EDITAR CLUB</h1>
+					<h1 className='text-center text-[350%]' id='titulos-grandes'>Editar club</h1>
 					<div className='flex items-center justify-center'>
 						<svg
 							className="my-1"

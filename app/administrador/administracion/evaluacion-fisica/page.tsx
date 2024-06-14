@@ -126,8 +126,8 @@ export default function EvaluacionFisicaAdmin() {
 			{criteriosData.length != 0 && (
 				<div>
 					<div className="container mx-auto mt-8">
-						<h1 className="text-center text-[400%]" id="titulos-grandes">
-					EVALUACIÓN FÍSICA
+						<h1 className="text-center text-[350%] text-" id="titulos-grandes">
+					Evaluación física
 						</h1>
 						<div className="p-4 max-w-5xl mx-auto flex">
 							<div className="w-2/3">
@@ -180,7 +180,7 @@ export default function EvaluacionFisicaAdmin() {
 									<div className="flex items-center mt-5">
 										<div className="w-full">
 											<h3 className="text-center text-[200%]" id="titulos-grandes">
-										NOMBRE DEL CRITERIO
+										Nombre del criterio
 											</h3>
 											<select
 												required

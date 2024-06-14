@@ -77,7 +77,7 @@ export default function TableClubes() {
 			{clubes.length != 0 && (
 				<div>
 					<div className='w-[80%] mx-auto mt-[6%]'>
-						<h1 className='text-[300%]' id='textos-grandes'>CLUBES</h1>
+						<h1 className='text-[350%]' id='titulos-grandes'>Clubes</h1>
 					</div>
 					<div className='flex justify-center items-center'>
 						<table className="w-[80%] mx-auto">
@@ -87,13 +87,13 @@ export default function TableClubes() {
 										className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 										id="titulos-grandes"
 									>
-                                CLUB
+                                Club
 									</th>
 									<th
 										className="border-[#1e1e1e] border-[4px] p-3 bg-[#cd1919] text-white text-center text-[150%] tracking-widest"
 										id="titulos-grandes"
 									>
-                                ACCIONES
+                                Acciones
 									</th>
 								</tr>
 							</thead>

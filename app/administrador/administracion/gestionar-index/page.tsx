@@ -83,14 +83,14 @@ export default function GestionarIndex() {
 			{!ready() && (<LoaderContenido/>)}
 			{ready() && (
 				<>
-					<h1 className="text-center text-[400%]" id="titulos-grandes">
-					INFORMACIÓN DEL INDEX
+					<h1 className="text-center text-[350%]" id="titulos-grandes">
+					Información del index
 					</h1>
 					<form>
 						<div className="max-w-5xl mx-auto flex col justify-center items-center">
 							<div className="w-2/4 mx-4">
 								<h3 className="text-[200%]" id="titulos-grandes">
-								MISIÓN
+								Misión
 								</h3>
 								<textarea
 									name="mision"
@@ -103,7 +103,7 @@ export default function GestionarIndex() {
 							</div>
 							<div className="w-2/4 mx-4">
 								<h3 className="text-[200%]" id="titulos-grandes">
-								VISIÓN
+								Visión
 								</h3>
 								<textarea
 									name="vision"
