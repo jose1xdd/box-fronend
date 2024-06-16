@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 import styles from '@/public/css/styles.module.scss';
+import Select from 'react-select';
 interface User {
     _id: string;
     name: string;
@@ -210,6 +211,16 @@ export default function CrearConvocatoria() {
 		return (selectedEntrenador !== '' && selectedEntrenador !== 'Selecciona un entrenador') && (fechaEvento !== '' && !fechainvalida) && (horaInicio !== '' && horaFin !== '' && !horaInvalida) && nombreEvento !== '' && descripcionEvento !== '' && (correos !== '');
 	};
 
+	const opcionesEntrenadores = entrenadores.map((entrenador) => ({
+		value: entrenador._id,
+		label: `${entrenador.name} ${entrenador.lastName}`
+	  }));
+
+	  const opcionesCombatientes = usuarios.map((usuario) => ({
+		value: usuario.email,
+		label: usuario.name + ' ' + usuario.lastName + ' (' + usuario.email + ')'
+	}));
+
 	return (
 		<>
 			{!ready() && (<LoaderContenido/>)}
@@ -226,14 +237,34 @@ export default function CrearConvocatoria() {
 										Entrenador encargado
 											</div>
 										</div>
-										<select onChange={(event)=>{setSelectedEntrenador(event.target.value);}} required className={`${(selectedEntrenador == '' || selectedEntrenador === 'Selecciona un entrenador') ? 'border-[3px] border-red-700' : ''} bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black`} id='texto-general' placeholder='Entrenador encargado'>
-											<option>Selecciona un entrenador</option>
-											{entrenadores.map((entrenador) => (
-												<option key={entrenador._id} value={entrenador._id} placeholder='Entrenador encargado'>
-													{entrenador.name + entrenador.lastName + ' - ' + entrenador.cedula}
-												</option>
-											))}
-										</select>
+										<Select
+											className='"bg-white text-black w-full h-10 mx-5 my-2 pl-1 text-black"'
+											id="texto-general"
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											placeholder='Selecciona un entrenador'
+											options={opcionesEntrenadores}
+											value={opcionesEntrenadores.find((opcion) => opcion.value === selectedEntrenador)}
+											onChange={(selectedOption) => setSelectedEntrenador(selectedOption?.value || '')}
+										/>
 									</div>
 									<div className="flex">
 										<div className="w-1/3 mx-2">
@@ -317,14 +348,38 @@ export default function CrearConvocatoria() {
 										<h1 className='text-center text-[400%]' id='titulos-grandes'>Participantes</h1>
 									</div>
 									<div className="flex">
-										<select onChange={(event)=>{setNuevoParticipante((event.target.value));}} required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black' id='texto-general' placeholder='Entrenador encargado'>
-											<option value=' '>Selecciona un usuario</option>
-											{usuarios.map((usuario) => (
-												<option key={usuario.email} value={usuario.email} placeholder='Entrenador encargado'>
-													{usuario.email}
-												</option>
-											))}
-										</select>
+										<Select
+											className="text-black w-full h-10 mx-5 my-2 pl-1"
+											id="texto-general"
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+												menu: (baseStyles) => ({
+													...baseStyles,
+													borderRadius: '12px'
+												}),
+											}}
+											placeholder='Selecciona un deportista'
+											options={opcionesCombatientes}
+											value={opcionesCombatientes.find((opcion) => opcion.value === nuevoParticipante)}
+											onChange={(selectedOption) => setNuevoParticipante(selectedOption?.value || '')}
+										/>
 									</div>
 									<div className="flex items-center justify-center">
 										<textarea

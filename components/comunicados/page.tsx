@@ -5,6 +5,7 @@ import router from 'next/router';
 import { useState, useEffect } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 import styles from '@/public/css/styles.module.scss';
+import Select from 'react-select';
 
 interface User {
     _id: string;
@@ -143,14 +144,40 @@ export default function Comunicados() {
 										</div>
 									</div>
 									<div className='w-2/3 mx-2'>
-										<select onChange={(event)=>{setSelectedUsuario(event.target.value);}}required className='bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black text-center' id='texto-general' placeholder='Seleccionar usuario'>
-											<option value="-">Selecciona un usuario</option>
-											{usuarios.map((usuario) => (
-												<option key={usuario.email} value={usuario.email} placeholder=''>
-													{usuario.name + usuario.lastName}
-												</option>
-											))}
-										</select>
+										<Select
+											className='w-full h-10 mx-3 my-2 pl-4 text-black text-center'
+											id='texto-general'
+											options={usuarios.map((usuario) => ({
+												value: usuario.email,
+												label: `${usuario.name} ${usuario.lastName}`
+											}))}
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											onChange={(selectedOption) => {
+												if (selectedOption) {
+													setSelectedUsuario(selectedOption.value);
+												}
+											}}
+											placeholder='Selecciona un usuario'
+										/>
 									</div>
 								</div>
 								<div className="flex">
