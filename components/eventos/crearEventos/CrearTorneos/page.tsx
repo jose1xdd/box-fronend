@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 import styles from '@/public/css/styles.module.scss';
+import Select from 'react-select';
 
 interface User {
   _id: string;
@@ -50,9 +51,7 @@ export default function CrearTorneo() {
 	const [nuevoParticipante2, setNuevoParticipante2] = useState('');
 	const [selectedUsuarios, setSelectedUsuarios] = useState<string[]>([]);
 	const [selectedCategoria, setSelectedCategoria] = useState<string>('');
-	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>(
-		[]
-	);
+	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>([]);
 	const [combates, setCombates] = useState<Combat[]>([]);
 	const [fechaRepetida, setFechaRepetida] = useState(false);
 	const [misDatos, setMisDatos] = useState<User>();
@@ -140,49 +139,13 @@ export default function CrearTorneo() {
 		}
 	};
 
-	const esAdmin = () => {
-		const datos = localStorage.getItem('userData');
-		let rol;
-		if (datos != null) {
-			rol = JSON.parse(datos).role;
-		}
-		if (rol === 'Admin') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	const cargarMisDatos = () => {
-		const datos = localStorage.getItem('datosUsuario');
-		let nombre;
-		if (datos != null) {
-			nombre = JSON.parse(datos).nombre + ' ' + JSON.parse(datos).apellido;
-		}
-		const datos2 = localStorage.getItem('userData');
-		let id;
-		if (datos2 != null) {
-			id = JSON.parse(datos2).userId;
-		}
-
-		if (nombre !== undefined && id !== undefined) {
-			const newUser: User = {
-				_id: id,
-				name: nombre,
-				lastName: '',
-			};
-			setMisDatos(newUser);
-		}
-	};
-
 	useEffect(() => {
 		cargarEntrenadores();
 		cargarUsuarios();
 		cargarCategorias();
-		cargarMisDatos();
 	}, []);
 
-	useEffect(() => {
+	useEffect(()=>{
 		//console.log(selectedEntrenador);
 		//console.log(fechaEvento);
 		//console.log(combates);
@@ -190,17 +153,10 @@ export default function CrearTorneo() {
 
 	useEffect(() => {
 		if (selectedCategoria) {
-			const categoriaSeleccionada = categorias.find(
-				(categoria) => categoria._id === selectedCategoria
-			);
+			const categoriaSeleccionada = categorias.find((categoria) => categoria._id === selectedCategoria);
 			if (categoriaSeleccionada) {
 				const { minWeight, maxWeight } = categoriaSeleccionada;
-				setFilteredUsuarios(
-					usuarios.filter(
-						(usuario) =>
-							usuario.weight >= minWeight && usuario.weight <= maxWeight
-					)
-				);
+				setFilteredUsuarios(usuarios.filter((usuario) => usuario.weight >= minWeight && usuario.weight <= maxWeight));
 			}
 		}
 	}, [selectedCategoria, categorias, usuarios]);
@@ -240,23 +196,33 @@ export default function CrearTorneo() {
 	const handlerSetParticipantes = (eliminar: boolean) => {
 		let users = [...selectedUsuarios];
 		const indice = users.indexOf(nuevoParticipante1);
+
+		// Verificar si el participante ya está en algún combate como boxer1 o boxer2
+		const participanteYaEnCombate = combates.some((combat) =>
+			combat.boxer1 === nuevoParticipante1 || combat.boxer2 === nuevoParticipante1 ||
+			combat.boxer1 === nuevoParticipante2 || combat.boxer2 === nuevoParticipante2
+		);
+
 		if (eliminar) {
 			if (indice !== -1) {
 				users.splice(indice, 1);
 			}
 		} else {
-			if (indice === -1) {
+			if (indice === -1 && !participanteYaEnCombate) {
 				users.push(nuevoParticipante1);
 			}
 		}
+
 		setSelectedUsuarios(users);
 
-		// Guardar el combate en el estado de combates
-		const nuevoCombate: Combat = {
-			boxer1: nuevoParticipante1,
-			boxer2: nuevoParticipante2,
-		};
-		setCombates([...combates, nuevoCombate]);
+		// Guardar el combate en el estado de combates si no existe aún
+		if (!participanteYaEnCombate) {
+			const nuevoCombate: Combat = {
+				boxer1: nuevoParticipante1,
+				boxer2: nuevoParticipante2,
+			};
+			setCombates([...combates, nuevoCombate]);
+		}
 
 		// Imprimir el arreglo de combates en la consola
 	};
@@ -283,29 +249,15 @@ export default function CrearTorneo() {
 			sessiontoken: token,
 		};
 
-		let body;
-
-		if (esAdmin()) {
-			body = {
-				name: nombreEvento,
-				description: descripcionEvento,
-				trainer: selectedEntrenador,
-				date: fechaEvento,
-				startsAt: horaInicio,
-				endsAt: horaFin,
-				combats: combates,
-			};
-		} else {
-			body = {
-				name: nombreEvento,
-				description: descripcionEvento,
-				trainer: misDatos?._id,
-				date: fechaEvento,
-				startsAt: horaInicio,
-				endsAt: horaFin,
-				combats: combates,
-			};
-		}
+		const body = {
+			name: nombreEvento,
+			description: descripcionEvento,
+			trainer: selectedEntrenador,
+			date: fechaEvento,
+			startsAt: horaInicio,
+			endsAt: horaFin,
+			combats: combates
+		};
 		let rol;
 		let route;
 		if (datos !== null) {
@@ -314,9 +266,7 @@ export default function CrearTorneo() {
 		if (rol === 'Entrenador') route = 'entrenador';
 		else route = 'administrador';
 		try {
-			await axios.post(`${apiEndpoint}/event/battle`, body, {
-				headers: headers,
-			});
+			let response = await axios.post(`${apiEndpoint}/event/battle`, body, { headers: headers });
 			//console.log(response);
 			router.push('/' + route + '/calendario');
 		} catch (error) {
@@ -326,9 +276,7 @@ export default function CrearTorneo() {
 	};
 
 	const ready = () => {
-		return (
-			usuarios.length != 0 && entrenadores.length != 0 && categorias.length != 0
-		);
+		return usuarios.length != 0 && entrenadores.length != 0 && categorias.length != 0;
 	};
 
 	const entrenadorSeleccionadoValido = () => {
@@ -337,7 +285,7 @@ export default function CrearTorneo() {
 	const fechaEventoVacio = () => {
 		return fechaEvento === '';
 	};
-	const horaInicioVacia = () => {
+	const horaInicioVacia = () =>{
 		return horaInicio === '';
 	};
 	const horaFinVacia = () => {
@@ -360,6 +308,51 @@ export default function CrearTorneo() {
 	};
 	const combatesVacios = () => {
 		return combates.length === 0;
+	};
+
+	const botonValido = () => {
+		return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
+	};
+
+	const opcionesEntrenadores = entrenadores.map((entrenador) => ({
+		value: entrenador._id,
+		label: `${entrenador.name} ${entrenador.lastName}`
+	  }));
+
+	  const opcionesCategorias = categorias.map((categoria) => ({
+		value: categoria._id,
+		label: categoria.name
+	}));
+
+	const opcionesCombatientes1 = filteredUsuarios.map((usuario) => ({
+		value: usuario._id,
+		label: usuario.name + ' ' + usuario.lastName
+	}));
+
+	const opcionesCombatientes2 = filteredUsuarios.map((usuario) => ({
+		value: usuario._id,
+		label: usuario.name + ' ' + usuario.lastName
+	}));
+
+	const opcionesFiltradas1 = opcionesCombatientes1.filter(
+		(opcion) => opcion.value !== nuevoParticipante2
+	);
+
+	const opcionesFiltradas2 = opcionesCombatientes2.filter(
+		(opcion) => opcion.value !== nuevoParticipante1
+	);
+
+	const esAdmin = () => {
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if (datos != null) {
+			rol = JSON.parse(datos).role;
+		}
+		if (rol === 'Admin') {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	const guessFechaInvalida = (fhoy: Date, fteclado: Date) => {
@@ -387,31 +380,6 @@ export default function CrearTorneo() {
 		else{setFechainvalida(true);}
 	};
 
-	const botonValido = () => {
-		if (esAdmin()) {
-			return (
-				entrenadorSeleccionadoValido() &&
-        !fechaEventoVacio() &&
-        !fechainvalida &&
-        !horaInicioVacia() &&
-        !horaFinVacia() &&
-        !nombreEventoVacio() &&
-        !descripcionEventoVacio() &&
-        !combatesVacios()
-			);
-		} else {
-			return (
-				!fechaEventoVacio() &&
-        !fechainvalida &&
-        !horaInicioVacia() &&
-        !horaFinVacia() &&
-        !nombreEventoVacio() &&
-        !descripcionEventoVacio() &&
-        !combatesVacios()
-			);
-		}
-	};
-
 	return (
 		<>
 			{!ready() && <LoaderContenido />}
@@ -434,23 +402,34 @@ export default function CrearTorneo() {
 											</div>
 										</div>
 										{esAdmin() && (
-											<select
-												onChange={(event) => {
-													setSelectedEntrenador(event.target.value);
-												}}
-												required
-												className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+											<Select
+												className='"bg-white text-black w-full h-10 mx-5 my-2 pl-1 text-black"'
 												id="texto-general"
-												placeholder="Entrenador encargado"
-												value={selectedEntrenador}
-											>
-												<option value="-">Selecciona un entrenador</option>
-												{entrenadores.map((entrenador) => (
-													<option key={entrenador._id} value={entrenador._id}>
-														{entrenador.name} {entrenador.lastName}
-													</option>
-												))}
-											</select>
+												placeholder = 'Selecciona un entrenador'
+												styles={{
+													option: (baseStyles, { isFocused, isSelected }) => ({
+														...baseStyles,
+														backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+														borderRadius: '10px',
+														':active': {
+															backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+														},
+													}),
+													control: (baseStyles, isFocused) => ({
+														...baseStyles,
+														borderColor: 'black',
+														borderRadius: '20px',
+														borderWidth: '3px',
+													}),
+													input: (baseStyles) => ({
+														...baseStyles,
+														textAlign: 'center'
+													}),
+												}}
+												options={opcionesEntrenadores}
+												value={opcionesEntrenadores.find((opcion) => opcion.value === selectedEntrenador)}
+												onChange={(selectedOption) => setSelectedEntrenador(selectedOption?.value || '')}
+											/>
 										)}
 										{!esAdmin() && (
 											<label
@@ -605,46 +584,73 @@ export default function CrearTorneo() {
                         Categoría
 											</div>
 										</div>
-										<select
-											onChange={(event) => {
-												setSelectedCategoria(event.target.value);
-											}}
-											required
-											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											className=" w-full h-10 mx-5 my-2 pl-1 text-black"
 											id="texto-general"
-											placeholder="Categoría"
-											value={selectedCategoria}
-										>
-											<option value="-">Selecciona una categoría</option>
-											{categorias.map((categoria) => (
-												<option key={categoria._id} value={categoria._id}>
-													{categoria.name}
-												</option>
-											))}
-										</select>
+											placeholder='Selecciona una categoría'
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											options={opcionesCategorias}
+											value={opcionesCategorias.find((opcion) => opcion.value === selectedCategoria)}
+											onChange={(selectedOption) => {
+												setSelectedCategoria(selectedOption?.value || '');
+												setNuevoParticipante1('-');
+												setNuevoParticipante2('-');
+											}}
+										/>
 									</div>
 									<div className="flex">
-										<select
-											onChange={(event) => {
-												setNuevoParticipante1(event.target.value);
-											}}
-											required
-											disabled={categoriaVacia()}
-											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											isDisabled={categoriaVacia() ? true : false}
+											className="text-black w-full h-10 mx-5 my-2 pl-1"
 											id="texto-general"
-											value={nuevoParticipante1}
-										>
-											<option value="-">Selecciona un participante</option>
-											{filteredUsuarios.map((usuario) => (
-												<option
-													key={usuario._id}
-													value={usuario._id}
-													disabled={usuario._id === nuevoParticipante2}
-												>
-													{usuario.name} {usuario.lastName}
-												</option>
-											))}
-										</select>
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+												menu: (baseStyles) => ({
+													...baseStyles,
+													borderRadius: '12px'
+												}),
+											}}
+											placeholder={categoriaVacia() ? 'Primero selecciona una categoría' : 'Selecciona un combatiente'}
+											options={opcionesFiltradas1}
+											value={opcionesFiltradas1.find((opcion) => opcion.value === nuevoParticipante1)}
+											onChange={(selectedOption) => setNuevoParticipante1(selectedOption?.value || '')}
+										/>
 									</div>
 									<div className="flex justify-center">
 										<h1
@@ -655,27 +661,35 @@ export default function CrearTorneo() {
 										</h1>
 									</div>
 									<div className="flex">
-										<select
-											onChange={(event) => {
-												setNuevoParticipante2(event.target.value);
-											}}
-											required
-											disabled={categoriaVacia()}
-											className="bg-neutral-200 rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											isDisabled={categoriaVacia() ? true : false}
+											className="text-black w-full h-10 mx-5 my-2 pl-1"
 											id="texto-general"
-											value={nuevoParticipante2}
-										>
-											<option value="-">Selecciona otro participante</option>
-											{filteredUsuarios.map((usuario) => (
-												<option
-													key={usuario._id}
-													value={usuario._id}
-													disabled={usuario._id === nuevoParticipante1}
-												>
-													{usuario.name} {usuario.lastName}
-												</option>
-											))}
-										</select>
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											placeholder={categoriaVacia() ? 'Primero selecciona una categoría' : 'Selecciona un combatiente'}
+											options={opcionesFiltradas2}
+											value={opcionesFiltradas2.find((opcion) => opcion.value === nuevoParticipante2)}
+											onChange={(selectedOption) => setNuevoParticipante2(selectedOption?.value || '')}
+										/>
 									</div>
 									<div className="flex">
 										<textarea
