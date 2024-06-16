@@ -363,6 +363,7 @@ export default function CrearTorneo() {
 										<Select
 											className='"bg-white text-black w-full h-10 mx-5 my-2 pl-1 text-black"'
 											id="texto-general"
+											placeholder = 'Selecciona un entrenador'
 											styles={{
 												option: (baseStyles, { isFocused, isSelected }) => ({
 													...baseStyles,
