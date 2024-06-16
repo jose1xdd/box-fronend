@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 import kevin from '@/public/css/styles.module.scss';
 import styles from '@/app/administrador/css/profiles.module.css';
+import Select from 'react-select';
 
 interface User {
   _id: string;
@@ -313,6 +314,34 @@ export default function CrearTorneo() {
 		return entrenadorSeleccionadoValido() && !fechaEventoVacio() && !fechainvalida && !horaInicioVacia() && !horaFinVacia() && !nombreEventoVacio() && !descripcionEventoVacio() && !combatesVacios();
 	};
 
+	const opcionesEntrenadores = entrenadores.map((entrenador) => ({
+		value: entrenador._id,
+		label: `${entrenador.name} ${entrenador.lastName}`
+	  }));
+
+	  const opcionesCategorias = categorias.map((categoria) => ({
+		value: categoria._id,
+		label: categoria.name
+	}));
+
+	const opcionesCombatientes1 = filteredUsuarios.map((usuario) => ({
+		value: usuario._id,
+		label: usuario.name + ' ' + usuario.lastName
+	}));
+
+	const opcionesCombatientes2 = filteredUsuarios.map((usuario) => ({
+		value: usuario._id,
+		label: usuario.name + ' ' + usuario.lastName
+	}));
+
+	const opcionesFiltradas1 = opcionesCombatientes1.filter(
+		(opcion) => opcion.value !== nuevoParticipante2
+	);
+
+	const opcionesFiltradas2 = opcionesCombatientes2.filter(
+		(opcion) => opcion.value !== nuevoParticipante1
+	);
+
 	return (
 		<>
 			{!ready() && (<LoaderContenido/>)}
@@ -331,23 +360,34 @@ export default function CrearTorneo() {
 										Entrenador encargado
 											</div>
 										</div>
-										<select
-											onChange={(event) => {
-												setSelectedEntrenador(event.target.value);
-											}}
-											required
-											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											className='"bg-white text-black w-full h-10 mx-5 my-2 pl-1 text-black"'
 											id="texto-general"
-											placeholder="Entrenador encargado"
-											value={selectedEntrenador}
-										>
-											<option value="-">Selecciona un entrenador</option>
-											{entrenadores.map((entrenador) => (
-												<option key={entrenador._id} value={entrenador._id}>
-													{entrenador.name} {entrenador.lastName}
-												</option>
-											))}
-										</select>
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											options={opcionesEntrenadores}
+											value={opcionesEntrenadores.find((opcion) => opcion.value === selectedEntrenador)}
+											onChange={(selectedOption) => setSelectedEntrenador(selectedOption?.value || '')}
+										/>
+
 									</div>
 									<div className="flex">
 										<div className="w-1/3 mx-2">
@@ -449,42 +489,75 @@ export default function CrearTorneo() {
 										Categoría
 											</div>
 										</div>
-										<select
-											onChange={(event) => {
-												setSelectedCategoria(event.target.value);
-											}}
-											required
-											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											className=" w-full h-10 mx-5 my-2 pl-1 text-black"
 											id="texto-general"
-											placeholder="Categoría"
-											value={selectedCategoria}
-										>
-											<option value="-">Selecciona una categoría</option>
-											{categorias.map((categoria) => (
-												<option key={categoria._id} value={categoria._id}>
-													{categoria.name}
-												</option>
-											))}
-										</select>
+											placeholder='Selecciona una categoría'
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											options={opcionesCategorias}
+											value={opcionesCategorias.find((opcion) => opcion.value === selectedCategoria)}
+											onChange={(selectedOption) => {
+												setSelectedCategoria(selectedOption?.value || '');
+												setNuevoParticipante1('-');
+												setNuevoParticipante2('-');
+											}}
+										/>
+
 									</div>
 									<div className="flex">
-										<select
-											onChange={(event) => {
-												setNuevoParticipante1(event.target.value);
-											}}
-											required
-											disabled = {categoriaVacia()}
-											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											isDisabled={categoriaVacia() ? true : false}
+											className="text-black w-full h-10 mx-5 my-2 pl-1"
 											id="texto-general"
-											value={nuevoParticipante1}
-										>
-											<option value="-">Selecciona un participante</option>
-											{filteredUsuarios.map((usuario) => (
-												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante2}>
-													{usuario.name} {usuario.lastName}
-												</option>
-											))}
-										</select>
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+												menu: (baseStyles) => ({
+													...baseStyles,
+													borderRadius: '12px'
+												}),
+											}}
+											placeholder={categoriaVacia() ? 'Primero selecciona una categoría' : 'Selecciona un combatiente'}
+											options={opcionesFiltradas1}
+											value={opcionesFiltradas1.find((opcion) => opcion.value === nuevoParticipante1)}
+											onChange={(selectedOption) => setNuevoParticipante1(selectedOption?.value || '')}
+										/>
+
 									</div>
 									<div className="flex justify-center">
 										<h1 className="text-center text-[250%]" id="titulos-grandes">
@@ -492,23 +565,36 @@ export default function CrearTorneo() {
 										</h1>
 									</div>
 									<div className="flex">
-										<select
-											onChange={(event) => {
-												setNuevoParticipante2(event.target.value);
-											}}
-											required
-											disabled = {categoriaVacia()}
-											className="bg-white border-[3px] border-black text-black rounded-full w-full h-10 mx-5 my-2 pl-4 text-black"
+										<Select
+											isDisabled={categoriaVacia() ? true : false}
+											className="text-black w-full h-10 mx-5 my-2 pl-1"
 											id="texto-general"
-											value={nuevoParticipante2}
-										>
-											<option value="-">Selecciona otro participante</option>
-											{filteredUsuarios.map((usuario) => (
-												<option key={usuario._id} value={usuario._id} disabled={usuario._id === nuevoParticipante1}>
-													{usuario.name} {usuario.lastName}
-												</option>
-											))}
-										</select>
+											styles={{
+												option: (baseStyles, { isFocused, isSelected }) => ({
+													...baseStyles,
+													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+													borderRadius: '10px',
+													':active': {
+														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+													},
+												}),
+												control: (baseStyles, isFocused) => ({
+													...baseStyles,
+													borderColor: 'black',
+													borderRadius: '20px',
+													borderWidth: '3px',
+												}),
+												input: (baseStyles) => ({
+													...baseStyles,
+													textAlign: 'center'
+												}),
+											}}
+											placeholder={categoriaVacia() ? 'Primero selecciona una categoría' : 'Selecciona un combatiente'}
+											options={opcionesFiltradas2}
+											value={opcionesFiltradas2.find((opcion) => opcion.value === nuevoParticipante2)}
+											onChange={(selectedOption) => setNuevoParticipante2(selectedOption?.value || '')}
+										/>
+
 									</div>
 									<div className="flex">
 										<textarea
