@@ -55,6 +55,7 @@ export default function CrearTorneo() {
 	const [filteredUsuarios, setFilteredUsuarios] = useState<UserDeportista[]>([]);
 	const [combates, setCombates] = useState<Combat[]>([]);
 	const [fechaRepetida, setFechaRepetida] = useState(false);
+	const [misDatos, setMisDatos] = useState<User>();
 
 	const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const router = useRouter();
@@ -139,10 +140,33 @@ export default function CrearTorneo() {
 		}
 	};
 
+	const cargarMisDatos = () => {
+		const datos = localStorage.getItem('datosUsuario');
+		let nombre;
+		if (datos != null) {
+			nombre = JSON.parse(datos).nombre + ' ' + JSON.parse(datos).apellido;
+		}
+		const datos2 = localStorage.getItem('userData');
+		let id;
+		if (datos2 != null) {
+			id = JSON.parse(datos2).userId;
+		}
+
+		if (nombre !== undefined && id !== undefined) {
+			const newUser: User = {
+				_id: id,
+				name: nombre,
+				lastName: '',
+			};
+			setMisDatos(newUser);
+		}
+	};
+
 	useEffect(() => {
 		cargarEntrenadores();
 		cargarUsuarios();
 		cargarCategorias();
+		cargarMisDatos();
 	}, []);
 
 	useEffect(()=>{
@@ -342,6 +366,44 @@ export default function CrearTorneo() {
 		(opcion) => opcion.value !== nuevoParticipante1
 	);
 
+	const esAdmin = () => {
+		const datos = localStorage.getItem('userData');
+		let rol;
+		if (datos != null) {
+			rol = JSON.parse(datos).role;
+		}
+		if (rol === 'Admin') {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	const guessFechaInvalida = (fhoy: Date, fteclado: Date) => {
+		console.log(fteclado.getUTCDate());
+		console.log(fhoy.getUTCDate());
+		if(fteclado.getFullYear() > fhoy.getFullYear()){
+			setFechainvalida(false);
+		}
+		else if(fteclado.getFullYear() === fhoy.getFullYear()){
+			if(fteclado.getMonth() > fhoy.getMonth()){
+				setFechainvalida(false);
+			}
+			else if(fteclado.getMonth() === fhoy.getMonth()){
+				if(fteclado.getUTCDate() >= fhoy.getUTCDate()){
+					setFechainvalida(false);
+				}
+				else{
+					setFechainvalida(true);
+				}
+			}
+			else{
+				setFechainvalida(true);
+			}
+		}
+		else{setFechainvalida(true);}
+	};
+
 	return (
 		<>
 			{!ready() && (<LoaderContenido/>)}
@@ -360,34 +422,44 @@ export default function CrearTorneo() {
 										Entrenador encargado
 											</div>
 										</div>
-										<Select
-											className='"bg-white text-black w-full h-10 mx-5 my-2 pl-1 text-black"'
-											id="texto-general"
-											placeholder = 'Selecciona un entrenador'
-											styles={{
-												option: (baseStyles, { isFocused, isSelected }) => ({
-													...baseStyles,
-													backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
-													borderRadius: '10px',
-													':active': {
-														backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
-													},
-												}),
-												control: (baseStyles, isFocused) => ({
-													...baseStyles,
-													borderColor: 'black',
-													borderRadius: '20px',
-													borderWidth: '3px',
-												}),
-												input: (baseStyles) => ({
-													...baseStyles,
-													textAlign: 'center'
-												}),
-											}}
-											options={opcionesEntrenadores}
-											value={opcionesEntrenadores.find((opcion) => opcion.value === selectedEntrenador)}
-											onChange={(selectedOption) => setSelectedEntrenador(selectedOption?.value || '')}
-										/>
+										{esAdmin() && (
+											<Select
+												className='"bg-white text-black w-full h-10 mx-5 my-2 pl-1 text-black"'
+												id="texto-general"
+												placeholder = 'Selecciona un entrenador'
+												styles={{
+													option: (baseStyles, { isFocused, isSelected }) => ({
+														...baseStyles,
+														backgroundColor: isSelected ? '#E68C8C' : isFocused ? '#F5D1D1' : baseStyles.backgroundColor,
+														borderRadius: '10px',
+														':active': {
+															backgroundColor: '#F5D1D1', // Cambiar color de fondo cuando la opción está activa
+														},
+													}),
+													control: (baseStyles, isFocused) => ({
+														...baseStyles,
+														borderColor: 'black',
+														borderRadius: '20px',
+														borderWidth: '3px',
+													}),
+													input: (baseStyles) => ({
+														...baseStyles,
+														textAlign: 'center'
+													}),
+												}}
+												options={opcionesEntrenadores}
+												value={opcionesEntrenadores.find((opcion) => opcion.value === selectedEntrenador)}
+												onChange={(selectedOption) => setSelectedEntrenador(selectedOption?.value || '')}
+											/>
+										)}
+										{!esAdmin() && (
+											<label
+												className="bg-white rounded-full w-full h-10 mx-5 my-2 p-2 pl-3 text-black"
+												id="texto-general"
+											>
+												{misDatos?.name}
+											</label>
+										)}
 
 									</div>
 									<div className="flex">

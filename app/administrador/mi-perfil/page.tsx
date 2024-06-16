@@ -352,7 +352,7 @@ export default function Home() {
 							</form>
 						</div>
 						<div className="w-1/3 flex flex-col justify-center items-center">
-							{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={256} height={256} src={datosPerfil.imagen}/>}
+							{datosPerfil.imagen != '' && <Image alt="Foto perfil" width={200} height={200} src={datosPerfil.imagen}/>}
 							<button className={`${kevin.button} w-60 h-10  py-2 px-4 mt-10`} onClick={handleChangeImage}>
 								Cargar nueva foto de perfil
 		  					</button>
