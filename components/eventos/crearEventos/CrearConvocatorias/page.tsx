@@ -1,11 +1,7 @@
 'use client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import {
-	use,
-	useEffect,
-	useState
-} from 'react';
+import { useEffect, useState } from 'react';
 import { LoaderContenido } from '@/components/loaderContenido';
 import styles from '@/public/css/styles.module.scss';
 import Select from 'react-select';
