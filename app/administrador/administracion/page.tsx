@@ -111,7 +111,7 @@ export default function AdministracionAdmin() {
 								</div>
 							</div>
 
-							<div className="flex space-x-4">
+							<div className="flex justify-center space-x-4">
 								<div className='m-0 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
 									<div className="flex items-center justify-center">
 										<Image
@@ -130,27 +130,6 @@ export default function AdministracionAdmin() {
 												}
 											>
 												Administrar categorías
-											</button>
-										</Link>
-									</div>
-								</div>
-								<div className='m-0 bg-[#C6C6C6] p-12 rounded-3xl w-[320px] h-[320px]'>
-									<div className="flex items-center justify-center">
-										<Image
-											src={gestionarRoles}
-											alt="Logo Liga de Boxeo de Norte de Santander"
-											width={200}
-											priority
-										/>
-									</div>
-									<div className="flex items-center justify-center mt-3">
-										<Link href="/administrador/administracion/gestionar-roles">
-											<button
-												className={
-													styles.button + ' w-60 h-10 text-white py-2 px-4 rounded-lg'
-												}
-											>
-												Gestionar roles
 											</button>
 										</Link>
 									</div>
